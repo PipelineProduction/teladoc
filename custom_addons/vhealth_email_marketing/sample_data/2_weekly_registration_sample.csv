@@ -1,0 +1,3 @@
+Client Code,Client Name,Client Surname,Client Gender,Client Language,Client DOB,Client Created Date,Client Prefix & Phone,Client Country,Client email,Product Code
+ACCESS001,TestUser,One,Male,English,1990-05-15,2026-11-06,+1 555-0199,US,test.eligibility1@pipelinedigital.co.uk,aetna-prod-002
+ACCESS002,TestUser,Two,Female,Spanish,1992-08-20,2026-11-06,+1 555-0200,Canada,test.eligibility2@pipelinedigital.co.uk,aetna-prod-001
