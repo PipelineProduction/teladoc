@@ -46,3 +46,6 @@ This is a **first-pass Community addon scaffold** rebuilt from the supplied Stud
 
 ## Install
 Copy this folder to `custom_addons/`, update the Apps list, then install **vHealth Email Marketing Processes** on the development database. Upgrade only this addon after code changes.
+
+
+Odoo 20 menu compatibility note: the vHealth Process menu is declared as a top-level menu because the legacy external ID `mass_mailing.menu_mass_mailing` is not present in the target Odoo 20 Community database. It remains restricted to the Email Marketing user group.
