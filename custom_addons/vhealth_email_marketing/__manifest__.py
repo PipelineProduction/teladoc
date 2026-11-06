@@ -4,6 +4,7 @@
     "version": "20.0.1.0.0",
     "category": "Marketing/Email Marketing",
     "license": "LGPL-3",
+    "author": "Pipeline Production",
     "depends": ["mass_mailing", "mail"],
     "data": [
         "security/security.xml",
