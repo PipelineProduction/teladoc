@@ -8,7 +8,7 @@
     "depends": ["mass_mailing", "mail"],
     "data": [
         "security/security.xml",
-        "security/ir.model.access.csv",
+        "security/ir.access.csv",
         "data/ir_cron.xml",
         "views/product_number_views.xml",
         "views/import_views.xml",
