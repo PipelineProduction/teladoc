@@ -1,17 +1,20 @@
 {
-    "name": "vHealth Email Marketing Tool",
+    "name": "vHealth Email Marketing Processes",
+    "summary": "vHealth/AETNA contact fields, CSV imports and registration queue",
     "version": "20.0.1.0.0",
-    "category": "Marketing",
-    "summary": "Custom vHealth Email Marketing migration module",
-    "description": """
-        Custom email marketing functionality for vHealth.
-        Includes contact fields, mailing lists and import workflows.
-    """,
-    "depends": [
-        "mass_mailing",
+    "category": "Marketing/Email Marketing",
+    "license": "LGPL-3",
+    "depends": ["mass_mailing", "mail"],
+    "data": [
+        "security/security.xml",
+        "security/ir.model.access.csv",
+        "data/ir_cron.xml",
+        "views/product_number_views.xml",
+        "views/import_views.xml",
+        "views/member_removal_views.xml",
+        "views/google_sheet_queue_views.xml",
+        "views/menus.xml",
     ],
-    "data": [],
     "installable": True,
     "application": True,
-    "license": "LGPL-3",
 }
