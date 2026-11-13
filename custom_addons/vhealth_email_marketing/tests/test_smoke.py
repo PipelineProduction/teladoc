@@ -46,3 +46,18 @@ class TestVHealthSmoke(TransactionCase):
         self.assertEqual(_get(row, "x_studio_first_name", "first name"), "Test")
         self.assertEqual(_get(row, "x_studio_cohort_group", "cohort group"), "TH")
 
+    def test_csv_binary_decoding_variants(self):
+        import base64
+        from ..models.imports import _decode_binary_to_text, _read_csv
+        raw_csv = "email,Name\nuser@example.com,John Doe\n"
+        # Test raw bytes (Odoo 18/20 BinaryValue)
+        self.assertIn("user@example.com", _decode_binary_to_text(raw_csv.encode("utf-8")))
+        # Test base64 bytes (legacy Odoo Binary)
+        self.assertIn("user@example.com", _decode_binary_to_text(base64.b64encode(raw_csv.encode("utf-8"))))
+        # Test base64 str
+        self.assertIn("user@example.com", _decode_binary_to_text(base64.b64encode(raw_csv.encode("utf-8")).decode("ascii")))
+        # Test _read_csv parse
+        rows = _read_csv(raw_csv.encode("utf-8"))
+        self.assertEqual(len(rows), 1)
+        self.assertEqual(rows[0]["email"], "user@example.com")
+

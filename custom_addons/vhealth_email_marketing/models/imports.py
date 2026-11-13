@@ -14,11 +14,63 @@ PRODUCT_COHORT = {
     "aetna-prod-007": "PC", "007": "PC",
 }
 
+def _decode_binary_to_text(binary):
+    if not binary:
+        return ""
+    if hasattr(binary, "content"):
+        raw = binary.content
+    elif isinstance(binary, memoryview):
+        raw = bytes(binary)
+    elif isinstance(binary, str):
+        if binary.startswith("data:") and "," in binary:
+            binary = binary.split(",", 1)[1]
+        if "," in binary or ";" in binary:
+            return binary
+        try:
+            raw = base64.b64decode(binary.strip())
+        except Exception:
+            return binary
+    else:
+        raw = bytes(binary)
+
+    if raw.startswith(b"data:") and b"," in raw:
+        raw = raw.split(b",", 1)[1]
+
+    if b"," in raw or b";" in raw:
+        for enc in ("utf-8-sig", "utf-8", "cp1252", "latin1"):
+            try:
+                return raw.decode(enc)
+            except UnicodeDecodeError:
+                continue
+        return raw.decode("utf-8", errors="replace")
+
+    try:
+        decoded = base64.b64decode(raw.strip())
+        for enc in ("utf-8-sig", "utf-8", "cp1252", "latin1"):
+            try:
+                return decoded.decode(enc)
+            except UnicodeDecodeError:
+                continue
+    except Exception:
+        pass
+
+    for enc in ("utf-8-sig", "utf-8", "cp1252", "latin1"):
+        try:
+            return raw.decode(enc)
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("utf-8", errors="replace")
+
 def _read_csv(binary):
-    try: text = base64.b64decode(binary).decode("utf-8-sig")
-    except Exception as exc: raise UserError(_("Could not decode CSV: %s") % exc)
+    try:
+        text = _decode_binary_to_text(binary)
+    except Exception as exc:
+        raise UserError(_("Could not decode CSV: %s") % exc)
+    if not text:
+        raise UserError(_("The CSV file is empty."))
     reader = csv.DictReader(io.StringIO(text))
-    if not reader.fieldnames: raise UserError(_("CSV has no header row."))
+    if not reader.fieldnames:
+        raise UserError(_("CSV has no header row."))
     return [{(k or "").strip(): (v or "").strip() for k, v in row.items()} for row in reader]
 
 def _get(row, *keys):

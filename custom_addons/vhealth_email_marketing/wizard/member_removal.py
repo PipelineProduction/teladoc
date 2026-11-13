@@ -1,6 +1,7 @@
-import base64, csv, io
+import csv, io
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from ..models.imports import _decode_binary_to_text
 
 class AetnaMemberRemoval(models.Model):
     _name = "x_aetna_member_removal"
@@ -38,8 +39,9 @@ class AetnaMemberRemoval(models.Model):
             if not rec.confirm_permanent_delete:
                 raise UserError(_("Tick the permanent-deletion confirmation before continuing."))
             try:
-                raw = base64.b64decode(rec.x_studio_import_file)
-                text = raw.decode("utf-8-sig")
+                text = _decode_binary_to_text(rec.x_studio_import_file)
+                if not text:
+                    raise UserError(_("The CSV file is empty."))
                 reader = csv.DictReader(io.StringIO(text))
                 if not reader.fieldnames:
                     raise UserError(_("The CSV is empty or has no header row."))
