@@ -35,3 +35,14 @@ class TestVHealthSmoke(TransactionCase):
         e = Elig.new({})
         self.assertEqual(e.display_name, "New", "Unsaved record display name should be 'New'")
 
+    def test_eligibility_import_flexible_helpers(self):
+        from ..models.imports import _get
+        row = {
+            "email": "test@business.co.uk",
+            "x_studio_first_name": "Test",
+            "x_studio_last_name": "User",
+            "x_studio_cohort_group": "TH",
+        }
+        self.assertEqual(_get(row, "x_studio_first_name", "first name"), "Test")
+        self.assertEqual(_get(row, "x_studio_cohort_group", "cohort group"), "TH")
+

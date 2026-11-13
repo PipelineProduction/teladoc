@@ -44,8 +44,13 @@ class AetnaMemberRemoval(models.Model):
                 if not reader.fieldnames:
                     raise UserError(_("The CSV is empty or has no header row."))
                 headers = {h.strip().lower(): h for h in reader.fieldnames if h}
-                email_col = headers.get("email") or headers.get("email address")
-                status_col = headers.get("aetna member status") or headers.get("status")
+                email_col = headers.get("email") or headers.get("email address") or headers.get("client email")
+                status_col = (
+                    headers.get("x_studio_aetna_member_status") or
+                    headers.get("aetna member status") or
+                    headers.get("status") or
+                    headers.get("member status")
+                )
                 if not email_col or not status_col:
                     raise UserError(_("CSV must contain Email and AETNA Member Status columns."))
                 rows = list(reader); removed = 0; not_found = 0; errors = []

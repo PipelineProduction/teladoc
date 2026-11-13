@@ -35,6 +35,13 @@ def _as_date(value):
         except ValueError: pass
     raise ValueError("Invalid date: %s" % value)
 
+def _get_or_create_list(env, name):
+    List = env["mailing.list"].sudo()
+    rec = List.search([("name", "=", name)], limit=1)
+    if not rec:
+        rec = List.create({"name": name})
+    return rec
+
 class EligibilityImport(models.Model):
     _name = "x_eligibility_import"
     _description = "Eligibility Import"
@@ -65,27 +72,50 @@ class EligibilityImport(models.Model):
             rows = _read_csv(rec.x_studio_import_file); created = updated = processed = 0; errors = []
             rec.write({"x_studio_import_status": "Processing", "x_studio_total_records": len(rows), "x_studio_processed_records": 0, "x_studio_created_contacts": 0, "x_studio_updated_contacts": 0, "x_studio_error_message": False})
             Contact = self.env["mailing.contact"].sudo(); List = self.env["mailing.list"].sudo()
-            live = List.search([("name", "=", LIVE_LIST_NAME)], limit=1)
+            live = _get_or_create_list(self.env, LIVE_LIST_NAME)
             for index, row in enumerate(rows, start=2):
                 try:
                     with self.env.cr.savepoint():
-                        email = _get(row, "Email", "ID").lower()
+                        email = _get(row, "email", "id").lower()
                         if not email: raise ValueError("Email is required")
-                        cohort = _get(row, "Cohort Group")
-                        vals = {"email": email, "x_studio_first_name": _get(row, "First Name"), "x_studio_last_name": _get(row, "Last Name"), "x_studio_aetna_language": _get(row, "Aetna Language", "Language") or "English", "x_studio_aetna_access_code": _get(row, "Aetna Access Code"), "x_studio_member_effective_date": _as_date(_get(row, "Member Effective Date")), "x_studio_cohort_group": cohort or False, "x_studio_launch_date": _as_date(_get(row, "Launch Date")), "x_studio_vhealth_contact": True}
-                        vals = {k:v for k,v in vals.items() if v is not None}
+                        cohort = _get(row, "x_studio_cohort_group", "cohort group", "cohort")
+                        first = _get(row, "x_studio_first_name", "first name", "first")
+                        last = _get(row, "x_studio_last_name", "last name", "last", "surname")
+                        name = _get(row, "name") or f"{first} {last}".strip() or email
+                        lang = _get(row, "x_studio_aetna_language", "aetna language", "language") or "English"
+                        access = _get(row, "x_studio_aetna_access_code", "aetna access code", "client code", "access code")
+                        eff_date = _as_date(_get(row, "x_studio_member_effective_date", "member effective date", "effective date"))
+                        launch_date = _as_date(_get(row, "x_studio_launch_date", "launch date"))
+                        is_unsub = _get(row, "isunsub", "unsubscribed", "opt_out") in ("1", "true", "yes")
+
+                        vals = {
+                            "name": name,
+                            "email": email,
+                            "x_studio_first_name": first,
+                            "x_studio_last_name": last,
+                            "x_studio_aetna_language": lang,
+                            "x_studio_aetna_access_code": access,
+                            "x_studio_member_effective_date": eff_date,
+                            "x_studio_cohort_group": cohort or False,
+                            "x_studio_launch_date": launch_date,
+                            "x_studio_vhealth_contact": True,
+                            "x_studio_aetna_member_status": "Eligible",
+                        }
+                        vals = {k: v for k, v in vals.items() if v is not None and v != ""}
                         contact = Contact.search([("email", "=ilike", email)], limit=1)
                         if contact: contact.write(vals); updated += 1
                         else: contact = Contact.create(vals); created += 1
                         launch = vals.get("x_studio_launch_date") or fields.Date.context_today(rec)
-                        eligible = List.search([("name", "=", "Eligible Member %s" % launch)], limit=1)
-                        if not eligible: eligible = List.create({"name": "Eligible Member %s" % launch})
+                        eligible = _get_or_create_list(self.env, "Eligible Member %s" % launch)
                         target_lists = eligible | live
                         if cohort in COHORT_LISTS:
-                            target_lists |= List.search([("name", "=", COHORT_LISTS[cohort])], limit=1)
+                            target_cohort_list = _get_or_create_list(self.env, COHORT_LISTS[cohort])
+                            target_lists |= target_cohort_list
                             old_cohorts = List.search([("name", "in", list(COHORT_LISTS.values()))])
                             contact.write({"list_ids": [(3, x.id) for x in (old_cohorts - target_lists)]})
                         contact.write({"list_ids": [(4, x.id) for x in target_lists]})
+                        if is_unsub and hasattr(contact, "subscription_list_ids"):
+                            contact.subscription_list_ids.filtered(lambda s: s.list_id in target_lists).write({"opt_out": True})
                     processed += 1
                 except Exception as exc: errors.append("Row %s: %s" % (index, exc)); _logger.exception("Eligibility import row failed")
                 rec.write({"x_studio_processed_records": processed, "x_studio_created_contacts": created, "x_studio_updated_contacts": updated})
@@ -125,13 +155,13 @@ class WeeklyVhealthRegistration(models.Model):
             rows = _read_csv(rec.x_studio_import_file); created = updated = processed = 0; errors = []; queue_ids = []
             rec.write({"x_studio_import_status": "processing", "x_studio_total_records": len(rows), "x_studio_processed_records": 0, "x_studio_created_contacts": 0, "x_studio_updated_contacts": 0, "x_studio_error_records": 0, "x_studio_error_message": False})
             Contact = self.env["mailing.contact"].sudo(); List = self.env["mailing.list"].sudo(); Product = self.env["x_product_number"].sudo()
-            registered = List.search([("name", "=", REGISTERED_LIST_NAME)], limit=1); live = List.search([("name", "=", LIVE_LIST_NAME)], limit=1)
+            registered = _get_or_create_list(self.env, REGISTERED_LIST_NAME); live = _get_or_create_list(self.env, LIVE_LIST_NAME)
             for index, row in enumerate(rows, start=2):
                 try:
                     with self.env.cr.savepoint():
-                        email = _get(row, "Client email", "Email").lower()
+                        email = _get(row, "Client email", "email", "id").lower()
                         if not email: raise ValueError("Client email is required")
-                        code_raw = _get(row, "Product Code")
+                        code_raw = _get(row, "Product Code", "x_studio_products_2", "product", "product_code")
                         codes = [c.strip().lower() for c in re.split(r'[,;]+', code_raw) if c.strip()]
                         if not codes: raise ValueError("Product Code is required")
                         products = self.env["x_product_number"]
@@ -147,26 +177,49 @@ class WeeklyVhealthRegistration(models.Model):
                         if "TH + MH" in cohorts or ("TH" in cohorts and "MH" in cohorts): cohort = "TH + MH"
                         elif cohorts: cohort = cohorts[0]
                         else: raise ValueError("Unknown Product Code %r" % code_raw)
-                        country = _get(row, "Client Country")
-                        first = _get(row, "Client Name"); surname = _get(row, "Client Surname")
+                        country = _get(row, "Client Country", "country")
+                        first = _get(row, "Client Name", "x_studio_first_name", "first name", "first")
+                        surname = _get(row, "Client Surname", "x_studio_last_name", "last name", "surname")
                         # Client Name in source may contain the surname as its final token; avoid duplicating it.
                         if surname and first.lower().endswith(" " + surname.lower()): first = first[:-(len(surname)+1)].strip()
-                        vals = {"email": email, "x_studio_aetna_access_code": _get(row, "Client Code"), "x_studio_first_name": first, "x_studio_last_name": surname, "x_studio_gender": _get(row, "Client Gender"), "x_studio_aetna_language": _get(row, "Client Language"), "x_studio_dob": _as_date(_get(row, "Client DOB")), "x_studio_registration_date": _as_date(_get(row, "Client Created Date")), "x_studio_vhealth_contact": True, "x_studio_app_registered": "Yes", "x_studio_app_unique_registered": "Yes", "x_studio_location_us_or_canada": country.strip().lower() in ("us", "usa", "united states", "canada"), "x_studio_aetna_status_live": True, "x_studio_cohort_group": cohort, "x_studio_products_2": [(4, p.id) for p in products]}
+                        name = _get(row, "Name") or f"{first} {surname}".strip() or email
+                        access_code = _get(row, "Client Code", "x_studio_aetna_access_code", "access code")
+                        gender = _get(row, "Client Gender", "x_studio_gender", "gender")
+                        language = _get(row, "Client Language", "x_studio_aetna_language", "language") or "English"
+                        dob = _as_date(_get(row, "Client DOB", "x_studio_dob", "dob"))
+                        reg_date = _as_date(_get(row, "Client Created Date", "x_studio_registration_date", "registration date"))
+                        prefix_phone = _get(row, "Client Prefix & Phone", "phone", "mobile")
+                        vals = {
+                            "name": name,
+                            "email": email,
+                            "x_studio_aetna_access_code": access_code,
+                            "x_studio_first_name": first,
+                            "x_studio_last_name": surname,
+                            "x_studio_gender": gender,
+                            "x_studio_aetna_language": language,
+                            "x_studio_dob": dob,
+                            "x_studio_registration_date": reg_date,
+                            "x_studio_vhealth_contact": True,
+                            "x_studio_app_registered": "Yes",
+                            "x_studio_app_unique_registered": "Yes",
+                            "x_studio_location_us_or_canada": country.strip().lower() in ("us", "usa", "united states", "canada"),
+                            "x_studio_aetna_status_live": True,
+                            "x_studio_cohort_group": cohort,
+                            "x_studio_products_2": [(4, p.id) for p in products],
+                        }
                         vals = {k:v for k,v in vals.items() if v is not None and v != ""}
                         contact = Contact.search([("email", "=ilike", email)], limit=1)
                         if contact: contact.write(vals); updated += 1
                         else: contact = Contact.create(vals); created += 1
-                        target = List.search([("name", "=", COHORT_LISTS[cohort])], limit=1)
+                        target = _get_or_create_list(self.env, COHORT_LISTS[cohort])
                         to_add = registered | live | target
                         contact.write({"list_ids": [(4, x.id) for x in to_add]})
                         Queue = self.env["x_google_sheet_registr"].sudo()
-                        reg_date = _get(row, "Client Created Date")
-                        prefix_phone = _get(row, "Client Prefix & Phone")
-                        access_code = _get(row, "Client Code")
+                        reg_date_str = _get(row, "Client Created Date", "x_studio_registration_date", "registration date")
                         # Idempotency guard: avoid adding the same unsent registration payload again on re-import.
-                        queue = Queue.search([("x_studio_email", "=ilike", email), ("x_studio_registration_date", "=", reg_date), ("x_studio_access_code", "=", access_code), ("x_studio_sent", "=", False)], limit=1)
+                        queue = Queue.search([("x_studio_email", "=ilike", email), ("x_studio_registration_date", "=", reg_date_str), ("x_studio_access_code", "=", access_code), ("x_studio_sent", "=", False)], limit=1)
                         if not queue:
-                            queue = Queue.create({"x_studio_email": email, "x_studio_registration_date": reg_date, "x_studio_prefix_phone": prefix_phone, "x_studio_access_code": access_code})
+                            queue = Queue.create({"x_studio_email": email, "x_studio_registration_date": reg_date_str, "x_studio_prefix_phone": prefix_phone, "x_studio_access_code": access_code})
                         queue_ids.append(queue.id)
                     processed += 1
                 except Exception as exc: errors.append("Row %s (%s): %s" % (index, _get(row, "Client email"), exc)); _logger.exception("Weekly registration row failed")
