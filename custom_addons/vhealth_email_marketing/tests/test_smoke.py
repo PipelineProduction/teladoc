@@ -24,3 +24,9 @@ class TestVHealthSmoke(TransactionCase):
         list_view = self.env.ref("vhealth_email_marketing.mailing_contact_view_tree_inherit_vhealth", raise_if_not_found=False)
         self.assertTrue(list_view, "Inherited list view should be loaded")
 
+    def test_product_number_rec_name_and_display(self):
+        Product = self.env["x_product_number"]
+        self.assertEqual(Product._rec_name, "x_name", "Rec name should be x_name to display 001/002 labels")
+        p = Product.create({"x_name": "001", "x_studio_product_value": "aetna-prod-001"})
+        self.assertEqual(p.display_name, "001", "Display name should resolve to x_name (001)")
+

@@ -1,4 +1,4 @@
-import base64, csv, io, logging
+import base64, csv, io, logging, re
 from datetime import datetime, date
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -7,7 +7,12 @@ _logger = logging.getLogger(__name__)
 LIVE_LIST_NAME = "All Live Contacts [SEND TO ALL]"
 REGISTERED_LIST_NAME = "All REGISTERED members"
 COHORT_LISTS = {"TH": "All Contacts - TH", "TH + MH": "All Contacts - TH + MH", "PC": "All Contacts - PC", "MH": "All Contacts - MH"}
-PRODUCT_COHORT = {"aetna-prod-001": "TH + MH", "aetna-prod-002": "TH", "aetna-prod-004": "MH", "aetna-prod-007": "PC"}
+PRODUCT_COHORT = {
+    "aetna-prod-001": "TH + MH", "001": "TH + MH",
+    "aetna-prod-002": "TH", "002": "TH",
+    "aetna-prod-004": "MH", "004": "MH",
+    "aetna-prod-007": "PC", "007": "PC",
+}
 
 def _read_csv(binary):
     try: text = base64.b64decode(binary).decode("utf-8-sig")
@@ -110,16 +115,27 @@ class WeeklyVhealthRegistration(models.Model):
                     with self.env.cr.savepoint():
                         email = _get(row, "Client email", "Email").lower()
                         if not email: raise ValueError("Client email is required")
-                        code = _get(row, "Product Code").lower()
-                        cohort = PRODUCT_COHORT.get(code)
-                        if not cohort: raise ValueError("Unknown Product Code %r" % code)
-                        product = Product.search(["|", ("x_studio_product_value", "=", code), ("x_name", "=", code)], limit=1)
-                        if not product: raise ValueError("Product code %s is missing from Product Number setup" % code)
+                        code_raw = _get(row, "Product Code")
+                        codes = [c.strip().lower() for c in re.split(r'[,;]+', code_raw) if c.strip()]
+                        if not codes: raise ValueError("Product Code is required")
+                        products = self.env["x_product_number"]
+                        cohorts = []
+                        for code in codes:
+                            c = PRODUCT_COHORT.get(code)
+                            p = Product.search(["|", ("x_studio_product_value", "=", code), ("x_name", "=", code)], limit=1)
+                            if not p: raise ValueError("Product code %s is missing from Product Number setup" % code)
+                            products |= p
+                            if not c and p.x_studio_product_value:
+                                c = PRODUCT_COHORT.get(p.x_studio_product_value.lower())
+                            if c: cohorts.append(c)
+                        if "TH + MH" in cohorts or ("TH" in cohorts and "MH" in cohorts): cohort = "TH + MH"
+                        elif cohorts: cohort = cohorts[0]
+                        else: raise ValueError("Unknown Product Code %r" % code_raw)
                         country = _get(row, "Client Country")
                         first = _get(row, "Client Name"); surname = _get(row, "Client Surname")
                         # Client Name in source may contain the surname as its final token; avoid duplicating it.
                         if surname and first.lower().endswith(" " + surname.lower()): first = first[:-(len(surname)+1)].strip()
-                        vals = {"email": email, "x_studio_aetna_access_code": _get(row, "Client Code"), "x_studio_first_name": first, "x_studio_last_name": surname, "x_studio_gender": _get(row, "Client Gender"), "x_studio_aetna_language": _get(row, "Client Language"), "x_studio_dob": _as_date(_get(row, "Client DOB")), "x_studio_registration_date": _as_date(_get(row, "Client Created Date")), "x_studio_vhealth_contact": True, "x_studio_app_registered": "Yes", "x_studio_app_unique_registered": "Yes", "x_studio_location_us_or_canada": country.strip().lower() in ("us", "usa", "united states", "canada"), "x_studio_aetna_status_live": True, "x_studio_cohort_group": cohort, "x_studio_products_2": [(4, product.id)]}
+                        vals = {"email": email, "x_studio_aetna_access_code": _get(row, "Client Code"), "x_studio_first_name": first, "x_studio_last_name": surname, "x_studio_gender": _get(row, "Client Gender"), "x_studio_aetna_language": _get(row, "Client Language"), "x_studio_dob": _as_date(_get(row, "Client DOB")), "x_studio_registration_date": _as_date(_get(row, "Client Created Date")), "x_studio_vhealth_contact": True, "x_studio_app_registered": "Yes", "x_studio_app_unique_registered": "Yes", "x_studio_location_us_or_canada": country.strip().lower() in ("us", "usa", "united states", "canada"), "x_studio_aetna_status_live": True, "x_studio_cohort_group": cohort, "x_studio_products_2": [(4, p.id) for p in products]}
                         vals = {k:v for k,v in vals.items() if v is not None and v != ""}
                         contact = Contact.search([("email", "=ilike", email)], limit=1)
                         if contact: contact.write(vals); updated += 1
