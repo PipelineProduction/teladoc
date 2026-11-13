@@ -14,157 +14,105 @@
         </field>
     </record>
 
-    <!-- Inherited Form View for mailing.contact -->
+    <!-- Inherited Form View for mailing.contact matching Odoo Online Studio structure -->
     <record id="mailing_contact_view_form_inherit_vhealth" model="ir.ui.view">
         <field name="name">mailing.contact.view.form.inherit.vhealth</field>
         <field name="model">mailing.contact</field>
         <field name="inherit_id" ref="mass_mailing.mailing_contact_view_form"/>
         <field name="priority">20</field>
         <field name="arch" type="xml">
-            <!-- Header section fields -->
-            <xpath expr="//field[@name='tag_ids']" position="after">
-                <field name="x_studio_aetna_member_status"/>
-            </xpath>
-            <xpath expr="//field[@name='create_date']" position="after">
-                <field name="x_studio_vhealth_contact"/>
-            </xpath>
-
-            <!-- Custom Tabs in Notebook -->
-            <xpath expr="//notebook" position="inside">
-                <!-- Tab 1: Personal Information -->
-                <page string="Personal Information" name="personal_information">
-                    <group>
-                        <group name="personal_info_left">
-                            <field name="x_studio_first_name"/>
-                            <field name="x_studio_last_name"/>
-                            <field name="x_studio_email"/>
-                            <field name="x_studio_aetna_language"/>
-                            <field name="x_studio_gender"/>
-                            <field name="x_studio_dob"/>
+            <data>
+                <xpath expr="/form//field[@name='tag_ids']" position="after">
+                    <field name="x_studio_aetna_member_status"/>
+                </xpath>
+                <xpath expr="/form/sheet/group/group[2]/field[@name='create_date']" position="after">
+                    <field name="x_studio_vhealth_contact"/>
+                </xpath>
+                <xpath expr="/form/sheet/notebook/page" position="after">
+                    <page string="Email marketing" name="studio_page_78d_1k07lgra7">
+                        <group name="studio_group_78d">
+                            <group name="studio_group_78d_left">
+                                <field name="x_studio_first_name"/>
+                                <field name="x_studio_last_name"/>
+                            </group>
+                            <group name="studio_group_78d_right">
+                                <field name="x_studio_cohort_group"/>
+                                <field name="x_studio_aetna_language"/>
+                            </group>
                         </group>
-                        <group name="personal_info_right">
-                            <field name="x_studio_nationality"/>
-                            <field name="x_studio_what_is_your_marital_status"/>
-                            <field name="x_studio_family_status"/>
-                            <field name="x_studio_do_you_have_children"/>
-                            <field name="x_studio_invalid_phone_number"/>
-                            <field name="x_studio_1st_email_non_email"/>
+                        <group name="studio_group_tj_1k0a6p200" string="Member data">
+                            <group name="studio_group_tj_left">
+                                <field name="x_studio_aetna_access_code"/>
+                                <field name="x_studio_member_effective_date" force_save="1" readonly="True"/>
+                                <field name="x_studio_products_2" widget="many2many_checkboxes"/>
+                                <field name="x_studio_sub_client"/>
+                            </group>
+                            <group name="studio_group_tj_right">
+                                <field name="x_studio_aetna_id"/>
+                                <field name="x_studio_launch_date" force_save="1" readonly="True" options="{&quot;numeric&quot;:true}"/>
+                                <field name="x_studio_member_id"/>
+                                <field name="x_studio_registration_date" force_save="0" readonly="False" options="{&quot;numeric&quot;:true}"/>
+                                <field name="x_studio_sub_group"/>
+                            </group>
                         </group>
-                    </group>
-                </page>
-
-                <!-- Tab 2: AETNA Information -->
-                <page string="AETNA Information" name="aetna_information">
-                    <group>
-                        <group name="aetna_info_left">
-                            <field name="x_studio_aetna_access_code"/>
-                            <field name="x_studio_aetna_id"/>
-                            <field name="x_studio_member_id"/>
-                            <field name="x_studio_member_type"/>
-                            <field name="x_studio_member_effective_date"/>
-                            <field name="x_studio_cohort_group"/>
+                        <group name="studio_group_3qs_1k0a9pu3r" string="Aetna">
+                            <group name="studio_group_3qs_left">
+                                <field name="x_studio_1st_email_non_email"/>
+                                <field name="x_studio_aetna_status_live"/>
+                                <field name="x_studio_app_unique_registered"/>
+                                <field name="x_studio_client"/>
+                                <field name="x_studio_do_you_have_children"/>
+                                <field name="x_studio_dob" required="False" force_save="1" readonly="True"/>
+                                <field name="x_studio_gender"/>
+                                <field name="x_studio_is_group_talent_trust"/>
+                                <field name="x_studio_nationality"/>
+                                <field name="x_studio_send_launch_sms"/>
+                                <field name="x_studio_sms_launch_no"/>
+                                <field name="x_studio_status" force_save="1" readonly="True"/>
+                                <field name="x_studio_vhealth90"/>
+                                <field name="x_studio_aetna_consultation"/>
+                                <field name="x_studio_aetna_consultation_video"/>
+                            </group>
+                            <group name="studio_group_3qs_right">
+                                <field name="x_studio_aetna_email_template" widget="radio" force_save="1" readonly="True"/>
+                                <field name="x_studio_app_registered"/>
+                                <field name="x_studio_are_you_registered_with_vhealth_by_aetna"/>
+                                <field name="x_studio_created_date_import"/>
+                                <field name="x_studio_family_status"/>
+                                <field name="x_studio_invalid_phone_number"/>
+                                <field name="x_studio_member_type"/>
+                                <field name="x_studio_not_registered_anymore" force_save="1" readonly="True"/>
+                                <field name="x_studio_sms_stop_opted_out"/>
+                                <field name="x_studio_sms_status_report" force_save="1" readonly="True"/>
+                                <field name="x_studio_what_is_your_marital_status"/>
+                                <field name="x_studio_aetna_consultation_call_back"/>
+                            </group>
                         </group>
-                        <group name="aetna_info_right">
-                            <field name="x_studio_launch_date"/>
-                            <field name="x_studio_client"/>
-                            <field name="x_studio_sub_client"/>
-                            <field name="x_studio_sub_group"/>
-                            <field name="x_studio_is_group_talent_trust"/>
-                            <field name="x_studio_status"/>
-                            <field name="x_studio_aetna_email_template"/>
+                        <group name="studio_group_3hd_1k0adl6v9" string="Aetna Dependent">
+                            <group name="studio_group_3hd_left">
+                                <field name="x_studio_dependent_email" force_save="1" readonly="True"/>
+                                <field name="x_studio_dependent_mobile_number" force_save="1" readonly="True"/>
+                                <field name="x_studio_family_member_explicit_consent_1" widget="radio" force_save="1" readonly="True"/>
+                            </group>
+                            <group name="studio_group_3hd_right">
+                                <field name="x_studio_dependent_first_name" force_save="1" readonly="True"/>
+                                <field name="x_studio_family_invite_form_url"/>
+                                <field name="x_studio_is_dependent_from_invite_form"/>
+                                <field name="x_studio_primary_member_first_name"/>
+                            </group>
                         </group>
-                    </group>
-                </page>
-
-                <!-- Tab 3: vHealth Status -->
-                <page string="vHealth Status" name="vhealth_status">
-                    <group>
-                        <group name="vhealth_status_left">
-                            <field name="x_studio_vhealth_contact"/>
-                            <field name="x_studio_aetna_member_status"/>
-                            <field name="x_studio_aetna_status_live"/>
-                            <field name="x_studio_app_registered"/>
-                            <field name="x_studio_app_unique_registered"/>
-                            <field name="x_studio_registered"/>
-                            <field name="x_studio_registered_manual_action"/>
+                        <group name="studio_group_1tp_1k0cl6teg" string="Uncategorized">
+                            <group name="studio_group_1tp_left">
+                                <field name="x_studio_check_for_engagement"/>
+                                <field name="x_studio_registered_manual_action"/>
+                            </group>
+                            <group name="studio_group_1tp_right">
+                                <field name="x_studio_location_us_or_canada"/>
+                            </group>
                         </group>
-                        <group name="vhealth_status_right">
-                            <field name="x_studio_registration_date"/>
-                            <field name="x_studio_are_you_registered_with_vhealth_by_aetna"/>
-                            <field name="x_studio_not_registered_anymore"/>
-                            <field name="x_studio_location_us_or_canada"/>
-                            <field name="x_studio_check_for_engagement"/>
-                            <field name="x_studio_vhealth90"/>
-                            <field name="x_studio_created_date_import"/>
-                        </group>
-                    </group>
-                </page>
-
-                <!-- Tab 4: Products & Other Fields -->
-                <page string="Products &amp; Other Fields" name="products_other_fields">
-                    <group string="Products">
-                        <group name="products_group_left">
-                            <field name="x_studio_products_2" widget="many2many_tags"/>
-                            <field name="x_studio_products"/>
-                        </group>
-                        <group name="products_group_right">
-                            <field name="x_studio_products_1" widget="many2many_tags"/>
-                            <field name="x_studio_many2many_field_3jv_1k0a84nt2" widget="many2many_tags"/>
-                        </group>
-                    </group>
-                    <group string="Aetna Dependents">
-                        <group name="dependents_group_left">
-                            <field name="x_studio_primary_member_first_name"/>
-                            <field name="x_studio_dependent_first_name"/>
-                            <field name="x_studio_dependent_email"/>
-                            <field name="x_studio_dependent_mobile_number"/>
-                        </group>
-                        <group name="dependents_group_right">
-                            <field name="x_studio_is_dependent_from_invite_form"/>
-                            <field name="x_studio_family_invite_form_url"/>
-                            <field name="x_studio_family_member_explicit_consent"/>
-                            <field name="x_studio_family_member_explicit_consent_1"/>
-                        </group>
-                    </group>
-                    <group string="Consultation &amp; SMS">
-                        <group name="consultation_group_left">
-                            <field name="x_studio_aetna_consultation"/>
-                            <field name="x_studio_aetna_consultation_video"/>
-                            <field name="x_studio_aetna_consultation_call_back"/>
-                        </group>
-                        <group name="sms_group_right">
-                            <field name="x_studio_send_launch_sms"/>
-                            <field name="x_studio_sms_launch_no"/>
-                            <field name="x_studio_sms_stop_opted_out"/>
-                            <field name="x_studio_sms_status_report"/>
-                        </group>
-                    </group>
-                    <group string="Company &amp; Custom Fields">
-                        <group name="company_group_left">
-                            <field name="x_studio_company"/>
-                            <field name="x_studio_company_id"/>
-                            <field name="x_studio_char_field_4r7_1k0uuh7ae"/>
-                            <field name="x_studio_html_field_5gi_1k0a9279h"/>
-                        </group>
-                        <group name="custom_group_right">
-                            <field name="x_studio_selection_field_4vn_1k0a88ot7"/>
-                            <field name="x_studio_selection_field_4k8_1k0a8tbq3"/>
-                            <field name="x_studio_selection_field_90b_1k0ab8s9f"/>
-                            <field name="x_studio_boolean_field_vi_1k0a89u5n"/>
-                            <field name="x_studio_boolean_field_7cn_1k0a8pmj4"/>
-                            <field name="x_studio_boolean_field_3pi_1k0aa19eg"/>
-                        </group>
-                    </group>
-                    <group string="Contact Lines">
-                        <field name="x_studio_one2many_field_338_1k0a93a98" nolabel="1">
-                            <list editable="bottom">
-                                <field name="x_studio_sequence" widget="handle"/>
-                                <field name="x_name"/>
-                            </list>
-                        </field>
-                    </group>
-                </page>
-            </xpath>
+                    </page>
+                </xpath>
+            </data>
         </field>
     </record>
 </odoo>

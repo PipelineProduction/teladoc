@@ -19,6 +19,8 @@ class TestVHealthSmoke(TransactionCase):
     def test_views_loaded(self):
         form_view = self.env.ref("vhealth_email_marketing.mailing_contact_view_form_inherit_vhealth", raise_if_not_found=False)
         self.assertTrue(form_view, "Inherited form view should be loaded")
+        self.assertIn("studio_page_78d_1k07lgra7", form_view.arch, "Studio page should match online setup")
+        self.assertNotIn("x_studio_char_field_4r7_1k0uuh7ae", form_view.arch, "Artifact text fields should not be in form view")
         list_view = self.env.ref("vhealth_email_marketing.mailing_contact_view_tree_inherit_vhealth", raise_if_not_found=False)
         self.assertTrue(list_view, "Inherited list view should be loaded")
 
