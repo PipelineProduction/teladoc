@@ -1,1 +1,58 @@
-<odoo><record id="view_member_removal_list" model="ir.ui.view"><field name="name">x.aetna.member.removal.list</field><field name="model">x_aetna_member_removal</field><field name="arch" type="xml"><list><field name="x_name"/><field name="x_studio_import_status"/><field name="x_studio_import_date"/><field name="x_studio_total_records"/><field name="x_studio_removed_contacts"/><field name="x_studio_not_found"/></list></field></record><record id="view_member_removal_form" model="ir.ui.view"><field name="name">x.aetna.member.removal.form</field><field name="model">x_aetna_member_removal</field><field name="arch" type="xml"><form><header><button name="action_process_removal" type="object" string="Permanently Delete Contacts" class="btn-danger" confirm="This permanently deletes matching mailing.contact records. Continue?"/><field name="x_studio_import_status" widget="statusbar" statusbar_visible="Draft,Processing,Completed,Error"/></header><sheet><group><field name="x_name"/><field name="x_studio_import_file" filename="x_studio_import_file_filename"/><field name="x_studio_import_file_filename" invisible="1"/><field name="confirm_permanent_delete"/></group><group><field name="x_studio_total_records"/><field name="x_studio_removed_contacts"/><field name="x_studio_not_found"/><field name="x_studio_import_date"/></group><field name="x_studio_error_message"/></sheet></form></field></record><record id="action_member_removal" model="ir.actions.act_window"><field name="name">AETNA Member Removal</field><field name="res_model">x_aetna_member_removal</field><field name="view_mode">list,form</field></record></odoo>
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_member_removal_list" model="ir.ui.view">
+        <field name="name">x.aetna.member.removal.list</field>
+        <field name="model">x_aetna_member_removal</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="x_name"/>
+                <field name="x_studio_import_status"/>
+                <field name="x_studio_import_date"/>
+                <field name="x_studio_total_records"/>
+                <field name="x_studio_removed_contacts"/>
+                <field name="x_studio_not_found"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_member_removal_form" model="ir.ui.view">
+        <field name="name">x.aetna.member.removal.form</field>
+        <field name="model">x_aetna_member_removal</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_process_removal" type="object" string="Permanently Delete Contacts" class="btn-danger" confirm="This permanently deletes matching mailing.contact records. Continue?"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="x_name" placeholder="Name..."/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="x_studio_import_file" filename="x_studio_import_file_filename"/>
+                            <field name="x_studio_import_file_filename" invisible="1"/>
+                            <field name="x_studio_import_status"/>
+                            <field name="confirm_permanent_delete"/>
+                        </group>
+                        <group>
+                            <field name="x_studio_total_records"/>
+                            <field name="x_studio_removed_contacts"/>
+                            <field name="x_studio_not_found"/>
+                            <field name="x_studio_import_date"/>
+                        </group>
+                    </group>
+                    <field name="x_studio_error_message"/>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_member_removal" model="ir.actions.act_window">
+        <field name="name">AETNA Member Removal</field>
+        <field name="res_model">x_aetna_member_removal</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

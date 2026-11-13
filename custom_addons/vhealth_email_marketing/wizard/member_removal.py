@@ -5,24 +5,31 @@ from odoo.exceptions import UserError
 class AetnaMemberRemoval(models.Model):
     _name = "x_aetna_member_removal"
     _description = "AETNA Member Removal"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "x_studio_sequence, id desc"
+    _rec_name = "x_name"
 
-    x_name = fields.Char(string="Name", required=True, default="New removal import")
+    x_name = fields.Char(string="Name", required=True)
     x_active = fields.Boolean(default=True)
     x_studio_partner_id = fields.Many2one("res.partner", string="Related Partner (legacy Studio field)")
     x_studio_partner_phone = fields.Char(string="Phone", related="x_studio_partner_id.phone", readonly=True)
     x_studio_partner_email = fields.Char(string="Email", related="x_studio_partner_id.email", readonly=True)
-    x_studio_sequence = fields.Integer(default=10)
-    x_studio_import_file = fields.Binary(string="CSV File", attachment=True)
+    x_studio_sequence = fields.Integer(string="Sequence", default=10)
+    x_studio_import_file = fields.Binary(string="Import File", attachment=True)
     x_studio_import_file_filename = fields.Char(string="Filename for import file")
     x_studio_import_date = fields.Datetime(string="Import Date")
-    x_studio_import_status = fields.Selection([("Draft", "Draft"), ("Processing", "Processing"), ("Completed", "Completed"), ("Error", "Error")], default="Draft", required=True)
-    x_studio_total_records = fields.Integer(readonly=True)
-    x_studio_removed_contacts = fields.Integer(readonly=True)
-    x_studio_not_found = fields.Integer(readonly=True)
-    x_studio_error_message = fields.Text(readonly=True)
+    x_studio_import_status = fields.Selection([("Draft", "Draft"), ("Processing", "Processing"), ("Completed", "Completed"), ("Error", "Error")], string="Import Status", default="Draft", required=True)
+    x_studio_total_records = fields.Integer(string="Total Records", readonly=True)
+    x_studio_removed_contacts = fields.Integer(string="Removed Contacts", readonly=True)
+    x_studio_not_found = fields.Integer(string="Not Found", readonly=True)
+    x_studio_error_message = fields.Text(string="Error Message", readonly=True)
     x_studio_aetna_mailing_list = fields.Many2one("mailing.list", string="AETNA Mailing List")
     confirm_permanent_delete = fields.Boolean(string="I confirm permanent contact deletion")
+
+    @api.depends("x_name")
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = rec.x_name or _("New")
 
     def action_process_removal(self):
         for rec in self:

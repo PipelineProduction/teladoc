@@ -30,3 +30,8 @@ class TestVHealthSmoke(TransactionCase):
         p = Product.create({"x_name": "001", "x_studio_product_value": "aetna-prod-001"})
         self.assertEqual(p.display_name, "001", "Display name should resolve to x_name (001)")
 
+        Elig = self.env["x_eligibility_import"]
+        self.assertEqual(Elig._rec_name, "x_name", "Eligibility import rec_name should be x_name")
+        e = Elig.new({})
+        self.assertEqual(e.display_name, "New", "Unsaved record display name should be 'New'")
+

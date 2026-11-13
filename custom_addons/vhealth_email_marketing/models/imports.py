@@ -38,18 +38,26 @@ def _as_date(value):
 class EligibilityImport(models.Model):
     _name = "x_eligibility_import"
     _description = "Eligibility Import"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "x_studio_sequence, id desc"
-    x_name = fields.Char(string="Name", required=True, default="New eligibility import")
+    _rec_name = "x_name"
+
+    x_name = fields.Char(string="Name", required=True)
     x_active = fields.Boolean(default=True)
-    x_studio_sequence = fields.Integer(default=10)
-    x_studio_import_file = fields.Binary(string="CSV File", attachment=True)
+    x_studio_sequence = fields.Integer(string="Sequence", default=10)
+    x_studio_import_file = fields.Binary(string="Import File", attachment=True)
     x_studio_import_file_filename = fields.Char(string="Filename for import file")
-    x_studio_import_status = fields.Selection([("Draft", "Draft"), ("Processing", "Processing"), ("Completed", "Completed"), ("Error", "Error")], default="Draft", required=True)
-    x_studio_total_records = fields.Integer(readonly=True)
-    x_studio_processed_records = fields.Integer(readonly=True)
-    x_studio_created_contacts = fields.Integer(readonly=True)
-    x_studio_updated_contacts = fields.Integer(readonly=True)
-    x_studio_error_message = fields.Text(readonly=True)
+    x_studio_import_status = fields.Selection([("Draft", "Draft"), ("Processing", "Processing"), ("Completed", "Completed"), ("Error", "Error")], string="Import Status", default="Draft", required=True)
+    x_studio_total_records = fields.Integer(string="Total Records", readonly=True)
+    x_studio_processed_records = fields.Integer(string="Processed Records", readonly=True)
+    x_studio_created_contacts = fields.Integer(string="Created Contacts", readonly=True)
+    x_studio_updated_contacts = fields.Integer(string="Updated Contacts", readonly=True)
+    x_studio_error_message = fields.Text(string="Error Message", readonly=True)
+
+    @api.depends("x_name")
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = rec.x_name or _("New")
 
     def action_process_import(self):
         for rec in self:
@@ -87,21 +95,29 @@ class EligibilityImport(models.Model):
 class WeeklyVhealthRegistration(models.Model):
     _name = "x_weekly_vhealth_regis"
     _description = "Weekly vHealth Registration Import"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
     _order = "x_studio_sequence, id desc"
-    x_name = fields.Char(string="Name", required=True, default="New weekly registration import")
+    _rec_name = "x_name"
+
+    x_name = fields.Char(string="Name", required=True)
     x_active = fields.Boolean(default=True)
-    x_studio_sequence = fields.Integer(default=10)
-    x_studio_import_file = fields.Binary(string="CSV File", attachment=True)
+    x_studio_sequence = fields.Integer(string="Sequence", default=10)
+    x_studio_import_file = fields.Binary(string="Import File", attachment=True)
     x_studio_import_file_filename = fields.Char(string="Filename for import file")
-    x_studio_import_status = fields.Selection([("draft", "draft"), ("processing", "processing"), ("completed", "completed"), ("error", "error")], default="draft", required=True)
-    x_studio_total_records = fields.Integer(readonly=True)
-    x_studio_processed_records = fields.Integer(readonly=True)
-    x_studio_created_contacts = fields.Integer(readonly=True)
-    x_studio_updated_contacts = fields.Integer(readonly=True)
-    x_studio_error_records = fields.Integer(readonly=True)
-    x_studio_error_message = fields.Text(readonly=True)
-    x_studio_import_result = fields.Text(readonly=True)
-    x_studio_google_sheet_payload = fields.Text(readonly=True)
+    x_studio_import_status = fields.Selection([("draft", "draft"), ("processing", "processing"), ("completed", "completed"), ("error", "error")], string="Import Status", default="draft", required=True)
+    x_studio_total_records = fields.Integer(string="Total Records", readonly=True)
+    x_studio_processed_records = fields.Integer(string="Processed Records", readonly=True)
+    x_studio_created_contacts = fields.Integer(string="Created Contacts", readonly=True)
+    x_studio_updated_contacts = fields.Integer(string="Updated Contacts", readonly=True)
+    x_studio_error_records = fields.Integer(string="Error Records", readonly=True)
+    x_studio_error_message = fields.Text(string="Error Message", readonly=True)
+    x_studio_import_result = fields.Text(string="Import Result", readonly=True)
+    x_studio_google_sheet_payload = fields.Text(string="Google Sheet Payload", readonly=True)
+
+    @api.depends("x_name")
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = rec.x_name or _("New")
 
     def action_process_import(self):
         for rec in self:

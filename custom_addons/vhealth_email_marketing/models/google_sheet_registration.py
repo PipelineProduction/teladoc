@@ -7,9 +7,11 @@ class GoogleSheetRegistration(models.Model):
     _name = "x_google_sheet_registr"
     _description = "Google Sheet Registration Queue"
     _order = "id"
+    _rec_name = "x_name"
+
     x_name = fields.Char(string="Name", default="Registration")
     x_active = fields.Boolean(default=True)
-    x_studio_sequence = fields.Integer(default=10)
+    x_studio_sequence = fields.Integer(string="Sequence", default=10)
     x_studio_email = fields.Char(string="Email", required=True, index=True)
     x_studio_registration_date = fields.Char(string="Registration Date")
     x_studio_prefix_phone = fields.Char(string="Prefix & Phone")
@@ -17,6 +19,11 @@ class GoogleSheetRegistration(models.Model):
     x_studio_sent = fields.Boolean(string="Sent", default=False, index=True)
     retry_count = fields.Integer(default=0)
     last_error = fields.Text()
+
+    @api.depends("x_name")
+    def _compute_display_name(self):
+        for rec in self:
+            rec.display_name = rec.x_name or "Registration"
 
     @api.model
     def _cron_send_registration_queue(self):
