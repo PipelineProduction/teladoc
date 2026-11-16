@@ -27,7 +27,9 @@ class TestVHealthSmoke(TransactionCase):
     def test_product_number_rec_name_and_display(self):
         Product = self.env["x_product_number"]
         self.assertEqual(Product._rec_name, "x_name", "Rec name should be x_name to display 001/002 labels")
-        p = Product.create({"x_name": "001", "x_studio_product_value": "aetna-prod-001"})
+        p = Product.search([("x_name", "=", "001")], limit=1)
+        if not p:
+            p = Product.create({"x_name": "001", "x_studio_product_value": "aetna-prod-001"})
         self.assertEqual(p.display_name, "001", "Display name should resolve to x_name (001)")
 
         Elig = self.env["x_eligibility_import"]

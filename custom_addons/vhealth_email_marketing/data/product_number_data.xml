@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="product_number_001" model="x_product_number">
+            <field name="x_name">001</field>
+            <field name="x_studio_product_value">aetna-prod-001</field>
+            <field name="x_studio_sequence">10</field>
+        </record>
+        <record id="product_number_002" model="x_product_number">
+            <field name="x_name">002</field>
+            <field name="x_studio_product_value">aetna-prod-002</field>
+            <field name="x_studio_sequence">20</field>
+        </record>
+        <record id="product_number_004" model="x_product_number">
+            <field name="x_name">004</field>
+            <field name="x_studio_product_value">aetna-prod-004</field>
+            <field name="x_studio_sequence">30</field>
+        </record>
+        <record id="product_number_007" model="x_product_number">
+            <field name="x_name">007</field>
+            <field name="x_studio_product_value">aetna-prod-007</field>
+            <field name="x_studio_sequence">40</field>
+        </record>
+    </data>
+</odoo>

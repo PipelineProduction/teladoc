@@ -1,7 +1,7 @@
 {
     "name": "vHealth Email Marketing Processes",
     "summary": "vHealth/AETNA contact fields, CSV imports and registration queue",
-    "version": "20.0.1.0.6",
+    "version": "20.0.1.0.7",
     "category": "Marketing/Email Marketing",
     "license": "LGPL-3",
     "author": "Pipeline Production",
@@ -9,6 +9,7 @@
     "data": [
         "security/security.xml",
         "security/ir.access.csv",
+        "data/product_number_data.xml",
         "data/ir_cron.xml",
         "views/product_number_views.xml",
         "views/import_views.xml",
@@ -17,6 +18,7 @@
         "views/mailing_contact_views.xml",
         "views/menus.xml",
     ],
+    "post_init_hook": "post_init_hook",
     "installable": True,
     "application": True,
 }
