@@ -11,5 +11,6 @@
 | 261113-audit-and-fix-import-processes | Audit and Fix Import Processes for Odoo.sh Compatibility | 2026-11-13 | bc7057f | [261113-audit-and-fix-import-processes](./quick/261113-audit-and-fix-import-processes/) |
 | 261113-fix-csv-binary-decoding | Fix CSV Binary Decoding for Odoo.sh | 2026-11-13 | 2ea4ed1 | [261113-fix-csv-binary-decoding](./quick/261113-fix-csv-binary-decoding/) |
 | 261116-fix-model-id-not-null-violation | Fix model_id Not-Null Violation on ir_model_fields for x_product_number | 2026-11-16 | 85512c8 | [261116-fix-model-id-not-null-violation](./quick/261116-fix-model-id-not-null-violation/) |
+| 261117-fix-google-sheet-registration-sync | Fix Google Sheet Registration Sync for Odoo.sh | 2026-11-17 | bead86c | [261117-fix-google-sheet-registration-sync](./quick/261117-fix-google-sheet-registration-sync/) |
 
-Last activity: 2026-11-16 - Completed quick task 261116-fix-model-id-not-null-violation: Fix model_id Not-Null Violation on ir_model_fields for x_product_number
+Last activity: 2026-11-17 - Completed quick task 261117-fix-google-sheet-registration-sync: Fix Google Sheet Registration Sync for Odoo.sh
