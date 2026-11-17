@@ -9,7 +9,7 @@ DEFAULT_WEBHOOK_URL = "https://script.google.com/macros/s/AKfycbze84DjgKTMAGVuDp
 class GoogleSheetRegistration(models.Model):
     _name = "x_google_sheet_registr"
     _description = "Google Sheet Registration Queue"
-    _order = "id"
+    _order = "id desc"
     _rec_name = "x_name"
 
     x_name = fields.Char(string="Name", default="Registration")
@@ -29,7 +29,17 @@ class GoogleSheetRegistration(models.Model):
             rec.display_name = rec.x_name or "Registration"
 
     def _get_endpoint(self):
-        param = self.env["ir.config_parameter"].sudo().get_param("vhealth_email_marketing.google_sheet_webhook_url")
+        Config = self.env["ir.config_parameter"].sudo()
+        param = ""
+        # Support Odoo 20 (get_str) as well as older Odoo (get_param)
+        if hasattr(Config, "get_str"):
+            param = Config.get_str("vhealth_email_marketing.google_sheet_webhook_url", default="")
+        elif hasattr(Config, "get_param"):
+            param = Config.get_param("vhealth_email_marketing.google_sheet_webhook_url", default="")
+        if not param:
+            rec = Config.search([("key", "=", "vhealth_email_marketing.google_sheet_webhook_url")], limit=1)
+            if rec and rec.value:
+                param = rec.value
         return (param or DEFAULT_WEBHOOK_URL).strip()
 
     def _send_record(self, endpoint=None):
@@ -81,11 +91,16 @@ class GoogleSheetRegistration(models.Model):
         errors = []
         for rec in self:
             try:
-                rec._send_record(endpoint=endpoint)
+                with self.env.cr.savepoint():
+                    rec._send_record(endpoint=endpoint)
                 count += 1
             except Exception as exc:
                 errors.append(f"{rec.x_studio_email}: {exc}")
-                rec.write({"retry_count": rec.retry_count + 1, "last_error": str(exc)})
+                try:
+                    with self.env.cr.savepoint():
+                        rec.write({"retry_count": rec.retry_count + 1, "last_error": str(exc)})
+                except Exception:
+                    pass
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
@@ -98,7 +113,7 @@ class GoogleSheetRegistration(models.Model):
         }
 
     def action_process_queue(self):
-        success_count, error_count = self._cron_send_registration_queue()
+        success_count, error_count = self._cron_send_registration_queue(limit=500)
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
@@ -111,19 +126,26 @@ class GoogleSheetRegistration(models.Model):
         }
 
     @api.model
-    def _cron_send_registration_queue(self):
+    def _cron_send_registration_queue(self, limit=100):
         endpoint = self._get_endpoint()
         if not endpoint:
             _logger.warning("vHealth Google Sheets webhook URL is not configured.")
             return 0, 0
         success_count = 0
         error_count = 0
-        for rec in self.search([("x_studio_sent", "=", False), ("retry_count", "<", 8)], limit=50):
+        domain = [("x_studio_sent", "=", False), ("retry_count", "<", 8)]
+        records = self.search(domain, limit=limit)
+        for rec in records:
             try:
-                rec._send_record(endpoint=endpoint)
+                with self.env.cr.savepoint():
+                    rec._send_record(endpoint=endpoint)
                 success_count += 1
             except Exception as exc:
                 error_count += 1
-                rec.write({"retry_count": rec.retry_count + 1, "last_error": str(exc)})
+                try:
+                    with self.env.cr.savepoint():
+                        rec.write({"retry_count": rec.retry_count + 1, "last_error": str(exc)})
+                except Exception:
+                    pass
                 _logger.exception("Google Sheets queue record %s failed", rec.id)
         return success_count, error_count
