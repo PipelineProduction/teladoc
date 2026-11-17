@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="param_google_sheet_webhook_url" model="ir.config_parameter">
+            <field name="key">vhealth_email_marketing.google_sheet_webhook_url</field>
+            <field name="value">https://script.google.com/macros/s/AKfycbze84DjgKTMAGVuDpepchYgXrPzxmF0LwOmwcUEobVBuqR1EZvZZGyZZCS-ueG5OF6k/exec</field>
+        </record>
+    </data>
+</odoo>

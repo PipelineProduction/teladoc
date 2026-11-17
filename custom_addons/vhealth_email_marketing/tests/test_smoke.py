@@ -63,3 +63,15 @@ class TestVHealthSmoke(TransactionCase):
         self.assertEqual(len(rows), 1)
         self.assertEqual(rows[0]["email"], "user@example.com")
 
+    def test_google_sheet_queue_endpoint_and_payload(self):
+        Queue = self.env["x_google_sheet_registr"]
+        self.assertTrue(Queue._get_endpoint().startswith("https://script.google.com"))
+        rec = Queue.new({
+            "x_studio_email": "test@example.com",
+            "x_studio_registration_date": "2026-11-10 00:00:00",
+            "x_studio_prefix_phone": "819013748795",
+            "x_studio_access_code": "FSBP",
+        })
+        reg_date = (rec.x_studio_registration_date or "").split(" ")[0].strip()
+        self.assertEqual(reg_date, "2026-11-10")
+

@@ -277,4 +277,8 @@ class WeeklyVhealthRegistration(models.Model):
                 except Exception as exc: errors.append("Row %s (%s): %s" % (index, _get(row, "Client email"), exc)); _logger.exception("Weekly registration row failed")
                 rec.write({"x_studio_processed_records": processed, "x_studio_created_contacts": created, "x_studio_updated_contacts": updated, "x_studio_error_records": len(errors)})
             rec.write({"x_studio_import_status": "error" if errors else "completed", "x_studio_error_message": "\n".join(errors), "x_studio_import_result": "Processed %s of %s rows; created %s; updated %s; errors %s." % (processed, len(rows), created, updated, len(errors)), "x_studio_google_sheet_payload": str(queue_ids)})
+            try:
+                self.env["x_google_sheet_registr"].sudo()._cron_send_registration_queue()
+            except Exception as exc:
+                _logger.warning("Auto-trigger of Google Sheet queue failed: %s", exc)
         return True
