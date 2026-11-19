@@ -13,5 +13,6 @@
 | 261116-fix-model-id-not-null-violation | Fix model_id Not-Null Violation on ir_model_fields for x_product_number | 2026-11-16 | 85512c8 | [261116-fix-model-id-not-null-violation](./quick/261116-fix-model-id-not-null-violation/) |
 | 261117-fix-google-sheet-registration-sync | Fix Google Sheet Registration Sync for Odoo.sh | 2026-11-17 | bead86c | [261117-fix-google-sheet-registration-sync](./quick/261117-fix-google-sheet-registration-sync/) |
 | 261117-fix-get-param-attribute-error | Fix get_param AttributeError on ir.config_parameter and Enable Automatic Google Sheets Push | 2026-11-17 | 4107018 | [261117-fix-get-param-attribute-error](./quick/261117-fix-get-param-attribute-error/) |
+| 261119-schedule-action-group-launch-emails | Implement SharpSpring-Style "Schedule Action Group for List" Drip Campaign Engine | 2026-11-19 | 0dd9779 | [261119-schedule-action-group-launch-emails](./quick/261119-schedule-action-group-launch-emails/) |
 
-Last activity: 2026-11-17 - Completed quick task 261117-fix-get-param-attribute-error: Fix get_param AttributeError on ir.config_parameter and Enable Automatic Google Sheets Push
+Last activity: 2026-11-19 - Completed quick task 261119-schedule-action-group-launch-emails: Implement SharpSpring-Style "Schedule Action Group for List" Drip Campaign Engine
