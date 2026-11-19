@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_vhealth_schedule_action_group_wizard_form" model="ir.ui.view">
+        <field name="name">vhealth.schedule.action.group.wizard.form</field>
+        <field name="model">vhealth.schedule.action.group.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Schedule Action Group for List">
+                <sheet>
+                    <group>
+                        <field name="mailing_list_id" readonly="1" options="{'no_open': True}"/>
+                        <field name="action_group" widget="radio"/>
+                    </group>
+                    <separator string="When would you like this action to take place?"/>
+                    <group>
+                        <field name="schedule_type" widget="radio"/>
+                        <field name="scheduled_datetime" invisible="schedule_type != 'scheduled'" required="schedule_type == 'scheduled'"/>
+                    </group>
+                    <field name="summary_html" nolabel="1"/>
+                </sheet>
+                <footer>
+                    <button name="action_schedule" string="Schedule" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vhealth_schedule_action_group_wizard" model="ir.actions.act_window">
+        <field name="name">Schedule Action Group for List</field>
+        <field name="res_model">vhealth.schedule.action.group.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="mass_mailing.model_mailing_list"/>
+        <field name="binding_view_types">form,list</field>
+    </record>
+</odoo>

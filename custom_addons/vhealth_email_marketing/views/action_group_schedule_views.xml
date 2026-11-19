@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_vhealth_action_group_schedule_list" model="ir.ui.view">
+        <field name="name">vhealth.action.group.schedule.list</field>
+        <field name="model">vhealth.action.group.schedule</field>
+        <field name="arch" type="xml">
+            <list string="Scheduled Action Groups">
+                <field name="name"/>
+                <field name="mailing_list_id"/>
+                <field name="action_group"/>
+                <field name="current_step"/>
+                <field name="step_status_description"/>
+                <field name="next_execution_date"/>
+                <field name="active_contacts_count"/>
+                <field name="registered_contacts_count"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'draft'"
+                       decoration-primary="state == 'running'"
+                       decoration-success="state == 'completed'"
+                       decoration-muted="state == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vhealth_action_group_schedule_form" model="ir.ui.view">
+        <field name="name">vhealth.action.group.schedule.form</field>
+        <field name="model">vhealth.action.group.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Action Group Schedule">
+                <header>
+                    <button name="action_start" type="object" string="Start Campaign" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_run_step_now" type="object" string="Run Next Step Now" class="btn-primary" invisible="state != 'running'"/>
+                    <button name="action_cancel" type="object" string="Cancel Campaign" class="btn-secondary" invisible="state not in ('draft', 'running')"/>
+                    <button name="action_resume" type="object" string="Resume Campaign" class="btn-secondary" invisible="state != 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,running,completed"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Campaign Setup">
+                            <field name="mailing_list_id" readonly="state != 'draft'"/>
+                            <field name="action_group" readonly="state != 'draft'"/>
+                            <field name="schedule_type" readonly="state != 'draft'"/>
+                            <field name="scheduled_datetime" invisible="schedule_type != 'scheduled'" readonly="state != 'draft'"/>
+                        </group>
+                        <group string="Execution Status">
+                            <field name="current_step" readonly="1"/>
+                            <field name="step_status_description" readonly="1"/>
+                            <field name="next_execution_date" readonly="1"/>
+                        </group>
+                    </group>
+                    <group string="Recipients Overview">
+                        <group>
+                            <field name="total_contacts_count" readonly="1"/>
+                            <field name="active_contacts_count" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="registered_contacts_count" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Drip Sequence &amp; Mailings">
+                            <group>
+                                <group string="Step 1: Launch #1 (Week 1)">
+                                    <field name="step1_date" readonly="1"/>
+                                    <field name="step1_mailing_id" readonly="1"/>
+                                </group>
+                                <group string="Step 2: Launch #2 (Week 2)">
+                                    <field name="step2_date" readonly="1"/>
+                                    <field name="step2_mailing_id" readonly="1"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group string="Step 3: Launch #3 (Week 3)">
+                                    <field name="step3_date" readonly="1"/>
+                                    <field name="step3_mailing_id" readonly="1"/>
+                                </group>
+                                <group string="Step 4: Engagement &amp; Launch #4 (Week 4)">
+                                    <field name="step4_date" readonly="1"/>
+                                    <field name="step4_mailing_id" readonly="1"/>
+                                </group>
+                            </group>
+                            <group string="Step 5: Add Non-Registered Members to List (Week 5)">
+                                <field name="step5_date" readonly="1"/>
+                            </group>
+                        </page>
+                        <page string="Execution History">
+                            <field name="execution_log" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vhealth_action_group_schedule" model="ir.actions.act_window">
+        <field name="name">Scheduled Action Groups</field>
+        <field name="res_model">vhealth.action.group.schedule</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No Action Group Campaigns scheduled yet!
+            </p>
+            <p>
+                Open an Eligible Member Mailing List and click <b>"Schedule Action Group"</b> to launch a drip campaign.
+            </p>
+        </field>
+    </record>
+</odoo>

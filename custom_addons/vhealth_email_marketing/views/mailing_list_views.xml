@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="mailing_list_view_form_inherit_vhealth" model="ir.ui.view">
+        <field name="name">mailing.list.form.inherit.vhealth</field>
+        <field name="model">mailing.list</field>
+        <field name="inherit_id" ref="mass_mailing.mailing_list_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_open_schedule_action_group_wizard"
+                        string="Schedule Action Group"
+                        type="object"
+                        class="btn btn-primary"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_vhealth_action_group_schedules"
+                        type="object"
+                        icon="calendar"
+                        class="oe_stat_button">
+                    <field name="vhealth_action_group_count" string="Action Groups" widget="statinfo"/>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>
