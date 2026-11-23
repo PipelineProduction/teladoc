@@ -17,5 +17,6 @@
 | 261123-fix-mailing-name-field-error | Fix ValueError Invalid field mailing.mailing.name on Start Campaign | 2026-11-23 | b3d1625 | [261123-fix-mailing-name-field-error](./quick/261123-fix-mailing-name-field-error/) |
 | 261123-fix-mailing-email-from-validation-error | Fix email from is required for non-template 'mail' mailings Validation Error | 2026-11-23 | 8f2ae31 | [261123-fix-mailing-email-from-validation-error](./quick/261123-fix-mailing-email-from-validation-error/) |
 | 261123-diagnose-mail-delivery-and-trigger-queue | Diagnose Email Delivery and Trigger Outgoing Mail Queue | 2026-11-23 | 0213587 | [261123-diagnose-mail-delivery-and-trigger-queue](./quick/261123-diagnose-mail-delivery-and-trigger-queue/) |
+| 261123-update-menus-branding-and-logo | Update Menus, App Metadata to Pipeline Digital, and Add Logo | 2026-11-23 | 104c906 | [261123-update-menus-branding-and-logo](./quick/261123-update-menus-branding-and-logo/) |
 
-Last activity: 2026-11-23 - Completed quick task 261123-diagnose-mail-delivery-and-trigger-queue: Diagnose Email Delivery and Trigger Outgoing Mail Queue
+Last activity: 2026-11-23 - Completed quick task 261123-update-menus-branding-and-logo: Update Menus, App Metadata to Pipeline Digital, and Add Logo
