@@ -18,5 +18,6 @@
 | 261123-fix-mailing-email-from-validation-error | Fix email from is required for non-template 'mail' mailings Validation Error | 2026-11-23 | 8f2ae31 | [261123-fix-mailing-email-from-validation-error](./quick/261123-fix-mailing-email-from-validation-error/) |
 | 261123-diagnose-mail-delivery-and-trigger-queue | Diagnose Email Delivery and Trigger Outgoing Mail Queue | 2026-11-23 | 0213587 | [261123-diagnose-mail-delivery-and-trigger-queue](./quick/261123-diagnose-mail-delivery-and-trigger-queue/) |
 | 261123-update-menus-branding-and-logo | Update Menus, App Metadata to Pipeline Digital, and Add Logo | 2026-11-23 | 104c906 | [261123-update-menus-branding-and-logo](./quick/261123-update-menus-branding-and-logo/) |
+| 261123-update-website-url | Update Website URL to https://pipelinedigital.co.uk/ | 2026-11-23 | 1496996 | [261123-update-website-url](./quick/261123-update-website-url/) |
 
-Last activity: 2026-11-23 - Completed quick task 261123-update-menus-branding-and-logo: Update Menus, App Metadata to Pipeline Digital, and Add Logo
+Last activity: 2026-11-23 - Completed quick task 261123-update-website-url: Update Website URL to https://pipelinedigital.co.uk/
