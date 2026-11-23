@@ -1,11 +1,11 @@
 {
     "name": "vHealth Email Marketing Processes",
     "summary": "Automated Member Onboarding, Launch Campaigns & Registration Management for vHealth",
-    "version": "20.0.1.0.15",
+    "version": "20.0.1.0.16",
     "category": "Marketing/Email Marketing",
     "license": "LGPL-3",
     "author": "Pipeline Digital",
-    "website": "https://pipelinedigital.com",
+    "website": "https://pipelinedigital.co.uk/",
     "description": """
 vHealth Email Marketing & Member Automation
 ==========================================
