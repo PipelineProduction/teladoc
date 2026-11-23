@@ -15,4 +15,4 @@
 | 261117-fix-get-param-attribute-error | Fix get_param AttributeError on ir.config_parameter and Enable Automatic Google Sheets Push | 2026-11-17 | 4107018 | [261117-fix-get-param-attribute-error](./quick/261117-fix-get-param-attribute-error/) |
 | 261119-schedule-action-group-launch-emails | Implement SharpSpring-Style "Schedule Action Group for List" Drip Campaign Engine | 2026-11-19 | 0dd9779 | [261119-schedule-action-group-launch-emails](./quick/261119-schedule-action-group-launch-emails/) |
 
-Last activity: 2026-11-19 - Completed quick task 261119-schedule-action-group-launch-emails: Implement SharpSpring-Style "Schedule Action Group for List" Drip Campaign Engine
+Last activity: 2026-11-23 - Completed strict database template lookup and language normalization for Launch Email campaigns (commit 4a5af33)
