@@ -1,10 +1,28 @@
 {
     "name": "vHealth Email Marketing Processes",
-    "summary": "vHealth/AETNA contact fields, CSV imports, action group campaigns, and registration queue",
-    "version": "20.0.1.0.14",
+    "summary": "Automated Member Onboarding, Launch Campaigns & Registration Management for vHealth",
+    "version": "20.0.1.0.15",
     "category": "Marketing/Email Marketing",
     "license": "LGPL-3",
-    "author": "Pipeline Production",
+    "author": "Pipeline Digital",
+    "website": "https://pipelinedigital.com",
+    "description": """
+vHealth Email Marketing & Member Automation
+==========================================
+
+Enterprise onboarding, membership lifecycle management, and automated drip campaign engine built specifically for vHealth and AETNA member operations.
+
+Key Features & Capabilities:
+-----------------------------
+* **Eligibility & Launch Management**: Automated ingestion of weekly eligible members ("New Members to Launch") with dynamic cohort routing and language assignment (English / Spanish).
+* **Automated Drip Engine (Scheduled Action Groups)**: Multi-week drip campaign engine mimicking SharpSpring action groups (Launch #1 to #4) with automated registration tracking, engagement value updates, and unregistered member list segregation.
+* **Member Lifecycle Operations**:
+  - Weekly vHealth Registration batch imports.
+  - AETNA Member Removal processing.
+  - Real-time Google Sheets registration queue synchronization.
+* **Bilingual Dynamic Delivery**: Individualized multilingual email composition based on member language preferences.
+* **vHealth Product Configuration**: Managed product numbering and mapping for Teladoc health plans.
+    """,
     "depends": ["mass_mailing", "mail"],
     "data": [
         "security/security.xml",

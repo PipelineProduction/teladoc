@@ -1,10 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_vhealth_process_root" name="vHealth Process" sequence="90" groups="mass_mailing.group_mass_mailing_user"/>
-    <menuitem id="menu_vhealth_product_number" name="Product Number" parent="menu_vhealth_process_root" action="action_product_number" sequence="10"/>
-    <menuitem id="menu_vhealth_eligibility" name="Eligibility Import" parent="menu_vhealth_process_root" action="action_eligibility_import" sequence="20"/>
-    <menuitem id="menu_vhealth_weekly_registration" name="Weekly vHealth Registration Import" parent="menu_vhealth_process_root" action="action_weekly_registration" sequence="30"/>
-    <menuitem id="menu_vhealth_member_removal" name="AETNA Member Removal" parent="menu_vhealth_process_root" action="action_member_removal" sequence="40"/>
-    <menuitem id="menu_vhealth_google_sheet_queue" name="Google Sheet Registration Queue" parent="menu_vhealth_process_root" action="action_google_sheet_queue" sequence="50"/>
-    <menuitem id="menu_vhealth_action_group_schedule" name="Scheduled Action Groups" parent="menu_vhealth_process_root" action="action_vhealth_action_group_schedule" sequence="60"/>
+    <!-- Top-level Root App Menu -->
+    <menuitem id="menu_vhealth_process_root"
+              name="vHealth Process"
+              sequence="90"
+              web_icon="vhealth_email_marketing,static/description/icon.png"
+              groups="mass_mailing.group_mass_mailing_user"/>
+
+    <!-- 1. VHealth Process Category -->
+    <menuitem id="menu_vhealth_process_category"
+              name="VHealth Process"
+              parent="menu_vhealth_process_root"
+              sequence="10"/>
+
+    <menuitem id="menu_vhealth_eligibility"
+              name="Eligibility - New Members to launch"
+              parent="menu_vhealth_process_category"
+              action="action_eligibility_import"
+              sequence="10"/>
+
+    <menuitem id="menu_vhealth_member_removal"
+              name="AETNA Member Removal"
+              parent="menu_vhealth_process_category"
+              action="action_member_removal"
+              sequence="20"/>
+
+    <menuitem id="menu_vhealth_weekly_registration_parent"
+              name="Weekly vHealth Registrations"
+              parent="menu_vhealth_process_category"
+              sequence="30">
+        <menuitem id="menu_vhealth_weekly_registration"
+                  name="Weekly vHealth Registrations"
+                  action="action_weekly_registration"
+                  sequence="10"/>
+        <menuitem id="menu_vhealth_google_sheet_queue"
+                  name="Google Sheet Registration Queue"
+                  action="action_google_sheet_queue"
+                  sequence="20"/>
+    </menuitem>
+
+    <!-- 2. Model Category -->
+    <menuitem id="menu_vhealth_model_category"
+              name="Model"
+              parent="menu_vhealth_process_root"
+              sequence="20"/>
+
+    <menuitem id="menu_vhealth_product_number"
+              name="vHealth Product"
+              parent="menu_vhealth_model_category"
+              action="action_product_number"
+              sequence="10"/>
+
+    <!-- 3. Configuration Category -->
+    <menuitem id="menu_vhealth_config_category"
+              name="Configuration"
+              parent="menu_vhealth_process_root"
+              sequence="30"/>
+
+    <menuitem id="menu_vhealth_action_group_schedule"
+              name="Scheduled Action Groups"
+              parent="menu_vhealth_config_category"
+              action="action_vhealth_action_group_schedule"
+              sequence="10"/>
 </odoo>

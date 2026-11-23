@@ -39,6 +39,42 @@ class TestVHealthSmoke(TransactionCase):
         ml_form = self.env.ref("vhealth_email_marketing.mailing_list_view_form_inherit_vhealth", raise_if_not_found=False)
         self.assertTrue(ml_form, "Inherited mailing list form view should be loaded")
 
+        # Menu structure verification
+        m_root = self.env.ref("vhealth_email_marketing.menu_vhealth_process_root", raise_if_not_found=False)
+        self.assertTrue(m_root, "Root menu should exist")
+        self.assertEqual(m_root.name, "vHealth Process")
+
+        m_proc = self.env.ref("vhealth_email_marketing.menu_vhealth_process_category", raise_if_not_found=False)
+        self.assertTrue(m_proc, "VHealth Process category should exist")
+        self.assertEqual(m_proc.name, "VHealth Process")
+
+        m_elig = self.env.ref("vhealth_email_marketing.menu_vhealth_eligibility", raise_if_not_found=False)
+        self.assertTrue(m_elig, "Eligibility menu should exist")
+        self.assertEqual(m_elig.name, "Eligibility - New Members to launch")
+
+        m_removal = self.env.ref("vhealth_email_marketing.menu_vhealth_member_removal", raise_if_not_found=False)
+        self.assertTrue(m_removal, "AETNA Member Removal menu should exist")
+
+        m_weekly = self.env.ref("vhealth_email_marketing.menu_vhealth_weekly_registration", raise_if_not_found=False)
+        self.assertTrue(m_weekly, "Weekly vHealth Registrations menu should exist")
+        self.assertEqual(m_weekly.name, "Weekly vHealth Registrations")
+
+        m_queue = self.env.ref("vhealth_email_marketing.menu_vhealth_google_sheet_queue", raise_if_not_found=False)
+        self.assertTrue(m_queue, "Google Sheet Registration Queue menu should exist")
+
+        m_model = self.env.ref("vhealth_email_marketing.menu_vhealth_model_category", raise_if_not_found=False)
+        self.assertTrue(m_model, "Model category should exist")
+
+        m_prod = self.env.ref("vhealth_email_marketing.menu_vhealth_product_number", raise_if_not_found=False)
+        self.assertTrue(m_prod, "vHealth Product menu should exist")
+        self.assertEqual(m_prod.name, "vHealth Product")
+
+        m_conf = self.env.ref("vhealth_email_marketing.menu_vhealth_config_category", raise_if_not_found=False)
+        self.assertTrue(m_conf, "Configuration category should exist")
+
+        m_sched = self.env.ref("vhealth_email_marketing.menu_vhealth_action_group_schedule", raise_if_not_found=False)
+        self.assertTrue(m_sched, "Scheduled Action Groups menu should exist")
+
     def test_product_number_rec_name_and_display(self):
         Product = self.env["x_product_number"]
         self.assertEqual(Product._rec_name, "x_name", "Rec name should be x_name to display 001/002 labels")
