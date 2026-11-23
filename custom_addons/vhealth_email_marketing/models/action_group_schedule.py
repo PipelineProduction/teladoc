@@ -277,6 +277,14 @@ class VHealthActionGroupSchedule(models.Model):
                     _logger.exception("Failed to queue or send mailing %s: %s", new_mailing.id, exc3)
                     raise UserError(_("Failed to dispatch Launch #%d mailing: %s") % (step_number, exc3))
 
+        # Trigger the mail queue manager cron so queued emails are dispatched without waiting for the default 1-hour interval
+        try:
+            mail_cron = self.env.ref("mail.ir_cron_mail_scheduler_action", raise_if_not_found=False)
+            if mail_cron:
+                mail_cron._trigger()
+        except Exception as cron_exc:
+            _logger.warning("Could not trigger mail.ir_cron_mail_scheduler_action: %s", cron_exc)
+
         self._log(_(
             "Step %d: Created and queued Launch #%d mailing '%s' (ID %d) for %d eligible recipients."
         ) % (step_number, step_number, new_mailing.subject, new_mailing.id, len(eligible_contacts)))
