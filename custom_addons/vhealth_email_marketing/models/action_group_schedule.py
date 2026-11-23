@@ -223,8 +223,20 @@ class VHealthActionGroupSchedule(models.Model):
         if not mailing_model_id:
             mailing_model_id = self.env["ir.model"]._get("mailing.list")
 
+        # Resolve email_from: PostgreSQL constraint enforces email_from is required for non-template mailings
+        email_from = (
+            (template.email_from and template.email_from.strip())
+            or (self.env.user and self.env.user.email_formatted)
+            or (self.env.user and self.env.user.email)
+            or (self.env.company and self.env.company.email_formatted)
+            or (self.env.company and self.env.company.email)
+            or (hasattr(self.env.get("ir.mail_server", object), "_get_default_from_address") and self.env["ir.mail_server"]._get_default_from_address())
+            or "info@vhealth-teladochealth.com"
+        )
+
         mailing_vals = {
             "subject": template.subject,
+            "email_from": email_from,
             "is_template": False,
             "mailing_model_id": mailing_model_id.id,
             "contact_list_ids": [(6, 0, [self.mailing_list_id.id])],
@@ -232,6 +244,14 @@ class VHealthActionGroupSchedule(models.Model):
             "vhealth_drip_step": step_number,
             "schedule_type": "now",
         }
+        if template.reply_to:
+            mailing_vals["reply_to"] = template.reply_to
+        else:
+            mailing_vals["reply_to"] = email_from
+        if template.reply_to_mode:
+            mailing_vals["reply_to_mode"] = template.reply_to_mode
+        else:
+            mailing_vals["reply_to_mode"] = "new"
 
         new_mailing = template.copy(default=mailing_vals)
         

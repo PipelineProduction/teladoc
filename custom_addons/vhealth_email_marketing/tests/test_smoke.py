@@ -157,6 +157,9 @@ class TestVHealthSmoke(TransactionCase):
         self.assertEqual(campaign.current_step, 1)
         self.assertTrue(campaign.step1_date)
         self.assertTrue(campaign.next_execution_date)
+        self.assertTrue(campaign.step1_mailing_id, "Step 1 mailing should be created")
+        self.assertFalse(campaign.step1_mailing_id.is_template, "Cloned mailing must not be a template")
+        self.assertTrue(campaign.step1_mailing_id.email_from, "email_from must be populated to satisfy DB constraint")
 
         # Step 2
         campaign.action_run_step_now()
