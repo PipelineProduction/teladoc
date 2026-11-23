@@ -98,10 +98,9 @@ class TestVHealthSmoke(TransactionCase):
         # Ensure mock templates exist
         for i in range(1, 5):
             tname = f"vHealth - Launch #{i} (2025)"
-            tmpl = Mailing.search([("name", "=ilike", tname)], limit=1)
+            tmpl = Mailing.search([("subject", "=ilike", tname)], limit=1)
             if not tmpl:
                 tmpl = Mailing.create({
-                    "name": tname,
                     "subject": tname,
                     "is_template": True,
                     "body_html": f"<p>Body for Launch {i}</p>",

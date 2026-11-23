@@ -1,7 +1,7 @@
 {
     "name": "vHealth Email Marketing Processes",
     "summary": "vHealth/AETNA contact fields, CSV imports, action group campaigns, and registration queue",
-    "version": "20.0.1.0.11",
+    "version": "20.0.1.0.12",
     "category": "Marketing/Email Marketing",
     "license": "LGPL-3",
     "author": "Pipeline Production",

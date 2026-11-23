@@ -165,12 +165,12 @@ class VHealthActionGroupSchedule(models.Model):
     def _find_template(self, step_number):
         """Find the mailing.mailing template for Launch #step_number strictly from Email Marketing > Templates."""
         Mailing = self.env["mailing.mailing"].sudo()
-        expected_name = f"vHealth - Launch #{step_number} (2025)"
+        expected_subject = f"vHealth - Launch #{step_number} (2025)"
         
-        # 1. Search for template by exact name
+        # 1. Search for template by exact subject
         tmpl = Mailing.search([
             ("is_template", "=", True),
-            ("name", "=ilike", expected_name),
+            ("subject", "=ilike", expected_subject),
         ], limit=1)
         if tmpl:
             return tmpl
@@ -178,29 +178,29 @@ class VHealthActionGroupSchedule(models.Model):
         # 2. Search template by looser pattern (e.g. Launch #1)
         tmpl = Mailing.search([
             ("is_template", "=", True),
-            ("name", "ilike", f"Launch #{step_number}"),
+            ("subject", "ilike", f"Launch #{step_number}"),
         ], limit=1)
         if tmpl:
             return tmpl
 
-        # 3. Search non-template mailing by exact name
+        # 3. Search non-template mailing by exact subject
         tmpl = Mailing.search([
-            ("name", "=ilike", expected_name),
+            ("subject", "=ilike", expected_subject),
         ], limit=1)
         if tmpl:
             return tmpl
 
         # 4. Search any mailing by looser pattern
         tmpl = Mailing.search([
-            ("name", "ilike", f"Launch #{step_number}"),
+            ("subject", "ilike", f"Launch #{step_number}"),
         ], limit=1)
         if tmpl:
             return tmpl
 
         raise UserError(_(
             "Could not find template '%s' in Email Marketing > Templates. "
-            "Please create or verify the template in Email Marketing -> Templates with the name '%s'."
-        ) % (expected_name, expected_name))
+            "Please create or verify the template in Email Marketing -> Templates with the Subject '%s'."
+        ) % (expected_subject, expected_subject))
 
     def _create_and_send_launch_mailing(self, step_number):
         """Duplicate launch template, configure for this mailing list, and queue for sending."""
@@ -223,9 +223,8 @@ class VHealthActionGroupSchedule(models.Model):
         if not mailing_model_id:
             mailing_model_id = self.env["ir.model"]._get("mailing.list")
 
-        mailing_name = f"{self.mailing_list_id.name} - Launch #{step_number}"
         mailing_vals = {
-            "name": mailing_name,
+            "subject": template.subject,
             "is_template": False,
             "mailing_model_id": mailing_model_id.id,
             "contact_list_ids": [(6, 0, [self.mailing_list_id.id])],
@@ -260,7 +259,7 @@ class VHealthActionGroupSchedule(models.Model):
 
         self._log(_(
             "Step %d: Created and queued Launch #%d mailing '%s' (ID %d) for %d eligible recipients."
-        ) % (step_number, step_number, mailing_name, new_mailing.id, len(eligible_contacts)))
+        ) % (step_number, step_number, new_mailing.subject, new_mailing.id, len(eligible_contacts)))
 
         return new_mailing
 
