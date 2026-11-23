@@ -1,5 +1,4 @@
 import logging
-import os
 from datetime import timedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -15,18 +14,6 @@ STATE_SELECTION = [
     ('running', 'Running'),
     ('completed', 'Completed'),
     ('cancelled', 'Cancelled'),
-]
-
-TEMPLATE_FILENAMES = {
-    1: 'vHealth - Launch #1 (2025).html',
-    2: 'vHealth - Launch #2 (2025).html',
-    3: 'vHealth - Launch #3 (2025).html',
-    4: 'vHealth - Launch #4 (2025).html',
-}
-
-TEMPLATE_FALLBACK_PATHS = [
-    '/home/elsner/Documents/pipeline/email-template',
-    '/mnt/extra-addons/custom_addons/vhealth_email_marketing/email-template',
 ]
 
 
@@ -176,7 +163,7 @@ class VHealthActionGroupSchedule(models.Model):
         return True
 
     def _find_template(self, step_number):
-        """Find the mailing.mailing template for Launch #step_number."""
+        """Find the mailing.mailing template for Launch #step_number strictly from Email Marketing > Templates."""
         Mailing = self.env["mailing.mailing"].sudo()
         expected_name = f"vHealth - Launch #{step_number} (2025)"
         
@@ -188,7 +175,7 @@ class VHealthActionGroupSchedule(models.Model):
         if tmpl:
             return tmpl
 
-        # 2. Search by looser name pattern
+        # 2. Search template by looser pattern (e.g. Launch #1)
         tmpl = Mailing.search([
             ("is_template", "=", True),
             ("name", "ilike", f"Launch #{step_number}"),
@@ -196,41 +183,24 @@ class VHealthActionGroupSchedule(models.Model):
         if tmpl:
             return tmpl
 
-        # 3. Search non-template mailing by name
+        # 3. Search non-template mailing by exact name
         tmpl = Mailing.search([
             ("name", "=ilike", expected_name),
         ], limit=1)
         if tmpl:
             return tmpl
 
-        # 4. Check on-disk HTML files to auto-bootstrap template if missing
-        filename = TEMPLATE_FILENAMES.get(step_number)
-        if filename:
-            for base_dir in TEMPLATE_FALLBACK_PATHS:
-                full_path = os.path.join(base_dir, filename)
-                if os.path.exists(full_path):
-                    try:
-                        with open(full_path, "r", encoding="utf-8") as f:
-                            html_content = f.read()
-                        model_id = self.env.ref("mass_mailing.model_mailing_list", raise_if_not_found=False)
-                        if not model_id:
-                            model_id = self.env["ir.model"]._get("mailing.list")
-                        tmpl = Mailing.create({
-                            "name": expected_name,
-                            "subject": expected_name,
-                            "is_template": True,
-                            "body_html": html_content,
-                            "body_arch": html_content,
-                            "mailing_model_id": model_id.id,
-                        })
-                        _logger.info("Auto-created mailing template %s from %s", expected_name, full_path)
-                        return tmpl
-                    except Exception as exc:
-                        _logger.warning("Could not create template from file %s: %s", full_path, exc)
+        # 4. Search any mailing by looser pattern
+        tmpl = Mailing.search([
+            ("name", "ilike", f"Launch #{step_number}"),
+        ], limit=1)
+        if tmpl:
+            return tmpl
 
         raise UserError(_(
-            "Could not find template '%s'. Please ensure the template exists in Email Marketing -> Templates."
-        ) % expected_name)
+            "Could not find template '%s' in Email Marketing > Templates. "
+            "Please create or verify the template in Email Marketing -> Templates with the name '%s'."
+        ) % (expected_name, expected_name))
 
     def _create_and_send_launch_mailing(self, step_number):
         """Duplicate launch template, configure for this mailing list, and queue for sending."""

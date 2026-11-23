@@ -94,6 +94,14 @@ def _get_or_create_list(env, name):
         rec = List.create({"name": name})
     return rec
 
+def _normalize_language(value):
+    if not value:
+        return "English"
+    cleaned = str(value).strip().lower()
+    if cleaned in ("spanish", "es", "es_es", "es-es", "español", "espanol"):
+        return "Spanish"
+    return "English"
+
 class EligibilityImport(models.Model):
     _name = "x_eligibility_import"
     _description = "Eligibility Import"
@@ -134,7 +142,7 @@ class EligibilityImport(models.Model):
                         first = _get(row, "x_studio_first_name", "first name", "first")
                         last = _get(row, "x_studio_last_name", "last name", "last", "surname")
                         name = _get(row, "name") or f"{first} {last}".strip() or email
-                        lang = _get(row, "x_studio_aetna_language", "aetna language", "language") or "English"
+                        lang = _normalize_language(_get(row, "x_studio_aetna_language", "aetna language", "language"))
                         access = _get(row, "x_studio_aetna_access_code", "aetna access code", "client code", "access code")
                         eff_date = _as_date(_get(row, "x_studio_member_effective_date", "member effective date", "effective date"))
                         launch_date = _as_date(_get(row, "x_studio_launch_date", "launch date"))
@@ -237,7 +245,7 @@ class WeeklyVhealthRegistration(models.Model):
                         name = _get(row, "Name") or f"{first} {surname}".strip() or email
                         access_code = _get(row, "Client Code", "x_studio_aetna_access_code", "access code")
                         gender = _get(row, "Client Gender", "x_studio_gender", "gender")
-                        language = _get(row, "Client Language", "x_studio_aetna_language", "language") or "English"
+                        language = _normalize_language(_get(row, "Client Language", "x_studio_aetna_language", "language"))
                         dob = _as_date(_get(row, "Client DOB", "x_studio_dob", "dob"))
                         reg_date = _as_date(_get(row, "Client Created Date", "x_studio_registration_date", "registration date"))
                         prefix_phone = _get(row, "Client Prefix & Phone", "phone", "mobile")

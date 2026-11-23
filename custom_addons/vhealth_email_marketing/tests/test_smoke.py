@@ -190,3 +190,24 @@ class TestVHealthSmoke(TransactionCase):
         self.assertIn(non_reg_list.id, c1.list_ids.ids)
         self.assertIn(non_reg_list.id, c2.list_ids.ids)
         self.assertNotIn(non_reg_list.id, c3.list_ids.ids, "Registered contact c3 must NOT be added to non-registered list")
+
+    def test_language_normalization(self):
+        from ..models.imports import _normalize_language
+        self.assertEqual(_normalize_language("spanish"), "Spanish")
+        self.assertEqual(_normalize_language("Spanish"), "Spanish")
+        self.assertEqual(_normalize_language("SPANISH"), "Spanish")
+        self.assertEqual(_normalize_language("es"), "Spanish")
+        self.assertEqual(_normalize_language("español"), "Spanish")
+        self.assertEqual(_normalize_language("english"), "English")
+        self.assertEqual(_normalize_language("English"), "English")
+        self.assertEqual(_normalize_language("ENGLISH"), "English")
+        self.assertEqual(_normalize_language(""), "English")
+        self.assertEqual(_normalize_language(None), "English")
+
+    def test_template_lookup_strict_database(self):
+        from odoo.exceptions import UserError
+        Schedule = self.env["vhealth.action.group.schedule"]
+        rec = Schedule.new({})
+        # Searching for non-existent step 99 must raise UserError and never read disk
+        with self.assertRaises(UserError):
+            rec._find_template(99)
