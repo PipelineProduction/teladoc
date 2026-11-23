@@ -15,5 +15,6 @@
 | 261117-fix-get-param-attribute-error | Fix get_param AttributeError on ir.config_parameter and Enable Automatic Google Sheets Push | 2026-11-17 | 4107018 | [261117-fix-get-param-attribute-error](./quick/261117-fix-get-param-attribute-error/) |
 | 261119-schedule-action-group-launch-emails | Implement SharpSpring-Style "Schedule Action Group for List" Drip Campaign Engine | 2026-11-19 | 0dd9779 | [261119-schedule-action-group-launch-emails](./quick/261119-schedule-action-group-launch-emails/) |
 | 261123-fix-mailing-name-field-error | Fix ValueError Invalid field mailing.mailing.name on Start Campaign | 2026-11-23 | b3d1625 | [261123-fix-mailing-name-field-error](./quick/261123-fix-mailing-name-field-error/) |
+| 261123-fix-mailing-email-from-validation-error | Fix email from is required for non-template 'mail' mailings Validation Error | 2026-11-23 | 8f2ae31 | [261123-fix-mailing-email-from-validation-error](./quick/261123-fix-mailing-email-from-validation-error/) |
 
-Last activity: 2026-11-23 - Completed quick task 261123-fix-mailing-name-field-error: Fix ValueError Invalid field mailing.mailing.name on Start Campaign
+Last activity: 2026-11-23 - Completed quick task 261123-fix-mailing-email-from-validation-error: Fix email from is required for non-template 'mail' mailings Validation Error
