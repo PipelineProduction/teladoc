@@ -223,9 +223,13 @@ class VHealthActionGroupSchedule(models.Model):
         if not mailing_model_id:
             mailing_model_id = self.env["ir.model"]._get("mailing.list")
 
+        # Resolve active mail server if available
+        mail_server = template.mail_server_id or self.env['ir.mail_server'].sudo().search([('active', '=', True)], order='sequence', limit=1)
+
         # Resolve email_from: PostgreSQL constraint enforces email_from is required for non-template mailings
         email_from = (
             (template.email_from and template.email_from.strip())
+            or (mail_server and mail_server.from_filter and '@' in mail_server.from_filter and mail_server.from_filter.strip())
             or (self.env.user and self.env.user.email_formatted)
             or (self.env.user and self.env.user.email)
             or (self.env.company and self.env.company.email_formatted)
@@ -244,6 +248,8 @@ class VHealthActionGroupSchedule(models.Model):
             "vhealth_drip_step": step_number,
             "schedule_type": "now",
         }
+        if mail_server:
+            mailing_vals["mail_server_id"] = mail_server.id
         if template.reply_to:
             mailing_vals["reply_to"] = template.reply_to
         else:
