@@ -20,5 +20,6 @@
 | 261123-update-menus-branding-and-logo | Update Menus, App Metadata to Pipeline Digital, and Add Logo | 2026-11-23 | 104c906 | [261123-update-menus-branding-and-logo](./quick/261123-update-menus-branding-and-logo/) |
 | 261123-update-website-url | Update Website URL to https://pipelinedigital.co.uk/ | 2026-11-23 | 1496996 | [261123-update-website-url](./quick/261123-update-website-url/) |
 | 261124-diagnose-aws-ses-delivery-failure | Diagnose AWS SES Delivery Failure & Explicit Mail Server Binding | 2026-11-24 | 14afc23 | [261124-diagnose-aws-ses-delivery-failure](./quick/261124-diagnose-aws-ses-delivery-failure/) |
+| 261124-keep-archives-for-technical-emails | Enable keep_archives for Action Group Mailings | 2026-11-24 | 044e525 | [261124-keep-archives-for-technical-emails](./quick/261124-keep-archives-for-technical-emails/) |
 
-Last activity: 2026-11-24 - Completed quick task 261124-diagnose-aws-ses-delivery-failure: Diagnose AWS SES Delivery Failure & Explicit Mail Server Binding
+Last activity: 2026-11-24 - Completed quick task 261124-keep-archives-for-technical-emails: Enable keep_archives for Action Group Mailings
