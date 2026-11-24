@@ -242,6 +242,7 @@ class VHealthActionGroupSchedule(models.Model):
             "subject": template.subject,
             "email_from": email_from,
             "is_template": False,
+            "keep_archives": True,
             "mailing_model_id": mailing_model_id.id,
             "contact_list_ids": [(6, 0, [self.mailing_list_id.id])],
             "vhealth_action_group_schedule_id": self.id,
