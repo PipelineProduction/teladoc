@@ -1,4 +1,5 @@
 import logging
+from markupsafe import escape
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
@@ -9,17 +10,32 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
     _name = "vhealth.schedule.action.group.wizard"
     _description = "Schedule Action Group for List Wizard"
 
+    @api.model
+    def _default_action_group_id(self):
+        ag = self.env["vhealth.action.group"]._get_new_group_launch()
+        if not ag:
+            ag = self.env["vhealth.action.group"].sudo().search([("active", "=", True)], limit=1)
+        return ag.id if ag else False
+
     mailing_list_id = fields.Many2one(
         "mailing.list",
         string="Mailing List",
         required=True,
         default=lambda self: self.env.context.get("active_id"),
     )
+    action_group_id = fields.Many2one(
+        "vhealth.action.group",
+        string="Action Group",
+        required=True,
+        domain="[('active', '=', True)]",
+        default=_default_action_group_id,
+    )
+    # Legacy selection kept optional for backward compatibility with callers passing action_group='new_group_launch'
     action_group = fields.Selection(
         [("new_group_launch", "NEW GROUP LAUNCH EMAILS")],
-        string="Action Group",
+        string="Legacy Action Group",
         default="new_group_launch",
-        required=True,
+        required=False,
     )
     schedule_type = fields.Selection(
         [
@@ -33,15 +49,23 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
     scheduled_datetime = fields.Datetime(
         string="Date and Time",
         default=fields.Datetime.now,
-        help="Date and time when the first email should be sent. Subsequent emails will be sent at 7-day intervals at this same time.",
+        help="Date and time when the first step should execute. Subsequent steps will follow the configured wait days.",
     )
 
     total_contacts = fields.Integer(string="Total Contacts", compute="_compute_list_summary")
-    active_contacts = fields.Integer(string="Eligible Unregistered", compute="_compute_list_summary")
+    active_contacts = fields.Integer(string="Eligible Recipients", compute="_compute_list_summary")
     registered_contacts = fields.Integer(string="Registered Members", compute="_compute_list_summary")
     summary_html = fields.Html(string="Summary", compute="_compute_list_summary")
 
-    @api.depends("mailing_list_id", "action_group", "schedule_type", "scheduled_datetime")
+    def _resolve_action_group(self):
+        self.ensure_one()
+        if self.action_group_id:
+            return self.action_group_id
+        if self.action_group == "new_group_launch":
+            return self.env["vhealth.action.group"]._get_new_group_launch()
+        return self.env["vhealth.action.group"].sudo().search([("active", "=", True)], limit=1)
+
+    @api.depends("mailing_list_id", "action_group_id", "action_group", "schedule_type", "scheduled_datetime")
     def _compute_list_summary(self):
         for rec in self:
             if not rec.mailing_list_id:
@@ -51,34 +75,60 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
                 rec.summary_html = _("<p>Please select a mailing list.</p>")
                 continue
 
+            ag = rec._resolve_action_group()
+            exclude_reg = ag.exclude_registered if ag else True
+
             contacts = rec.mailing_list_id.contact_ids
             total = len(contacts)
             registered = len(contacts.filtered(lambda c: c.x_studio_app_registered == "Yes"))
-            active = total - registered
+            active = (total - registered) if exclude_reg else total
             rec.total_contacts = total
             rec.registered_contacts = registered
             rec.active_contacts = active
 
-            timing_text = _("immediately upon scheduling") if rec.schedule_type == "now" else _("on <b>%s</b>") % (rec.scheduled_datetime or _("selected time"))
+            ag_name = escape(ag.name if ag else "NEW GROUP LAUNCH EMAILS")
+            list_name = escape(rec.mailing_list_id.name or "")
+            timing_text = (
+                _("immediately upon scheduling")
+                if rec.schedule_type == "now"
+                else _("on <b>%s</b>") % escape(str(rec.scheduled_datetime or _("selected time")))
+            )
 
+            exclusion_note = (
+                _(" (%d already registered members will be excluded)") % registered
+                if exclude_reg
+                else _(" (all members included)")
+            )
+
+            # Build dynamic step summary from the configured Action Group steps
+            step_lines = []
+            if ag and ag.step_ids:
+                steps = ag.step_ids.sorted(key=lambda s: (s.sequence, s.id))
+                day_offset = 0
+                for idx, step in enumerate(steps):
+                    when_label = _("Start") if day_offset == 0 else _("+%d days") % day_offset
+                    step_lines.append(
+                        f"• <b>{escape(when_label)}:</b> {escape(step._describe_step())}<br/>"
+                    )
+                    if idx < len(steps) - 1 and step.delay_days > 0:
+                        day_offset += step.delay_days
+            else:
+                step_lines.append(f"• {escape(_('No steps configured yet on this Action Group.'))}<br/>")
+
+            steps_html = "".join(step_lines)
             html = f"""
             <div class="alert alert-info py-2 px-3 mb-2" role="alert">
                 <p class="mb-1">
-                    This action will schedule the <b>NEW GROUP LAUNCH EMAILS</b> drip campaign for
-                    <b>{active}</b> eligible (unregistered) members of list <b>"{rec.mailing_list_id.name}"</b>
-                    ({registered} already registered members will be excluded).
+                    This action will schedule the <b>{ag_name}</b> workflow for
+                    <b>{active}</b> eligible members of list <b>"{list_name}"</b>{escape(exclusion_note)}.
                 </p>
                 <p class="mb-1">
-                    First email will be sent: <b>{timing_text}</b>.
+                    First step will run: <b>{timing_text}</b>.
                 </p>
                 <hr class="my-2"/>
                 <p class="mb-0 small text-muted">
-                    <b>Drip Workflow Sequence:</b><br/>
-                    • <b>Week 1:</b> Launch #1 email sent<br/>
-                    • <b>Week 2 (+7 days):</b> Launch #2 email sent (registered members excluded)<br/>
-                    • <b>Week 3 (+7 days):</b> Launch #3 email sent (registered members excluded)<br/>
-                    • <b>Week 4 (+7 days):</b> Contact field <i>"Check for engagement"</i> set to True + Launch #4 email sent<br/>
-                    • <b>Week 5 (+7 days):</b> Unregistered members automatically added to list <i>"All non registered members"</i>
+                    <b>Action Group Workflow Sequence:</b><br/>
+                    {steps_html}
                 </p>
             </div>
             """
@@ -90,10 +140,18 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
         if not self.mailing_list_id:
             raise UserError(_("Please select a mailing list."))
 
-        # Check for existing running campaign for this list
+        ag = self._resolve_action_group()
+        if not ag:
+            raise UserError(_("Please select an Action Group."))
+        if not ag.step_ids:
+            raise UserError(_(
+                "Action Group '%s' has no steps configured. Please add at least one step in Configuration > Action Groups."
+            ) % ag.name)
+
+        # Check for existing running campaign for this list + action group
         existing_running = self.env["vhealth.action.group.schedule"].search([
             ("mailing_list_id", "=", self.mailing_list_id.id),
-            ("action_group", "=", self.action_group),
+            ("action_group_id", "=", ag.id),
             ("state", "=", "running"),
         ], limit=1)
 
@@ -104,7 +162,8 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
 
         schedule_vals = {
             "mailing_list_id": self.mailing_list_id.id,
-            "action_group": self.action_group,
+            "action_group_id": ag.id,
+            "action_group": ag.code if ag.code == "new_group_launch" else False,
             "schedule_type": self.schedule_type,
             "scheduled_datetime": self.scheduled_datetime if self.schedule_type == "scheduled" else fields.Datetime.now(),
         }

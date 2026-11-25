@@ -16,9 +16,13 @@ class MailingMailing(models.Model):
     vhealth_drip_step = fields.Integer(string="vHealth Drip Step", default=0)
 
     def _get_recipients_domain(self):
-        """Ensure contacts who have registered are strictly excluded from vHealth drip campaign mailings."""
+        """Ensure contacts who have registered are excluded from vHealth drip campaign mailings when configured."""
         domain = super()._get_recipients_domain()
-        if self.vhealth_action_group_schedule_id or self.env.context.get("vhealth_exclude_registered"):
+        should_exclude = (
+            (self.vhealth_action_group_schedule_id and self.vhealth_action_group_schedule_id.exclude_registered)
+            or self.env.context.get("vhealth_exclude_registered")
+        )
+        if should_exclude:
             try:
                 from odoo.fields import Domain
                 domain = domain & Domain([("x_studio_app_registered", "!=", "Yes")])

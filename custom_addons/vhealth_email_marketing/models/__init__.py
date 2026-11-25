@@ -4,6 +4,7 @@ from . import mailing_contact_line
 from . import imports
 from . import google_sheet_registration
 from . import vhelth_contacts
+from . import action_group
 from . import action_group_schedule
 from . import mailing
 from . import mailing_list

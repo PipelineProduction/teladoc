@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Seeded default Action Group matching the SharpSpring NEW GROUP LAUNCH EMAILS workflow -->
+    <record id="action_group_new_group_launch" model="vhealth.action.group">
+        <field name="name">NEW GROUP LAUNCH EMAILS</field>
+        <field name="code">new_group_launch</field>
+        <field name="sequence">10</field>
+        <field name="active">True</field>
+        <field name="exclude_registered">True</field>
+        <field name="description">4-week automated launch drip sequence for newly eligible members. Excludes any member who registers at any point, flags engagement check before Launch #4, and adds remaining unregistered members to 'All non registered members' in Week 5.</field>
+    </record>
+
+    <record id="action_group_new_group_launch_step_1" model="vhealth.action.group.step">
+        <field name="action_group_id" ref="action_group_new_group_launch"/>
+        <field name="sequence">10</field>
+        <field name="action_type">send_email</field>
+        <field name="template_subject_pattern">vHealth - Launch #1 (2025)</field>
+        <field name="launch_step_number">1</field>
+        <field name="delay_days">7</field>
+    </record>
+
+    <record id="action_group_new_group_launch_step_2" model="vhealth.action.group.step">
+        <field name="action_group_id" ref="action_group_new_group_launch"/>
+        <field name="sequence">20</field>
+        <field name="action_type">send_email</field>
+        <field name="template_subject_pattern">vHealth - Launch #2 (2025)</field>
+        <field name="launch_step_number">2</field>
+        <field name="delay_days">7</field>
+    </record>
+
+    <record id="action_group_new_group_launch_step_3" model="vhealth.action.group.step">
+        <field name="action_group_id" ref="action_group_new_group_launch"/>
+        <field name="sequence">30</field>
+        <field name="action_type">send_email</field>
+        <field name="template_subject_pattern">vHealth - Launch #3 (2025)</field>
+        <field name="launch_step_number">3</field>
+        <field name="delay_days">7</field>
+    </record>
+
+    <record id="action_group_new_group_launch_step_4a" model="vhealth.action.group.step">
+        <field name="action_group_id" ref="action_group_new_group_launch"/>
+        <field name="sequence">40</field>
+        <field name="action_type">update_contact</field>
+        <field name="field_name">x_studio_check_for_engagement</field>
+        <field name="field_value">True</field>
+        <field name="delay_days">0</field>
+    </record>
+
+    <record id="action_group_new_group_launch_step_4b" model="vhealth.action.group.step">
+        <field name="action_group_id" ref="action_group_new_group_launch"/>
+        <field name="sequence">50</field>
+        <field name="action_type">send_email</field>
+        <field name="template_subject_pattern">vHealth - Launch #4 (2025)</field>
+        <field name="launch_step_number">4</field>
+        <field name="delay_days">7</field>
+    </record>
+
+    <record id="action_group_new_group_launch_step_5" model="vhealth.action.group.step">
+        <field name="action_group_id" ref="action_group_new_group_launch"/>
+        <field name="sequence">60</field>
+        <field name="action_type">add_to_list</field>
+        <field name="target_list_name">All non registered members</field>
+        <field name="delay_days">0</field>
+    </record>
+
+    <!-- Link existing schedule records & field_id on upgrade -->
+    <function model="vhealth.action.group.schedule" name="_migrate_legacy_action_groups"/>
+</odoo>

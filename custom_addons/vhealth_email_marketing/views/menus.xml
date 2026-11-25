@@ -57,6 +57,12 @@
               parent="menu_vhealth_process_root"
               sequence="30"/>
 
+    <menuitem id="menu_vhealth_action_group"
+              name="Action Groups"
+              parent="menu_vhealth_config_category"
+              action="action_vhealth_action_group"
+              sequence="5"/>
+
     <menuitem id="menu_vhealth_action_group_schedule"
               name="Scheduled Action Groups"
               parent="menu_vhealth_config_category"

@@ -8,7 +8,7 @@
                 <sheet>
                     <group>
                         <field name="mailing_list_id" readonly="1" options="{'no_open': True}"/>
-                        <field name="action_group" widget="radio"/>
+                        <field name="action_group_id" options="{'no_create': True, 'no_open': True}"/>
                     </group>
                     <separator string="When would you like this action to take place?"/>
                     <group>

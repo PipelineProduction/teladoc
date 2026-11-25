@@ -9,7 +9,10 @@ class TestVHealthSmoke(TransactionCase):
         self.assertIn("x_weekly_vhealth_regis", self.env)
         self.assertIn("x_aetna_member_removal", self.env)
         self.assertIn("x_google_sheet_registr", self.env)
+        self.assertIn("vhealth.action.group", self.env)
+        self.assertIn("vhealth.action.group.step", self.env)
         self.assertIn("vhealth.action.group.schedule", self.env)
+        self.assertIn("vhealth.action.group.schedule.line", self.env)
         self.assertIn("vhealth.schedule.action.group.wizard", self.env)
 
     def test_mailing_contact_custom_fields(self):
@@ -30,6 +33,10 @@ class TestVHealthSmoke(TransactionCase):
         self.assertTrue(list_view, "Inherited list view should be loaded")
 
         # Action Group views
+        ag_master_list = self.env.ref("vhealth_email_marketing.view_vhealth_action_group_list", raise_if_not_found=False)
+        self.assertTrue(ag_master_list, "Action group master list view should be loaded")
+        ag_master_form = self.env.ref("vhealth_email_marketing.view_vhealth_action_group_form", raise_if_not_found=False)
+        self.assertTrue(ag_master_form, "Action group master form view should be loaded")
         ag_list = self.env.ref("vhealth_email_marketing.view_vhealth_action_group_schedule_list", raise_if_not_found=False)
         self.assertTrue(ag_list, "Action group schedule list view should be loaded")
         ag_form = self.env.ref("vhealth_email_marketing.view_vhealth_action_group_schedule_form", raise_if_not_found=False)
@@ -71,6 +78,9 @@ class TestVHealthSmoke(TransactionCase):
 
         m_conf = self.env.ref("vhealth_email_marketing.menu_vhealth_config_category", raise_if_not_found=False)
         self.assertTrue(m_conf, "Configuration category should exist")
+
+        m_ag = self.env.ref("vhealth_email_marketing.menu_vhealth_action_group", raise_if_not_found=False)
+        self.assertTrue(m_ag, "Action Groups menu should exist")
 
         m_sched = self.env.ref("vhealth_email_marketing.menu_vhealth_action_group_schedule", raise_if_not_found=False)
         self.assertTrue(m_sched, "Scheduled Action Groups menu should exist")
@@ -249,3 +259,68 @@ class TestVHealthSmoke(TransactionCase):
         # Searching for non-existent step 99 must raise UserError and never read disk
         with self.assertRaises(UserError):
             rec._find_template(99)
+
+    def test_custom_action_group_execution(self):
+        ActionGroup = self.env["vhealth.action.group"]
+        List = self.env["mailing.list"]
+        Contact = self.env["mailing.contact"]
+        Mailing = self.env["mailing.mailing"]
+        Wizard = self.env["vhealth.schedule.action.group.wizard"]
+
+        # Seeded NEW GROUP LAUNCH EMAILS should exist
+        seeded = ActionGroup._get_new_group_launch()
+        self.assertTrue(seeded, "Seeded NEW GROUP LAUNCH EMAILS action group must exist")
+        self.assertEqual(len(seeded.step_ids), 6)
+
+        tmpl = Mailing.create({
+            "subject": "Custom Welcome Email",
+            "is_template": True,
+            "body_html": "<p>Welcome</p>",
+            "body_arch": "<p>Welcome</p>",
+        })
+        dest_list = List.create({"name": "Custom Followup List"})
+        src_list = List.create({"name": "Custom Source List"})
+
+        c1 = Contact.create({
+            "name": "Custom Contact",
+            "email": "custom1@example.com",
+            "list_ids": [(4, src_list.id)],
+            "x_studio_app_registered": "No",
+        })
+
+        custom_ag = ActionGroup.create({
+            "name": "CUSTOM ONBOARDING FLOW",
+            "exclude_registered": True,
+            "step_ids": [
+                (0, 0, {
+                    "sequence": 10,
+                    "action_type": "send_email",
+                    "mailing_template_id": tmpl.id,
+                    "delay_days": 3,
+                }),
+                (0, 0, {
+                    "sequence": 20,
+                    "action_type": "add_to_list",
+                    "target_mailing_list_id": dest_list.id,
+                    "delay_days": 0,
+                }),
+            ],
+        })
+
+        wiz = Wizard.create({
+            "mailing_list_id": src_list.id,
+            "action_group_id": custom_ag.id,
+            "schedule_type": "now",
+        })
+        self.assertIn("CUSTOM ONBOARDING FLOW", wiz.summary_html)
+        action = wiz.action_schedule()
+        sched = self.env["vhealth.action.group.schedule"].browse(action["res_id"])
+        self.assertEqual(sched.action_group_id, custom_ag)
+        self.assertEqual(sched.state, "running")
+        self.assertEqual(sched.current_step, 1)
+        self.assertTrue(sched.step1_mailing_id)
+
+        sched.action_run_step_now()
+        self.assertEqual(sched.state, "completed")
+        self.assertIn(dest_list.id, c1.list_ids.ids)
+        self.assertEqual(len(sched.execution_line_ids), 2)

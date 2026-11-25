@@ -7,7 +7,7 @@
             <list string="Scheduled Action Groups">
                 <field name="name"/>
                 <field name="mailing_list_id"/>
-                <field name="action_group"/>
+                <field name="action_group_id"/>
                 <field name="current_step"/>
                 <field name="step_status_description"/>
                 <field name="next_execution_date"/>
@@ -43,12 +43,14 @@
                     <group>
                         <group string="Campaign Setup">
                             <field name="mailing_list_id" readonly="state != 'draft'"/>
-                            <field name="action_group" readonly="state != 'draft'"/>
+                            <field name="action_group_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="exclude_registered" readonly="1"/>
                             <field name="schedule_type" readonly="state != 'draft'"/>
                             <field name="scheduled_datetime" invisible="schedule_type != 'scheduled'" readonly="state != 'draft'"/>
                         </group>
                         <group string="Execution Status">
                             <field name="current_step" readonly="1"/>
+                            <field name="last_step_id" readonly="1"/>
                             <field name="step_status_description" readonly="1"/>
                             <field name="next_execution_date" readonly="1"/>
                         </group>
@@ -63,6 +65,19 @@
                         </group>
                     </group>
                     <notebook>
+                        <page string="Executed Steps">
+                            <field name="execution_line_ids" readonly="1">
+                                <list string="Executed Steps">
+                                    <field name="cycle_number"/>
+                                    <field name="step_name"/>
+                                    <field name="action_type"/>
+                                    <field name="executed_at"/>
+                                    <field name="affected_count"/>
+                                    <field name="mailing_id"/>
+                                    <field name="note"/>
+                                </list>
+                            </field>
+                        </page>
                         <page string="Drip Sequence &amp; Mailings">
                             <group>
                                 <group string="Step 1: Launch #1 (Week 1)">

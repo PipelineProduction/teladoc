@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_vhealth_action_group_list" model="ir.ui.view">
+        <field name="name">vhealth.action.group.list</field>
+        <field name="model">vhealth.action.group</field>
+        <field name="arch" type="xml">
+            <list string="Action Groups">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code" optional="hide"/>
+                <field name="step_count"/>
+                <field name="exclude_registered"/>
+                <field name="schedule_count"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_vhealth_action_group_form" model="ir.ui.view">
+        <field name="name">vhealth.action.group.form</field>
+        <field name="model">vhealth.action.group</field>
+        <field name="arch" type="xml">
+            <form string="Action Group">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_schedules"
+                                type="object"
+                                icon="fa-calendar"
+                                class="oe_stat_button">
+                            <field name="schedule_count" string="Scheduled" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name" string="Action Group Name"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. NEW GROUP LAUNCH EMAILS"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="Settings">
+                            <field name="exclude_registered"/>
+                            <field name="sequence"/>
+                        </group>
+                        <group string="Notes">
+                            <field name="code" readonly="1" invisible="not code"/>
+                            <field name="description" placeholder="Describe when this Action Group should be scheduled..."/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Action Steps">
+                            <field name="step_ids">
+                                <list string="Steps">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="action_type"/>
+                                    <field name="name"/>
+                                    <field name="delay_days"/>
+                                </list>
+                                <form string="Action Step">
+                                    <group>
+                                        <group string="Step Action">
+                                            <field name="sequence"/>
+                                            <field name="action_type"/>
+                                            <field name="name"/>
+                                            <field name="delay_days"/>
+                                        </group>
+                                        <group string="Email Settings" invisible="action_type != 'send_email'">
+                                            <field name="mailing_template_id"/>
+                                            <field name="template_subject_pattern" placeholder="Fallback subject if no template selected"/>
+                                            <field name="launch_step_number"/>
+                                        </group>
+                                        <group string="Contact Field Update" invisible="action_type != 'update_contact'">
+                                            <field name="field_id"/>
+                                            <field name="field_name" readonly="1" invisible="not field_name"/>
+                                            <field name="field_value" placeholder="e.g. True, False, Yes, No"/>
+                                        </group>
+                                        <group string="Mailing List Target" invisible="action_type not in ('add_to_list', 'remove_from_list')">
+                                            <field name="target_mailing_list_id"/>
+                                            <field name="target_list_name" placeholder="Or exact list name (auto-created on Add)"/>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vhealth_action_group" model="ir.actions.act_window">
+        <field name="name">Action Groups</field>
+        <field name="res_model">vhealth.action.group</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first reusable Action Group!
+            </p>
+            <p>
+                Define multi-step workflows (send email templates, update contact fields, add/remove contacts from lists)
+                and schedule them on any Mailing List via <b>Schedule Action Group</b>.
+            </p>
+        </field>
+    </record>
+</odoo>
