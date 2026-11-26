@@ -28,3 +28,6 @@ access_vhealth_action_group_step_mm_user,vhealth action group step mm user,vheal
 access_vhealth_action_schedule_line_user,vhealth action schedule line user,vhealth.action.group.schedule.line,vhealth_email_marketing.group_vhealth_import_user,r,
 access_vhealth_action_schedule_line_manager,vhealth action schedule line manager,vhealth.action.group.schedule.line,vhealth_email_marketing.group_vhealth_import_manager,crud,
 access_vhealth_action_schedule_line_mm_user,vhealth action schedule line mm user,vhealth.action.group.schedule.line,mass_mailing.group_mass_mailing_user,crud,
+access_vhealth_rebuild_lists_wizard_user,vhealth rebuild lists wizard user,vhealth.rebuild.mailing.lists.wizard,vhealth_email_marketing.group_vhealth_import_user,crud,
+access_vhealth_rebuild_lists_wizard_manager,vhealth rebuild lists wizard manager,vhealth.rebuild.mailing.lists.wizard,vhealth_email_marketing.group_vhealth_import_manager,crud,
+access_vhealth_rebuild_lists_wizard_mm_user,vhealth rebuild lists wizard mm user,vhealth.rebuild.mailing.lists.wizard,mass_mailing.group_mass_mailing_user,crud,

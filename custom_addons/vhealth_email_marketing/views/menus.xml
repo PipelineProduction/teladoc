@@ -68,4 +68,10 @@
               parent="menu_vhealth_config_category"
               action="action_vhealth_action_group_schedule"
               sequence="10"/>
+
+    <menuitem id="menu_vhealth_rebuild_mailing_lists"
+              name="Rebuild Mailing Lists"
+              parent="menu_vhealth_config_category"
+              action="action_vhealth_rebuild_mailing_lists"
+              sequence="20"/>
 </odoo>

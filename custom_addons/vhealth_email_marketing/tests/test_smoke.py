@@ -429,3 +429,79 @@ class TestVHealthSmoke(TransactionCase):
         self.assertNotIn("{$", ss_fixed)
         self.assertIn("https://vhealth.app.link/gotostore", ss_fixed)
         self.assertIn("A family member has invited you", ss_fixed)
+
+    def test_rebuild_mailing_lists_wizard_and_rules(self):
+        from ..models.imports import _get_or_create_list
+
+        List = self.env["mailing.list"]
+        Contact = self.env["mailing.contact"]
+        RebuildWizard = self.env["vhealth.rebuild.mailing.lists.wizard"]
+
+        # Case-insensitive list reuse
+        existing_reg = List.create({"name": "All Registered Members"})
+        resolved_reg = _get_or_create_list(self.env, "All REGISTERED members")
+        self.assertEqual(resolved_reg.id, existing_reg.id)
+
+        # Create contacts covering all rule combinations
+        c_th_us_reg = Contact.create({
+            "name": "TH US Registered",
+            "email": "th_us_reg@example.com",
+            "x_studio_vhealth_contact": True,
+            "x_studio_cohort_group": "TH",
+            "x_studio_app_registered": "Yes",
+            "x_studio_location_us_or_canada": True,
+        })
+        c_mh_us_uniq = Contact.create({
+            "name": "MH US Unique Reg",
+            "email": "mh_us_uniq@example.com",
+            "x_studio_vhealth_contact": True,
+            "x_studio_cohort_group": "MH",
+            "x_studio_app_unique_registered": "Yes",
+            "x_studio_location_us_or_canada": True,
+        })
+        c_pc_non_us_reg = Contact.create({
+            "name": "PC Non-US Registered",
+            "email": "pc_non_us@example.com",
+            "x_studio_vhealth_contact": True,
+            "x_studio_cohort_group": "PC",
+            "x_studio_app_registered": "Yes",
+            "x_studio_location_us_or_canada": False,
+        })
+        c_th_mh_non_vhealth = Contact.create({
+            "name": "Non vHealth Contact",
+            "email": "non_vh@example.com",
+            "x_studio_vhealth_contact": False,
+            "x_studio_cohort_group": "TH + MH",
+            "x_studio_app_registered": "Yes",
+            "x_studio_location_us_or_canada": True,
+        })
+
+        # Add a stale contact to existing_reg and verify rebuild removes it while keeping opt_out on valid ones
+        existing_reg.write({"contact_ids": [(4, c_pc_non_us_reg.id)]})
+
+        wiz = RebuildWizard.create({"require_vhealth_contact": True})
+        self.assertEqual(wiz.list_registered_id.id, existing_reg.id)
+        wiz.action_rebuild_lists()
+        self.assertEqual(wiz.state, "done")
+
+        # Live list: all vHealth contacts only
+        self.assertIn(c_th_us_reg.id, wiz.list_live_id.contact_ids.ids)
+        self.assertIn(c_mh_us_uniq.id, wiz.list_live_id.contact_ids.ids)
+        self.assertIn(c_pc_non_us_reg.id, wiz.list_live_id.contact_ids.ids)
+        self.assertNotIn(c_th_mh_non_vhealth.id, wiz.list_live_id.contact_ids.ids)
+
+        # Registered list: vHealth + US/Canada + (App Registered == Yes OR App UNIQUE Registered == Yes)
+        self.assertIn(c_th_us_reg.id, wiz.list_registered_id.contact_ids.ids)
+        self.assertIn(c_mh_us_uniq.id, wiz.list_registered_id.contact_ids.ids)
+        self.assertNotIn(c_pc_non_us_reg.id, wiz.list_registered_id.contact_ids.ids)
+        self.assertNotIn(c_th_mh_non_vhealth.id, wiz.list_registered_id.contact_ids.ids)
+
+        # Cohort lists
+        self.assertIn(c_th_us_reg.id, wiz.list_th_id.contact_ids.ids)
+        self.assertIn(c_mh_us_uniq.id, wiz.list_mh_id.contact_ids.ids)
+        self.assertIn(c_pc_non_us_reg.id, wiz.list_pc_id.contact_ids.ids)
+        self.assertNotIn(c_th_mh_non_vhealth.id, wiz.list_th_mh_id.contact_ids.ids)
+
+        # Verify menu exists
+        m_rebuild = self.env.ref("vhealth_email_marketing.menu_vhealth_rebuild_mailing_lists", raise_if_not_found=False)
+        self.assertTrue(m_rebuild)

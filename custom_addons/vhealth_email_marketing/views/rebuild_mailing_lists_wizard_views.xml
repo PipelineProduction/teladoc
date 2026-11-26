@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_vhealth_rebuild_mailing_lists_wizard_form" model="ir.ui.view">
+        <field name="name">vhealth.rebuild.mailing.lists.wizard.form</field>
+        <field name="model">vhealth.rebuild.mailing.lists.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Rebuild Mailing Lists">
+                <sheet>
+                    <field name="state" invisible="1"/>
+                    <group string="Default Rule">
+                        <field name="require_vhealth_contact" readonly="state == 'done'"/>
+                    </group>
+                    <group string="Target Mailing Lists (Auto-matched or auto-created if empty)" col="2">
+                        <field name="list_live_id" readonly="state == 'done'"/>
+                        <field name="list_registered_id" readonly="state == 'done'"/>
+                        <field name="list_th_id" readonly="state == 'done'"/>
+                        <field name="list_th_mh_id" readonly="state == 'done'"/>
+                        <field name="list_pc_id" readonly="state == 'done'"/>
+                        <field name="list_mh_id" readonly="state == 'done'"/>
+                    </group>
+                    <separator string="Rule Preview" invisible="state == 'done'"/>
+                    <field name="preview_html" nolabel="1" invisible="state == 'done'"/>
+                    <separator string="Rebuild Result" invisible="state != 'done'"/>
+                    <field name="result_html" nolabel="1" invisible="state != 'done'"/>
+                </sheet>
+                <footer>
+                    <button name="action_rebuild_lists"
+                            string="Rebuild Mailing Lists"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state == 'done'"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" invisible="state == 'done'"/>
+                    <button string="Close" class="btn-primary" special="cancel" invisible="state != 'done'"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_vhealth_rebuild_mailing_lists" model="ir.actions.act_window">
+        <field name="name">Rebuild Mailing Lists</field>
+        <field name="res_model">vhealth.rebuild.mailing.lists.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

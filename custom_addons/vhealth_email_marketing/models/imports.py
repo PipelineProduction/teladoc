@@ -88,10 +88,13 @@ def _as_date(value):
     raise ValueError("Invalid date: %s" % value)
 
 def _get_or_create_list(env, name):
+    clean_name = (name or "").strip()
     List = env["mailing.list"].sudo()
-    rec = List.search([("name", "=", name)], limit=1)
+    rec = List.search([("name", "=", clean_name)], limit=1)
     if not rec:
-        rec = List.create({"name": name})
+        rec = List.search([("name", "=ilike", clean_name)], limit=1)
+    if not rec:
+        rec = List.create({"name": clean_name})
     return rec
 
 def _normalize_language(value):

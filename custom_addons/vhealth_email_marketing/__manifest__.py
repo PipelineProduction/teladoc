@@ -1,7 +1,7 @@
 {
     "name": "vHealth Email Marketing Processes",
     "summary": "Automated Member Onboarding, Launch Campaigns & Registration Management for vHealth",
-    "version": "20.0.1.0.21",
+    "version": "20.0.1.0.22",
     "category": "Marketing/Email Marketing",
     "license": "LGPL-3",
     "author": "Pipeline Digital",
@@ -40,6 +40,7 @@ Key Features & Capabilities:
         "views/mailing_views.xml",
         "views/action_group_views.xml",
         "views/schedule_action_group_wizard_views.xml",
+        "views/rebuild_mailing_lists_wizard_views.xml",
         "views/action_group_schedule_views.xml",
         "views/mailing_list_views.xml",
         "views/menus.xml",

@@ -2,6 +2,7 @@ import logging
 from datetime import timedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from .imports import _get_or_create_list
 from .mailing import fix_odoo_email_html_for_gmail, load_bundled_template, match_bundled_template_key
 
 _logger = logging.getLogger(__name__)
@@ -16,14 +17,6 @@ STATE_SELECTION = [
     ("completed", "Completed"),
     ("cancelled", "Cancelled"),
 ]
-
-
-def _get_or_create_list(env, name):
-    List = env["mailing.list"].sudo()
-    rec = List.search([("name", "=", name)], limit=1)
-    if not rec:
-        rec = List.create({"name": name})
-    return rec
 
 
 class VHealthActionGroupSchedule(models.Model):
