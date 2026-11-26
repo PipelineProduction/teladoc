@@ -341,13 +341,13 @@ class MailingMailing(models.Model):
             subject_lower = (rec.subject or "").lower()
             body = rec.body_html or rec.body_arch or ""
             is_launch_1 = "launch #1" in subject_lower or "vhealth-email-head_launch-01" in body.lower()
-            if is_launch_1 and (
+            is_broken_layout = (
                 "design-element" in body
                 or "o_mail_wrapper" in body
-                or "/web/image/" in body
                 or "background: red" in body
                 or not body.strip()
-            ):
+            )
+            if is_launch_1 and is_broken_layout:
                 rec.write({"body_html": launch_1_html, "body_arch": launch_1_html})
                 updated += 1
             else:
@@ -385,16 +385,14 @@ class MailingMailing(models.Model):
         launch_1_html = load_bundled_launch_1_template()
         for tmpl in templates:
             body = tmpl.body_html or tmpl.body_arch or ""
-            has_issues = any(
+            is_broken_layout = any(
                 marker in body
-                for marker in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red", "/web/image/")
+                for marker in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red")
             )
-            if not has_issues:
-                continue
-            if "launch #1" in (tmpl.subject or "").lower():
+            if "launch #1" in (tmpl.subject or "").lower() and is_broken_layout:
                 tmpl.write({"body_html": launch_1_html, "body_arch": launch_1_html})
                 _logger.info("Upgraded vHealth Launch #1 template (ID %s) to Gmail-compatible HTML.", tmpl.id)
-            else:
+            elif is_broken_layout or "/web/image/" in body:
                 vals = {}
                 if tmpl.body_html:
                     fixed = fix_odoo_email_html_for_gmail(tmpl.body_html)

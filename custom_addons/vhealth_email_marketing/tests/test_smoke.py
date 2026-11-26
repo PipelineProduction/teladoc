@@ -385,3 +385,10 @@ class TestVHealthSmoke(TransactionCase):
         self.assertNotIn("/web/image/", tmpl.body_html)
         self.assertNotIn("background: red", tmpl.body_html)
         self.assertIn("/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png", tmpl.body_html)
+
+        # Custom edits + newly uploaded Odoo image on already-fixed template must NOT be overwritten
+        custom_html = tmpl.body_html.replace("Talk to a doctor", "Custom Heading") + '<img src="/web/image/999-abc/new_custom_banner.png"/>'
+        tmpl.write({"body_html": custom_html, "body_arch": custom_html})
+        Mailing._upgrade_fix_vhealth_templates()
+        self.assertIn("Custom Heading", tmpl.body_html)
+        self.assertIn("/web/image/999-abc/new_custom_banner.png", tmpl.body_html)
