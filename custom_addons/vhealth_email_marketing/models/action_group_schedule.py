@@ -2,6 +2,7 @@ import logging
 from datetime import timedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from .mailing import fix_odoo_email_html_for_gmail, load_bundled_launch_1_template
 
 _logger = logging.getLogger(__name__)
 
@@ -363,6 +364,32 @@ class VHealthActionGroupSchedule(models.Model):
         mailing_vals["reply_to_mode"] = template.reply_to_mode or "new"
 
         new_mailing = template.copy(default=mailing_vals)
+
+        # Ensure outgoing mailing HTML is Gmail-compatible and uses public static image URLs
+        raw_body = new_mailing.body_html or new_mailing.body_arch or ""
+        is_broken_launch_1 = (
+            "launch #1" in (template.subject or "").lower()
+            and any(m in raw_body for m in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red"))
+        )
+        if is_broken_launch_1:
+            fixed_body = load_bundled_launch_1_template()
+            new_mailing.write({"body_html": fixed_body, "body_arch": fixed_body})
+        elif raw_body:
+            fixed_body = fix_odoo_email_html_for_gmail(raw_body)
+            if fixed_body != raw_body:
+                new_mailing.write({"body_html": fixed_body})
+
+        # Warn if web.base.url is localhost/127.0.0.1 because Gmail image proxy cannot fetch local URLs
+        try:
+            ICP = self.env["ir.config_parameter"].sudo()
+            base_url = ICP.get_str("web.base.url", "") if hasattr(ICP, "get_str") else ICP.get_param("web.base.url", "")
+            if base_url and ("localhost" in base_url or "127.0.0.1" in base_url):
+                _logger.warning(
+                    "web.base.url is '%s'; external email clients like Gmail cannot load images hosted on localhost.",
+                    base_url,
+                )
+        except Exception:
+            pass
 
         filter_domain = [("list_ids", "in", [self.mailing_list_id.id])]
         if self.exclude_registered:

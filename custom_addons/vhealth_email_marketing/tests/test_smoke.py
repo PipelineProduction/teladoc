@@ -324,3 +324,64 @@ class TestVHealthSmoke(TransactionCase):
         self.assertEqual(sched.state, "completed")
         self.assertIn(dest_list.id, c1.list_ids.ids)
         self.assertEqual(len(sched.execution_line_ids), 2)
+
+    def test_gmail_html_hardening_and_image_rewrite(self):
+        from ..models.mailing import (
+            fix_odoo_email_html_for_gmail,
+            load_bundled_launch_1_template,
+            rewrite_vhealth_image_urls,
+        )
+
+        raw = (
+            '<div class="o_layout"><style id="design-element">.o_layout{}</style>'
+            '<div class="container o_mail_wrapper"><div class="row" style="background: red;">'
+            '<img src="/web/image/158-5cc5bc03/Aetna_logo_24%20%282%29.png?access_token=abc" class="img-fluid"/>'
+            '<img src="https://example.odoo.com/web/image/195-75d5d0be/20-vH_0395-New-App-Tile-1024x1024.png?access_token=xyz"/>'
+            '<a href="https://vhealth.app.link/gotostore" class="btn btn-lg rounded-circle btn-primary">Register</a>'
+            '<div class="bg-o-color-5"><p style="color:#fff;">Legal</p></div>'
+            '</div></div></div>'
+        )
+        rewritten = rewrite_vhealth_image_urls(raw)
+        self.assertIn("/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png", rewritten)
+        self.assertIn("https://example.odoo.com/vhealth_email_marketing/static/src/img/email/20-vH_0395-New-App-Tile-1024x1024.png", rewritten)
+        self.assertNotIn("/web/image/", rewritten)
+
+        fixed = fix_odoo_email_html_for_gmail(raw)
+        self.assertNotIn("design-element", fixed)
+        self.assertNotIn("background: red", fixed)
+        self.assertIn("background-color: #363C44", fixed)
+        self.assertIn("background-color: #7C3F96", fixed)
+        self.assertIn('width="120"', fixed)
+        self.assertIn("max-width: 600px", fixed)
+
+        launch_1 = load_bundled_launch_1_template()
+        self.assertNotIn("/web/image/", launch_1)
+        self.assertNotIn("design-element", launch_1)
+        self.assertIn("/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png", launch_1)
+        self.assertIn("background-color: #363C44", launch_1)
+        self.assertIn("background-color: #7C3F96", launch_1)
+        self.assertIn('width="120"', launch_1)
+
+    def test_launch_1_template_upgrade_and_render(self):
+        Mailing = self.env["mailing.mailing"]
+        tmpl = Mailing.search([("is_template", "=", True), ("subject", "ilike", "Launch #1")], limit=1)
+        broken_html = (
+            '<div class="o_layout"><style id="design-element">.x{}</style>'
+            '<div class="o_mail_wrapper"><div class="row" style="background: red;">'
+            '<img src="/web/image/158-5cc5bc03/Aetna_logo_24%20%282%29.png?access_token=abc"/>'
+            '</div></div></div>'
+        )
+        if tmpl:
+            tmpl.write({"body_html": broken_html, "body_arch": broken_html})
+        else:
+            tmpl = Mailing.create({
+                "subject": "vHealth - Launch #1 (2025)",
+                "is_template": True,
+                "body_html": broken_html,
+                "body_arch": broken_html,
+            })
+
+        Mailing._upgrade_fix_vhealth_templates()
+        self.assertNotIn("/web/image/", tmpl.body_html)
+        self.assertNotIn("background: red", tmpl.body_html)
+        self.assertIn("/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png", tmpl.body_html)

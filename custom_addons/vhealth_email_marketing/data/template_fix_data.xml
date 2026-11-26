@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Upgrade broken un-inlined vHealth email templates to Gmail-compatible HTML and static assets -->
+    <function model="mailing.mailing" name="_upgrade_fix_vhealth_templates"/>
+</odoo>
