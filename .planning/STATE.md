@@ -24,5 +24,6 @@
 | 261125-opq | Configurable SharpSpring-style Action Groups master setup | 2026-11-25 | edb7790 | [261125-opq-configurable-sharpspring-style-action-gr](./quick/261125-opq-configurable-sharpspring-style-action-gr/) |
 | 261126-kmn | Fix email template Gmail layout and image rendering for vHealth Launch 1 | 2026-11-26 | c6f10ba | [261126-kmn-fix-email-template-gmail-layout-and-imag](./quick/261126-kmn-fix-email-template-gmail-layout-and-imag/) |
 | 261126-mg3 | Fix Gmail layout and images for all remaining vHealth email templates | 2026-11-26 | 969c6cd | [261126-mg3-fix-gmail-layout-and-images-for-all-rema](./quick/261126-mg3-fix-gmail-layout-and-images-for-all-rema/) |
+| 261126-nz1 | Add Rebuild Mailing Lists action under Configuration menu with vHealth rules | 2026-11-26 | d76209d | [261126-nz1-add-rebuild-mailing-lists-action-under-c](./quick/261126-nz1-add-rebuild-mailing-lists-action-under-c/) |
 
-Last activity: 2026-11-26 - Completed quick task 261126-mg3: Fix Gmail layout and images for all remaining vHealth email templates
+Last activity: 2026-11-26 - Completed quick task 261126-nz1: Add Rebuild Mailing Lists action under Configuration menu with vHealth rules
