@@ -1,0 +1,308 @@
+<div data-name="Mailing" class="o_layout oe_unremovable oe_unmovable o_empty_theme" style="background-color: #F7F7F7; margin: 0; padding: 0;">
+    <style type="text/css">
+        @media only screen and (max-width: 620px) {
+            .vh-container { width: 100% !important; max-width: 100% !important; }
+            .vh-stack-col { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; padding-left: 0 !important; padding-right: 0 !important; padding-bottom: 16px !important; }
+        }
+    </style>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #F7F7F7; border-collapse: collapse; width: 100%; margin: 0; padding: 0;">
+        <tbody>
+            <tr>
+                <td align="center" style="padding: 16px 8px; vertical-align: top;">
+                    <!--[if (gte mso 9)|(IE)]>
+                    <table role="presentation" align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                    <tr><td align="center" valign="top" width="600">
+                    <![endif]-->
+                    <table role="presentation" class="vh-container" align="center" width="600" cellpadding="0" cellspacing="0" border="0" style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #FFFFFF; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif;">
+                        <tbody>
+                            <!-- 1. Header Logo -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 24px 20px 16px 20px; text-align: left; vertical-align: middle;">
+                                    <a target="_blank" href="#" style="text-decoration: none;">
+                                        <img src="/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png" alt="Aetna" width="200" style="width: 200px; max-width: 100%; height: auto; display: block; border: 0;"/>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <!-- 2. Hero Banner -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 10px 0 16px 0; text-align: center; vertical-align: top;">
+                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                        <img src="/vhealth_email_marketing/static/src/img/email/vhealth-email-head_launch-01_es-v3.jpg" alt="vHealth" width="600" style="width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;"/>
+                                    </t>
+                                    <t t-else="">
+                                        <img src="/vhealth_email_marketing/static/src/img/email/vhealth-email-head_launch-03_en-v3.jpg" alt="vHealth" width="600" style="width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;"/>
+                                    </t>
+                                </td>
+                            </tr>
+
+                            <!-- 3. Headline & Intro Copy -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 16px 20px; font-family: Arial, Helvetica, sans-serif; color: #000000; font-size: 16px; line-height: 1.5; text-align: left;">
+                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                        <h2 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 1.25; font-weight: bold; color: #000000; margin: 0 0 16px 0;">
+                                            ¿Qué harás con el tiempo extra?
+                                        </h2>
+                                        <hr style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;"/>
+                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #000000; margin: 0 0 16px 0;">
+                                            Como miembro de Aetna International tienes acceso a vHealth. Al evitar el tráfico, las salas de espera y las largas colas, nuestros miembros ahorran un promedio de 4,5 horas por cita.
+                                        </p>
+                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">
+                                            Entonces, ¿a qué estás esperando? Regístrate ahora para tener acceso cuando nos necesites.
+                                        </p>
+                                    </t>
+                                    <t t-else="">
+                                        <h2 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 1.25; font-weight: bold; color: #000000; margin: 0 0 16px 0;">
+                                            What will you do with the extra time?
+                                        </h2>
+                                        <hr style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;"/>
+                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #000000; margin: 0 0 16px 0;">
+                                            As an Aetna International member you have access to vHealth. By avoiding traffic, waiting rooms and long queues, our members save on average 4.5 hours per appointment.
+                                        </p>
+                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">
+                                            So what are you waiting for? Register now for access when you need us.
+                                        </p>
+                                    </t>
+                                </td>
+                            </tr>
+
+                            <!-- 3b. 4 Feature Cards -->
+                            <tr>
+                                <td style="background-color: #F7F7F7; padding: 16px 20px;">
+                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border-spacing: 0 12px;">
+                                            <tbody>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">Ilimitado y Gratuito</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">vHealth es gratuito para ti y para tu familia**, y puedes utilizarlo siempre que lo necesites.</p>
+                                                </td></tr>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">Disponible en 24 x 7</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">Los médicos están a tu disposición para ofrecerte asesoramiento y apoyo en el momento que lo necesites.</p>
+                                                </td></tr>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">Imparcial e Independiente</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">Este servicio es ofrecido independientemente de Aetna. La información compartida durante las consultas de vHealth no afectará a las condiciones de tu póliza.</p>
+                                                </td></tr>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">Médicos multilingües</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0 0 12px 0;">Las consultas telefónicas están disponibles en inglés, español, francés, mandarín, japonés, alemán, árabe, cantonés, hindi, húngaro, portugués, malayo, coreano, tailandés e italiano.</p>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">Por favor, recuerda que las videoconsultas están disponibles solamente en inglés y español.</p>
+                                                </td></tr>
+                                            </tbody>
+                                        </table>
+                                    </t>
+                                    <t t-else="">
+                                        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: separate; border-spacing: 0 12px;">
+                                            <tbody>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">Free &amp; Unlimited</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">vHealth is free for you and eligible family members to use, and you can contact us as many times as you need.</p>
+                                                </td></tr>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">Available 24 x 7</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">Doctors are on standby to provide advice and support, at a time that suits your schedule.</p>
+                                                </td></tr>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">Impartial &amp; Independent</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;">This benefit is run independently of Aetna. Information shared during vHealth consultations will not affect your policy.</p>
+                                                </td></tr>
+                                                <tr><td style="background-color: #FFFFFF; border: 1px solid #DEE2E6; padding: 20px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <h2 style="font-size: 22px; font-weight: bold; color: #7C3F96; margin: 0 0 8px 0;">A Range Of Languages</h2>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0 0 12px 0;"><strong>Telephone consultations</strong> are available in English, Spanish, French, Mandarin, Japanese, German, Arabic, Cantonese, Hindi, Hungarian, Portuguese, Malay, Korean, Thai and Italian.</p>
+                                                    <p style="font-size: 16px; line-height: 1.5; color: #000000; margin: 0;"><strong>Video consultations</strong> are available in English and Spanish only.</p>
+                                                </td></tr>
+                                            </tbody>
+                                        </table>
+                                    </t>
+                                </td>
+                            </tr>
+
+                            <!-- 4. Purple Banner -->
+                            <tr>
+                                <td style="background-color: #7C3F96; padding: 40px 20px; text-align: center; font-family: Arial, Helvetica, sans-serif;">
+                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                        <h2 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 1.25; font-weight: bold; color: #FFFFFF; margin: 0;">Ahorra tiempo y cuida tu salud</h2>
+                                    </t>
+                                    <t t-else="">
+                                        <h2 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 1.25; font-weight: bold; color: #FFFFFF; margin: 0;">Save time and keep healthy</h2>
+                                    </t>
+                                </td>
+                            </tr>
+
+                            <!-- 5. Access Code Card -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 16px 20px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border: 1px solid #DEE2E6; border-collapse: collapse; background-color: #FFFFFF;">
+                                        <tbody>
+                                            <tr>
+                                                <td style="padding: 32px 20px 24px 20px; text-align: center; font-family: Arial, Helvetica, sans-serif;">
+                                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                                        <h2 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 24px; line-height: 1.3; font-weight: 500; color: #000000; margin: 0;">Código de acceso</h2>
+                                                        <h3 style="font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 1.3; font-weight: bold; color: #8546A0; margin: 15px 0 20px 0; text-align: center;">
+                                                            <t t-out="object.x_studio_aetna_access_code or ''"/>
+                                                        </h3>
+                                                        <p style="text-align: center; margin: 0;">
+                                                            <a href="https://vhealth.app.link/gotostore" target="_blank" style="display: inline-block; background-color: #7C3F96; color: #FFFFFF; border: 1px solid #7C3F96; border-radius: 50px; padding: 12px 28px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; text-decoration: none; line-height: 1.4;">Registrese y reserve ahora</a>
+                                                        </p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <h2 style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 24px; line-height: 1.3; font-weight: 500; color: #000000; margin: 0;">Your access code</h2>
+                                                        <h3 style="font-family: Arial, Helvetica, sans-serif; font-size: 30px; line-height: 1.3; font-weight: bold; color: #8546A0; margin: 15px 0 20px 0; text-align: center;">
+                                                            <t t-out="object.x_studio_aetna_access_code or ''"/>
+                                                        </h3>
+                                                        <p style="text-align: center; margin: 0;">
+                                                            <a href="https://vhealth.app.link/gotostore" target="_blank" style="display: inline-block; background-color: #7C3F96; color: #FFFFFF; border: 1px solid #7C3F96; border-radius: 50px; padding: 12px 28px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; text-decoration: none; line-height: 1.4;">Register and Book Now</a>
+                                                        </p>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- 6. 2-Column Registration Instructions -->
+                            <tr>
+                                <td style="background-color: #F2F2F2; padding: 24px 20px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse;">
+                                        <tbody>
+                                            <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                                <tr>
+                                                    <td class="vh-stack-col" width="50%" style="width: 50%; padding: 0 6px 0 0; vertical-align: top;">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/instructions-1_es-v3.png" alt="Instrucciones paso 1" width="274" style="width: 100%; max-width: 274px; height: auto; display: block; border: 0;"/>
+                                                    </td>
+                                                    <td class="vh-stack-col" width="50%" style="width: 50%; padding: 0 0 0 6px; vertical-align: top;">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/instructions-2_es.png" alt="Instrucciones paso 2" width="274" style="width: 100%; max-width: 274px; height: auto; display: block; border: 0;"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                            <t t-else="">
+                                                <tr>
+                                                    <td class="vh-stack-col" width="50%" style="width: 50%; padding: 0 6px 0 0; vertical-align: top;">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/instructions-1_en.png" alt="Instructions step 1" width="274" style="width: 100%; max-width: 274px; height: auto; display: block; border: 0;"/>
+                                                    </td>
+                                                    <td class="vh-stack-col" width="50%" style="width: 50%; padding: 0 0 0 6px; vertical-align: top;">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/instructions-2_en.png" alt="Instructions step 2" width="274" style="width: 100%; max-width: 274px; height: auto; display: block; border: 0;"/>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- 7. 2-Column Video GIF + Doctor Access & Booking CTAs -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 32px 20px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse;">
+                                        <tbody>
+                                            <tr>
+                                                <td class="vh-stack-col" width="48%" style="width: 48%; padding: 0 12px 0 0; vertical-align: top;">
+                                                    <img src="/vhealth_email_marketing/static/src/img/email/vhealth-video_email_v2.gif" alt="vHealth Video" width="260" style="width: 100%; max-width: 260px; height: auto; display: block; border: 0;"/>
+                                                </td>
+                                                <td class="vh-stack-col" width="52%" style="width: 52%; padding: 8px 0 0 8px; vertical-align: top; font-family: Arial, Helvetica, sans-serif; color: #000000;">
+                                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #000000; margin: 0 0 14px 0;">Como miembro de Aetna, dispones de acceso gratuito e ilimitado a un médico las 24 horas del día, los 365 días del año.</p>
+                                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #000000; margin: 0 0 16px 0;">Ahora, céntrate en lo interesante: <strong><a href="https://vhealth.app.link/gotostore" target="_blank" style="color: #7C3F96; text-decoration: underline;">descárgate</a></strong> la app y regístrate para saber qué hacer cuando nos necesites.</p>
+                                                        <h3 style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; line-height: 1.3; font-weight: bold; color: #7C3F96; margin: 8px 0 14px 0;">Reservar una cita es fácil.</h3>
+                                                        <p style="margin: 0 0 12px 0;"><a style="text-decoration: none;" title="Register and book now" href="https://vhealth.app.link/gotostore" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/vhealth_register-book-now_es.png" alt="Regístrese y reserve ahora" width="250" style="width: 100%; max-width: 250px; height: auto; display: block; border: 0;"/></a></p>
+                                                        <p style="margin: 0;"><a style="text-decoration: none;" title="Watch our video" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=o0k9Jt59jGwmDH2KiJ0/aBQOwQ2CAc%20L" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/vhealth_watch-video_es.png" alt="Ver video" width="210" style="width: 85%; max-width: 210px; height: auto; display: block; border: 0;"/></a></p>
+                                                    </t>
+                                                    <t t-else="">
+                                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #000000; margin: 0 0 14px 0;">As an Aetna member, you have free &amp; unlimited access to a doctor 24 hours a day, 365 days a year.</p>
+                                                        <p style="font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #000000; margin: 0 0 16px 0;">Get the boring bit out of the way now - <strong><a href="https://vhealth.app.link/gotostore" target="_blank" style="color: #7C3F96; text-decoration: underline;">download</a></strong> and register so you know where to turn when you need us.</p>
+                                                        <h3 style="font-family: Arial, Helvetica, sans-serif; font-size: 20px; line-height: 1.3; font-weight: bold; color: #7C3F96; margin: 8px 0 14px 0;">Booking an appointment is easy.</h3>
+                                                        <p style="margin: 0 0 12px 0;"><a style="text-decoration: none;" title="Register and book now" href="https://vhealth.app.link/gotostore" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/vhealth_register-book-now_en.png" alt="Register and book now" width="250" style="width: 100%; max-width: 250px; height: auto; display: block; border: 0;"/></a></p>
+                                                        <p style="margin: 0;"><a style="text-decoration: none;" title="Watch our video" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=o0k9Jt59jGwmDH2KiJ0/aBQOwQ2CAc%20L" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/vhealth_watch-video_en.png" alt="Watch our video" width="220" style="width: 88%; max-width: 220px; height: auto; display: block; border: 0;"/></a></p>
+                                                    </t>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- 8. 3-Column App Store / Google Play / Website Badges -->
+                            <tr>
+                                <td style="background-color: #F7F7F7; padding: 20px 16px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse;">
+                                        <tbody>
+                                            <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                                <tr>
+                                                    <td width="33%" style="width: 33.33%; padding: 6px; text-align: center; vertical-align: middle;"><a style="text-decoration: none;" title="vHealth (Worldwide) - App Store" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=GdW9IerORUbJ3nqYsa5kVYn1B49HO2Z2" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/download-app-store-badge-es-2.png" alt="App Store" width="165" style="width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;"/></a></td>
+                                                    <td width="33%" style="width: 33.33%; padding: 6px; text-align: center; vertical-align: middle;"><a style="text-decoration: none;" title="vHealth (Worldwide) - Google Play" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=YpmhHMQ4YXfgEWMed%20oidQjz0SdDBWYS" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/google-play-badge-es.png" alt="Google Play" width="165" style="width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;"/></a></td>
+                                                    <td width="33%" style="width: 33.33%; padding: 6px; text-align: center; vertical-align: middle;"><a style="text-decoration: none;" title="Access via our website" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=IJkkzbp8yjyhhKtMnd4YKIqHIeKsE3sH" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/vhealth-access-via-website-es.png" alt="Accede en nuestra web" width="165" style="width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;"/></a></td>
+                                                </tr>
+                                            </t>
+                                            <t t-else="">
+                                                <tr>
+                                                    <td width="33%" style="width: 33.33%; padding: 6px; text-align: center; vertical-align: middle;"><a style="text-decoration: none;" title="vHealth (Worldwide) - App Store" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=GdW9IerORUbJ3nqYsa5kVYn1B49HO2Z2" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/download-app-store-badge-en-2.png" alt="App Store" width="165" style="width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;"/></a></td>
+                                                    <td width="33%" style="width: 33.33%; padding: 6px; text-align: center; vertical-align: middle;"><a style="text-decoration: none;" title="vHealth (Worldwide) - Google Play" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=YpmhHMQ4YXfgEWMed%20oidQjz0SdDBWYS" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/google-play-badge-en.png" alt="Google Play" width="165" style="width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;"/></a></td>
+                                                    <td width="33%" style="width: 33.33%; padding: 6px; text-align: center; vertical-align: middle;"><a style="text-decoration: none;" title="Access via our website" href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=IJkkzbp8yjyhhKtMnd4YKIqHIeKsE3sH" target="_blank" rel="noopener"><img src="/vhealth_email_marketing/static/src/img/email/vhealth-access-via-website-v2.png" alt="Access via our website" width="165" style="width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;"/></a></td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- 9. Centered App Tile Icon -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 28px 20px 8px 20px; text-align: center;">
+                                    <img src="/vhealth_email_marketing/static/src/img/email/20-vH_0395-New-App-Tile-1024x1024.png" alt="vHealth App" width="120" style="width: 120px; max-width: 120px; height: auto; display: block; margin: 0 auto; border: 0;"/>
+                                </td>
+                            </tr>
+
+                            <!-- 10. 3-Column Policy / Contact / Other Links -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 24px 10px 32px 10px;">
+                                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif; color: #333333; font-size: 13px; line-height: 1.5;">
+                                        <tbody>
+                                            <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                                <tr>
+                                                    <td class="vh-stack-col" width="33%" style="width: 33.33%; padding: 0 10px; vertical-align: top;"><h5 style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #000000; margin: 0 0 8px 0;">CONSULTAS SOBRE LA PÓLIZA DE AETNA</h5><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #333333; margin: 0;">Si tienes alguna pregunta sobre tu póliza o alguna reclamación, comunícate con el equipo de atención al cliente de Aetna que aparece en el reverso de tu tarjeta de miembro.</p></td>
+                                                    <td class="vh-stack-col" width="33%" style="width: 33.33%; padding: 0 10px; vertical-align: top;"><h5 style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #000000; margin: 0 0 8px 0;">CONTACTA CON NOSOTROS</h5><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #333333; margin: 0 0 8px 0;">Si tienes problemas para acceder al servicio o quieres hacer preguntas sobre vHealth, ponte en contacto con:</p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #454545; margin: 0;">UK: <a href="tel:00442034992851" style="color: #363C44; text-decoration: underline;">+44 (0) 20 3499 2851</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #454545; margin: 0;">USA: <a href="tel:0018572563784" style="color: #333333; text-decoration: underline;">1-857-256-3784</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #454545; margin: 0;">Email: <a href="mailto:vhealth@teladochealth.com" style="color: #333333; text-decoration: underline;">vhealth@teladochealth.com</a></p></td>
+                                                    <td class="vh-stack-col" width="33%" style="width: 33.33%; padding: 0 10px; vertical-align: top;"><h5 style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #000000; margin: 0 0 8px 0;">Otros enlaces</h5><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; margin: 0 0 4px 0;"><a href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=PzE584iqMe0CIZI3RxdyDaZsjZuwLCly" target="_blank" style="color: #333333; text-decoration: underline;">Más información sobre vHealth</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; margin: 0 0 4px 0;"><a t-att-href="object.x_studio_family_invite_form_url or 'https://info.vhealth-teladochealth.com/invite'" target="_blank" style="color: #333333; text-decoration: underline;">Compártelo con tu familia**</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; margin: 0;"><a href="https://info.vhealth-teladochealth.com/stop-register/" target="_blank" style="color: #333333; text-decoration: underline;">¿Ya estás registrado? Haz clic aquí</a></p></td>
+                                                </tr>
+                                            </t>
+                                            <t t-else="">
+                                                <tr>
+                                                    <td class="vh-stack-col" width="33%" style="width: 33.33%; padding: 0 10px; vertical-align: top;"><h5 style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #000000; margin: 0 0 8px 0;">AETNA POLICY QUERIES</h5><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #333333; margin: 0;">If you have questions about your Aetna International policy, please call the member services number on the back of your member ID card.</p></td>
+                                                    <td class="vh-stack-col" width="33%" style="width: 33.33%; padding: 0 10px; vertical-align: top;"><h5 style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #000000; margin: 0 0 8px 0;">CONTACT VHEALTH</h5><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #333333; margin: 0 0 8px 0;">If you have issues accessing the service, or have questions about vHealth, please contact:</p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #454545; margin: 0;">UK: <a href="tel:00442034992851" style="color: #363C44; text-decoration: underline;">+44 (0) 20 3499 2851</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #454545; margin: 0;">USA: <a href="tel:0018572563784" style="color: #333333; text-decoration: underline;">1-857-256-3784</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; color: #454545; margin: 0;">Email: <a href="mailto:vhealth@teladochealth.com" style="color: #333333; text-decoration: underline;">vhealth@teladochealth.com</a></p></td>
+                                                    <td class="vh-stack-col" width="33%" style="width: 33.33%; padding: 0 10px; vertical-align: top;"><h5 style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #000000; margin: 0 0 8px 0;">Other links</h5><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; margin: 0 0 4px 0;"><a href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=o0k9Jt59jGwmDH2KiJ0/aBQOwQ2CAc%20L" target="_blank" style="color: #333333; text-decoration: underline;">More vHealth information</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; margin: 0 0 4px 0;"><a t-att-href="object.x_studio_family_invite_form_url or 'https://info.vhealth-teladochealth.com/invite'" target="_blank" style="color: #333333; text-decoration: underline;">Invite your family members**</a></p><p style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; line-height: 1.5; margin: 0;"><a href="https://info.vhealth-teladochealth.com/stop-register/" target="_blank" style="color: #333333; text-decoration: underline;">Already registered? Click here</a></p></td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <!-- 11. Teladoc Health Footer Logo -->
+                            <tr>
+                                <td style="background-color: #FFFFFF; padding: 16px 20px 24px 20px; text-align: center; font-family: Arial, Helvetica, sans-serif;">
+                                    <a target="_blank" href="#" style="text-decoration: none;"><img src="/vhealth_email_marketing/static/src/img/email/teladochealth_logo_plum_aqua_rgb.png" alt="Teladoc Health" width="200" style="width: 200px; max-width: 100%; height: auto; display: block; margin: 0 auto 16px auto; border: 0;"/></a>
+                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'"><p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #000000; margin: 0;">vHealth (Worldwide) en asociación con Teladoc Health</p></t>
+                                    <t t-else=""><p style="text-align: center; font-family: Arial, Helvetica, sans-serif; font-size: 15px; line-height: 1.5; color: #000000; margin: 0;">vHealth (Worldwide) in partnership with Teladoc Health</p></t>
+                                </td>
+                            </tr>
+
+                            <!-- 12. Legal Disclaimer Dark Footer -->
+                            <tr>
+                                <td style="background-color: #363C44; padding: 32px 20px; font-family: Arial, Helvetica, sans-serif; color: #FFFFFF;">
+                                    <t t-if="(object.x_studio_aetna_language or '').strip().lower() == 'spanish'">
+                                        <p style="text-align: left; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 10px; line-height: 1.5; margin: 0;">*Como la regulación de la prescripción médica varía país por país, no siempre podemos garantizar una prescripción médica. **Los miembros elegibles de tu familia son aquellos que están cubiertos por tu Aetna Health Plan. vHealth es un servicio de Advance Medical. Advance Medical conjuntamente con sus médicos y su personal son contratistas independientes y no son agentes ni empleados de Aetna. Aetna no ofrece atención ni garantiza el acceso a los servicios de salud. vHealth, el servicio de Advance Medical descrito en este documento solo está disponible de forma gratuita para los miembros de Aetna durante el período establecido por Aetna. El contenido de esta comunicación (incluidos los archivos adjuntos) es confidencial. Si no es el destinatario de esta comunicación, cualquier divulgación, copia, distribución o uso de su contenido está estrictamente prohibida, y debe notificar al remitente de inmediato y luego eliminarlo (incluidos los archivos adjuntos) de su sistema. Aetna no proporcionará ningún servicio que infrinja las regulaciones económicas o comerciales aplicables de los Estados Unidos (EE. UU.), Las Naciones Unidas (ONU) o la Unión Europea (UE). Esto incluye regulaciones relacionadas con una persona o entidad bloqueada, o un país sancionado por los EE. UU., A menos que esté permitido bajo una licencia válida de Office of Foreign Asset Control (OFAC). Para obtener más información sobre OFAC, visite https://www.treasury.gov/resource-center/sanctions/Pages/default.aspx. Apple, el logotipo de Apple y el iPhone son marcas comerciales de Apple Inc., registradas en los EE. UU. Y en otros países. App Store es una marca de servicio de Apple Inc. Google Play y los logotipos de Google Play son marcas comerciales de Google LLC. Aetna® es una marca comercial de Aetna Inc. y está protegida en todo el mundo mediante registros de marcas comerciales y tratados. Si ya se ha unido a vHealth por Aetna, haga clic en este enlace. Al darse de baja de la suscripción, no recibirá correos electrónicos futuros relacionados con vHealth. Aún puede seguir recibiendo material de marketing directamente de Aetna como parte de su plan.</p>
+                                    </t>
+                                    <t t-else="">
+                                        <p style="text-align: left; color: #FFFFFF; font-family: Arial, Helvetica, sans-serif; font-size: 10px; line-height: 1.5; margin: 0;">*As prescription regulation varies country by country, we cannot guarantee a prescription. **Eligible family members are those covered by your Aetna Health Plan. vHealth is an Advance Medical service. Advance Medical together with their physicians and staff are independent contractors and are neither agents nor employees of Aetna. Aetna does not provide care or guarantee access to health services. vHealth, the Advance Medical service described in this document are only available free of charge to Aetna members for the period set out by Aetna. The contents of this communication (including attachments) are confidential and may be privileged. If you are not the intended recipient of this communication, any disclosure, copying, distribution or use of its contents is strictly prohibited, and you should notify the sender immediately and then delete it (including any attachments) from your system. Aetna will not provide any services that violate any United States (US), United Nations (UN), European Union (EU) or other applicable economic or trade sanctions. This includes sanctions related to a blocked person or entity, or a country under sanction by the US, unless permitted under a valid written Office of Foreign Asset Control (OFAC) license. For more information on OFAC, visit https://www.treasury.gov/resource-center/sanctions/Pages/default.aspx. Apple, the Apple logo and iPhone are trademarks of Apple Inc., registered in the U.S. and other countries. App Store is a service mark of Apple Inc. Google Play and the Google Play logos are trademarks of Google LLC. Aetna® is a trademark of Aetna Inc. and is protected throughout the world by trademark registrations and treaties. If you have already joined vHealth through Aetna, click on this link. By unsubscribing, you are opting out of general vHealth communications only. Registered users will still receive key emails such as appointment confirmations. You may still receive communications from Aetna International as part of your plan.</p>
+                                    </t>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--[if (gte mso 9)|(IE)]></td></tr></table><![endif]-->
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

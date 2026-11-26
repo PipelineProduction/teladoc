@@ -392,3 +392,40 @@ class TestVHealthSmoke(TransactionCase):
         Mailing._upgrade_fix_vhealth_templates()
         self.assertIn("Custom Heading", tmpl.body_html)
         self.assertIn("/web/image/999-abc/new_custom_banner.png", tmpl.body_html)
+
+    def test_all_seven_bundled_templates_and_matching(self):
+        from ..models.mailing import (
+            _BUNDLED_TEMPLATE_FILES,
+            load_bundled_template,
+            match_bundled_template_key,
+            fix_odoo_email_html_for_gmail,
+        )
+
+        self.assertEqual(match_bundled_template_key("vHealth - Launch #1 (2025)", ""), "launch_1")
+        self.assertEqual(match_bundled_template_key("vHealth - Launch #2 (2025)", ""), "launch_2")
+        self.assertEqual(match_bundled_template_key("vHealth - Launch #3 (2025)", "vhealth-email-head_launch-01_es-v3.jpg"), "launch_3")
+        self.assertEqual(match_bundled_template_key("vHealth - Launch #4 (2025)", ""), "launch_4")
+        self.assertEqual(match_bundled_template_key("vHealth Worldwide - Family Invited", ""), "family_invited")
+        self.assertEqual(match_bundled_template_key("VHealth Register Email", ""), "register")
+        self.assertEqual(match_bundled_template_key("VHealth Non-Register Email", ""), "non_register")
+
+        for key in _BUNDLED_TEMPLATE_FILES:
+            html = load_bundled_template(key)
+            self.assertNotIn("/web/image/", html, f"{key} must not have /web/image/ URLs")
+            self.assertNotIn("design-element", html, f"{key} must not have design-element")
+            self.assertNotIn("{$", html, f"{key} must not have unconverted SharpSpring tags")
+            self.assertIn("background-color: #363C44", html, f"{key} missing footer dark background")
+            self.assertIn("background-color: #7C3F96", html, f"{key} missing purple CTA/banner")
+            self.assertIn('width="120"', html, f"{key} missing 120px app tile width")
+
+        # Verify SharpSpring tag cleanup in fix_odoo_email_html_for_gmail
+        ss_raw = (
+            '<div class="o_mail_wrapper">'
+            '<a href="{$family_invite_form_url_5d11dd4d2ed3f!&quot;https://vhealth.app.link/gotostore&quot;}">click</a>'
+            '<h2>{$firstName}, {$primary_member_email__1__5c2cc0c228ec8!"A family member"} has invited you</h2>'
+            '</div>'
+        )
+        ss_fixed = fix_odoo_email_html_for_gmail(ss_raw)
+        self.assertNotIn("{$", ss_fixed)
+        self.assertIn("https://vhealth.app.link/gotostore", ss_fixed)
+        self.assertIn("A family member has invited you", ss_fixed)

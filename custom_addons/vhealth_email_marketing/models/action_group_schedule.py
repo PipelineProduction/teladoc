@@ -2,7 +2,7 @@ import logging
 from datetime import timedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from .mailing import fix_odoo_email_html_for_gmail, load_bundled_launch_1_template
+from .mailing import fix_odoo_email_html_for_gmail, load_bundled_template, match_bundled_template_key
 
 _logger = logging.getLogger(__name__)
 
@@ -367,12 +367,12 @@ class VHealthActionGroupSchedule(models.Model):
 
         # Ensure outgoing mailing HTML is Gmail-compatible and uses public static image URLs
         raw_body = new_mailing.body_html or new_mailing.body_arch or ""
-        is_broken_launch_1 = (
-            "launch #1" in (template.subject or "").lower()
-            and any(m in raw_body for m in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red"))
+        tmpl_key = match_bundled_template_key(template.subject, raw_body)
+        is_broken_layout = any(
+            m in raw_body for m in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red", "{$", "%7B%24")
         )
-        if is_broken_launch_1:
-            fixed_body = load_bundled_launch_1_template()
+        if tmpl_key and is_broken_layout:
+            fixed_body = load_bundled_template(tmpl_key)
             new_mailing.write({"body_html": fixed_body, "body_arch": fixed_body})
         elif raw_body:
             fixed_body = fix_odoo_email_html_for_gmail(raw_body)

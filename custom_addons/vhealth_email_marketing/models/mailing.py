@@ -44,6 +44,14 @@ VHEALTH_IMAGE_FILENAME_MAP = {
     "teladochealth_logo_plum_aqua_rgb (1).png": "teladochealth_logo_plum_aqua_rgb.png",
     "teladochealth_logo_plum_aqua_rgb (2).png": "teladochealth_logo_plum_aqua_rgb.png",
     "teladochealth_logo_plum_aqua_rgb.png": "teladochealth_logo_plum_aqua_rgb.png",
+    "vhealth-worldwide_2026-09_reg_es.jpg": "vHealth-worldwide_2026-09_Reg_es.jpg",
+    "vhealth-worldwide_2026-09_reg_en.jpg": "vHealth-worldwide_2026-09_reg_en.jpg",
+    "vhealth-worldwide_family-invite-2025-es.jpg": "vhealth-worldwide_family-invite-2025-es.jpg",
+    "vhealth-worldwide_family-invite-2025-en.jpg": "vhealth-worldwide_family-invite-2025-en.jpg",
+    "vhealth-worldwide_2026-09_nonreg_es (1).jpg": "vHealth-worldwide_2026-09_nonreg_es.jpg",
+    "vhealth-worldwide_2026-09_nonreg_es.jpg": "vHealth-worldwide_2026-09_nonreg_es.jpg",
+    "vhealth-worldwide_2026-09_nonreg_en (1).jpg": "vHealth-worldwide_2026-09_nonreg_en.jpg",
+    "vhealth-worldwide_2026-09_nonreg_en.jpg": "vHealth-worldwide_2026-09_nonreg_en.jpg",
 }
 
 # Target display widths for bundled images so Gmail never renders 2000px/1200px/660px assets at native size
@@ -52,6 +60,7 @@ _IMAGE_WIDTH_RULES = [
     ("aetna_logo_24", ("200", "width: 200px; max-width: 100%; height: auto; display: block; border: 0;")),
     ("teladochealth_logo_plum_aqua_rgb", ("200", "width: 200px; max-width: 100%; height: auto; display: block; margin: 0 auto; border: 0;")),
     ("vhealth-email-head_", ("600", "width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;")),
+    ("vhealth-worldwide_", ("600", "width: 100%; max-width: 600px; height: auto; display: block; margin: 0 auto; border: 0;")),
     ("instructions-", ("274", "width: 100%; max-width: 274px; height: auto; display: block; border: 0;")),
     ("vhealth-video_email", ("260", "width: 100%; max-width: 260px; height: auto; display: block; border: 0;")),
     ("vhealth_register-book-now", ("250", "width: 100%; max-width: 250px; height: auto; display: block; border: 0;")),
@@ -72,9 +81,19 @@ _DESIGN_ELEMENT_STYLE_RE = re.compile(
 )
 
 _SHARPSPRING_INVITE_RE = re.compile(
-    r"""%7B%24family_invite_form_url_[^"']*https://info\.vhealth-teladochealth\.com/invite[^"']*""",
+    r"""(?:%7B%24|\{\$)family_invite_form_url_[^"'}]+(?:\}|%7D)?""",
     re.IGNORECASE,
 )
+
+_BUNDLED_TEMPLATE_FILES = {
+    "launch_1": "vhealth_launch_1.html",
+    "launch_2": "vhealth_launch_2.html",
+    "launch_3": "vhealth_launch_3.html",
+    "launch_4": "vhealth_launch_4.html",
+    "family_invited": "vhealth_family_invited.html",
+    "non_register": "vhealth_non_register_email.html",
+    "register": "vhealth_register_email.html",
+}
 
 
 def rewrite_vhealth_image_urls(html):
@@ -265,13 +284,32 @@ def _propagate_colgroup_widths(html):
     return table_re.sub(_fix_table, html)
 
 
+def _clean_sharpspring_tags(html):
+    """Replace unconverted SharpSpring merge tags with safe fallback URLs or strings."""
+    if not html:
+        return html
+    if "family_invite_form_url" in html:
+        def _rep_invite(m):
+            txt = m.group(0)
+            if "gotostore" in txt:
+                return "https://vhealth.app.link/gotostore"
+            return "https://info.vhealth-teladochealth.com/invite"
+        html = _SHARPSPRING_INVITE_RE.sub(_rep_invite, html)
+    html = re.sub(
+        r"\{\$firstName\},\s*\{\$primary_member_email__1__[^}]+!\s*(?:\"|&quot;)([^\"&}]+)(?:\"|&quot;)\}",
+        r"\1",
+        html,
+    )
+    return html
+
+
 def fix_odoo_email_html_for_gmail(html):
     """Ensure Odoo mass_mailing HTML uses public image assets and Gmail-compatible inline styles."""
     if not html:
         return html
 
     html = rewrite_vhealth_image_urls(html)
-    html = _SHARPSPRING_INVITE_RE.sub("https://info.vhealth-teladochealth.com/invite", html)
+    html = _clean_sharpspring_tags(html)
 
     needs_layout_fix = any(
         marker in html
@@ -285,16 +323,49 @@ def fix_odoo_email_html_for_gmail(html):
     return html
 
 
-def load_bundled_launch_1_template():
-    """Load the Gmail-hardened Launch #1 HTML template from module data."""
+def load_bundled_template(key):
+    """Load one of the Gmail-hardened HTML templates from data/templates/."""
+    filename = _BUNDLED_TEMPLATE_FILES.get(key)
+    if not filename:
+        raise ValueError(f"Unknown bundled template key: {key}")
     tmpl_path = os.path.join(
         os.path.dirname(os.path.dirname(__file__)),
         "data",
         "templates",
-        "vhealth_launch_1.html",
+        filename,
     )
     with open(tmpl_path, "r", encoding="utf-8") as f:
         return f.read()
+
+
+def load_bundled_launch_1_template():
+    """Load the Gmail-hardened Launch #1 HTML template from module data."""
+    return load_bundled_template("launch_1")
+
+
+def match_bundled_template_key(subject="", body=""):
+    """Identify which bundled vHealth template matches a mailing's subject or body."""
+    subj = (subject or "").lower()
+    content = (body or "").lower()
+
+    if "launch #1" in subj or "vhealth-email-head_launch-01" in content:
+        # Distinguish Launch #3 Spanish which reuses launch-01_es-v3 banner
+        if "launch #3" in subj or "vhealth-email-head_launch-03" in content or "what will you do with the extra time" in content or "qué harás con el tiempo extra" in content:
+            return "launch_3"
+        return "launch_1"
+    if "launch #2" in subj or "vhealth-email-head_launch-02" in content:
+        return "launch_2"
+    if "launch #3" in subj or "vhealth-email-head_launch-03" in content:
+        return "launch_3"
+    if "launch #4" in subj or "vhealth-email-head_launch-04" in content:
+        return "launch_4"
+    if "family invited" in subj or "family-invite-2025" in content:
+        return "family_invited"
+    if "non-register" in subj or "non register" in subj or "nonreg" in content:
+        return "non_register"
+    if "register email" in subj or "2026-09_reg_" in content:
+        return "register"
+    return None
 
 
 class MailingMailing(models.Model):
@@ -335,20 +406,21 @@ class MailingMailing(models.Model):
 
     def action_fix_gmail_layout(self):
         """Update selected mailings/templates with Gmail-compatible layout and public static images."""
-        launch_1_html = load_bundled_launch_1_template()
         updated = 0
         for rec in self:
-            subject_lower = (rec.subject or "").lower()
             body = rec.body_html or rec.body_arch or ""
-            is_launch_1 = "launch #1" in subject_lower or "vhealth-email-head_launch-01" in body.lower()
+            tmpl_key = match_bundled_template_key(rec.subject, body)
             is_broken_layout = (
                 "design-element" in body
                 or "o_mail_wrapper" in body
                 or "background: red" in body
+                or "{$" in body
+                or "%7B%24" in body
                 or not body.strip()
             )
-            if is_launch_1 and is_broken_layout:
-                rec.write({"body_html": launch_1_html, "body_arch": launch_1_html})
+            if tmpl_key and is_broken_layout:
+                bundled_html = load_bundled_template(tmpl_key)
+                rec.write({"body_html": bundled_html, "body_arch": bundled_html})
                 updated += 1
             else:
                 fixed_html = fix_odoo_email_html_for_gmail(rec.body_html) if rec.body_html else rec.body_html
@@ -382,16 +454,17 @@ class MailingMailing(models.Model):
         ])
         if not templates:
             return
-        launch_1_html = load_bundled_launch_1_template()
         for tmpl in templates:
             body = tmpl.body_html or tmpl.body_arch or ""
+            tmpl_key = match_bundled_template_key(tmpl.subject, body)
             is_broken_layout = any(
                 marker in body
-                for marker in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red")
+                for marker in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red", "{$", "%7B%24")
             )
-            if "launch #1" in (tmpl.subject or "").lower() and is_broken_layout:
-                tmpl.write({"body_html": launch_1_html, "body_arch": launch_1_html})
-                _logger.info("Upgraded vHealth Launch #1 template (ID %s) to Gmail-compatible HTML.", tmpl.id)
+            if tmpl_key and is_broken_layout:
+                bundled_html = load_bundled_template(tmpl_key)
+                tmpl.write({"body_html": bundled_html, "body_arch": bundled_html})
+                _logger.info("Upgraded vHealth template '%s' (%s, ID %s) to Gmail-compatible HTML.", tmpl.subject, tmpl_key, tmpl.id)
             elif is_broken_layout or "/web/image/" in body:
                 vals = {}
                 if tmpl.body_html:
