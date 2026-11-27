@@ -47,6 +47,7 @@
                             <field name="exclude_registered" readonly="1"/>
                             <field name="schedule_type" readonly="state != 'draft'"/>
                             <field name="scheduled_datetime" invisible="schedule_type != 'scheduled'" readonly="state != 'draft'"/>
+                            <field name="custom_interval_minutes" readonly="state in ('completed', 'cancelled')"/>
                         </group>
                         <group string="Execution Status">
                             <field name="current_step" readonly="1"/>

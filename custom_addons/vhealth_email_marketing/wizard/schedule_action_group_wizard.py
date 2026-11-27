@@ -49,7 +49,12 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
     scheduled_datetime = fields.Datetime(
         string="Date and Time",
         default=fields.Datetime.now,
-        help="Date and time when the first step should execute. Subsequent steps will follow the configured wait days.",
+        help="Date and time when the first step should execute. Subsequent steps will follow the configured wait days or custom delay minutes.",
+    )
+    custom_interval_minutes = fields.Integer(
+        string="Custom Delay Between Steps (Minutes)",
+        default=0,
+        help="Optional testing override: e.g. set 10 to wait 10 minutes between Launch #1, #2, #3, #4 instead of 7 days. Leave 0 to use the Action Group's default schedule.",
     )
 
     total_contacts = fields.Integer(string="Total Contacts", compute="_compute_list_summary")
@@ -65,7 +70,7 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
             return self.env["vhealth.action.group"]._get_new_group_launch()
         return self.env["vhealth.action.group"].sudo().search([("active", "=", True)], limit=1)
 
-    @api.depends("mailing_list_id", "action_group_id", "action_group", "schedule_type", "scheduled_datetime")
+    @api.depends("mailing_list_id", "action_group_id", "action_group", "schedule_type", "scheduled_datetime", "custom_interval_minutes")
     def _compute_list_summary(self):
         for rec in self:
             if not rec.mailing_list_id:
@@ -104,14 +109,28 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
             step_lines = []
             if ag and ag.step_ids:
                 steps = ag.step_ids.sorted(key=lambda s: (s.sequence, s.id))
-                day_offset = 0
+                offset_minutes = 0
+                custom_min = rec.custom_interval_minutes or 0
                 for idx, step in enumerate(steps):
-                    when_label = _("Start") if day_offset == 0 else _("+%d days") % day_offset
+                    if offset_minutes == 0:
+                        when_label = _("Start")
+                    else:
+                        days, mins = divmod(offset_minutes, 1440)
+                        parts = []
+                        if days:
+                            parts.append(_("%d day") % days if days == 1 else _("%d days") % days)
+                        if mins:
+                            parts.append(_("%d min") % mins)
+                        when_label = "+%s" % " ".join(parts)
                     step_lines.append(
                         f"• <b>{escape(when_label)}:</b> {escape(step._describe_step())}<br/>"
                     )
-                    if idx < len(steps) - 1 and step.delay_days > 0:
-                        day_offset += step.delay_days
+                    has_delay = (step.delay_days > 0 or step.delay_minutes > 0)
+                    if idx < len(steps) - 1 and has_delay:
+                        if custom_min > 0:
+                            offset_minutes += custom_min
+                        else:
+                            offset_minutes += (step.delay_days * 1440) + step.delay_minutes
             else:
                 step_lines.append(f"• {escape(_('No steps configured yet on this Action Group.'))}<br/>")
 
@@ -160,12 +179,16 @@ class VHealthScheduleActionGroupWizard(models.TransientModel):
                 "A running campaign '%s' already exists for list '%s'. Please wait for it to complete or cancel it first."
             ) % (existing_running.name, self.mailing_list_id.name))
 
+        if self.custom_interval_minutes < 0:
+            raise UserError(_("Custom Delay Between Steps (Minutes) cannot be negative."))
+
         schedule_vals = {
             "mailing_list_id": self.mailing_list_id.id,
             "action_group_id": ag.id,
             "action_group": ag.code if ag.code == "new_group_launch" else False,
             "schedule_type": self.schedule_type,
             "scheduled_datetime": self.scheduled_datetime if self.schedule_type == "scheduled" else fields.Datetime.now(),
+            "custom_interval_minutes": self.custom_interval_minutes,
         }
 
         campaign = self.env["vhealth.action.group.schedule"].create(schedule_vals)

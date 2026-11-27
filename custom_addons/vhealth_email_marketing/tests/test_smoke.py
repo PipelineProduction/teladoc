@@ -523,3 +523,131 @@ class TestVHealthSmoke(TransactionCase):
         # Verify menu exists
         m_rebuild = self.env.ref("vhealth_email_marketing.menu_vhealth_rebuild_mailing_lists", raise_if_not_found=False)
         self.assertTrue(m_rebuild)
+
+    def test_custom_delay_minutes_and_testing_override(self):
+        from datetime import timedelta
+        from odoo.exceptions import ValidationError, UserError
+
+        ActionGroup = self.env["vhealth.action.group"]
+        List = self.env["mailing.list"]
+        Contact = self.env["mailing.contact"]
+        Mailing = self.env["mailing.mailing"]
+        Wizard = self.env["vhealth.schedule.action.group.wizard"]
+
+        tmpl = Mailing.create({
+            "subject": "Test Delay Email",
+            "is_template": True,
+            "body_html": "<p>Test Delay</p>",
+            "body_arch": "<p>Test Delay</p>",
+        })
+        src_list = List.create({"name": "Test Delay Source List"})
+        dest_list = List.create({"name": "Test Delay Dest List"})
+        c1 = Contact.create({
+            "name": "Delay Test Contact",
+            "email": "delay_test@example.com",
+            "list_ids": [(4, src_list.id)],
+            "x_studio_app_registered": "No",
+        })
+
+        # Action group with 7-day wait after step 1, 0-delay chaining on step 2, and final email step 3
+        ag = ActionGroup.create({
+            "name": "TEST INTERVAL ACTION GROUP",
+            "exclude_registered": True,
+            "step_ids": [
+                (0, 0, {
+                    "sequence": 10,
+                    "action_type": "send_email",
+                    "mailing_template_id": tmpl.id,
+                    "delay_days": 7,
+                    "delay_minutes": 0,
+                }),
+                (0, 0, {
+                    "sequence": 20,
+                    "action_type": "add_to_list",
+                    "target_mailing_list_id": dest_list.id,
+                    "delay_days": 0,
+                    "delay_minutes": 0,
+                }),
+                (0, 0, {
+                    "sequence": 30,
+                    "action_type": "send_email",
+                    "mailing_template_id": tmpl.id,
+                    "delay_days": 0,
+                    "delay_minutes": 15,
+                }),
+            ],
+        })
+
+        # Negative values must be rejected
+        with self.assertRaises(ValidationError):
+            ag.step_ids[0].write({"delay_minutes": -1})
+
+        # Schedule with custom 10-minute override for testing
+        wiz = Wizard.create({
+            "mailing_list_id": src_list.id,
+            "action_group_id": ag.id,
+            "schedule_type": "now",
+            "custom_interval_minutes": 10,
+        })
+        self.assertIn("+10 min", wiz.summary_html)
+        action = wiz.action_schedule()
+        sched = self.env["vhealth.action.group.schedule"].browse(action["res_id"])
+        self.assertEqual(sched.custom_interval_minutes, 10)
+        self.assertEqual(sched.state, "running")
+        self.assertEqual(sched.current_step, 1)
+        self.assertTrue(sched.next_execution_date)
+        delta_after_1 = sched.next_execution_date - fields.Datetime.now()
+        self.assertGreaterEqual(delta_after_1, timedelta(minutes=8))
+        self.assertLessEqual(delta_after_1, timedelta(minutes=11))
+
+        # Running next step should execute step 2 (0-delay) AND immediately chain into step 3
+        sched.action_run_step_now()
+        self.assertEqual(sched.state, "completed")
+        self.assertIn(dest_list.id, c1.list_ids.ids)
+        self.assertEqual(len(sched.execution_line_ids), 3)
+
+        # Verify negative custom_interval_minutes is rejected on schedule & wizard
+        with self.assertRaises(ValidationError):
+            sched.write({"custom_interval_minutes": -5})
+        bad_wiz = Wizard.create({
+            "mailing_list_id": src_list.id,
+            "action_group_id": ag.id,
+            "schedule_type": "now",
+            "custom_interval_minutes": -5,
+        })
+        with self.assertRaises(UserError):
+            bad_wiz.action_schedule()
+
+        # Verify step-level delay_minutes works without custom_interval_minutes override
+        ag_min = ActionGroup.create({
+            "name": "STEP MINUTES ACTION GROUP",
+            "exclude_registered": True,
+            "step_ids": [
+                (0, 0, {
+                    "sequence": 10,
+                    "action_type": "send_email",
+                    "mailing_template_id": tmpl.id,
+                    "delay_days": 0,
+                    "delay_minutes": 15,
+                }),
+                (0, 0, {
+                    "sequence": 20,
+                    "action_type": "add_to_list",
+                    "target_mailing_list_id": dest_list.id,
+                    "delay_days": 0,
+                    "delay_minutes": 0,
+                }),
+            ],
+        })
+        wiz2 = Wizard.create({
+            "mailing_list_id": src_list.id,
+            "action_group_id": ag_min.id,
+            "schedule_type": "now",
+            "custom_interval_minutes": 0,
+        })
+        self.assertIn("+15 min", wiz2.summary_html)
+        action2 = wiz2.action_schedule()
+        sched2 = self.env["vhealth.action.group.schedule"].browse(action2["res_id"])
+        delta2 = sched2.next_execution_date - fields.Datetime.now()
+        self.assertGreaterEqual(delta2, timedelta(minutes=13))
+        self.assertLessEqual(delta2, timedelta(minutes=16))

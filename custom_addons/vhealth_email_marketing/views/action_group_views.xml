@@ -56,6 +56,7 @@
                                     <field name="action_type"/>
                                     <field name="name"/>
                                     <field name="delay_days"/>
+                                    <field name="delay_minutes"/>
                                 </list>
                                 <form string="Action Step">
                                     <group>
@@ -64,6 +65,7 @@
                                             <field name="action_type"/>
                                             <field name="name"/>
                                             <field name="delay_days"/>
+                                            <field name="delay_minutes"/>
                                         </group>
                                         <group string="Email Settings" invisible="action_type != 'send_email'">
                                             <field name="mailing_template_id"/>

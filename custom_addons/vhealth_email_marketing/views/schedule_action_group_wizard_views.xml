@@ -14,6 +14,7 @@
                     <group>
                         <field name="schedule_type" widget="radio"/>
                         <field name="scheduled_datetime" invisible="schedule_type != 'scheduled'" required="schedule_type == 'scheduled'"/>
+                        <field name="custom_interval_minutes"/>
                     </group>
                     <field name="summary_html" nolabel="1"/>
                 </sheet>

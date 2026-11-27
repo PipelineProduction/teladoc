@@ -104,6 +104,11 @@ class VHealthActionGroupStep(models.Model):
         default=7,
         help="Days to wait after this step runs before running the next step. Set 0 to run the next step immediately in the same cycle.",
     )
+    delay_minutes = fields.Integer(
+        string="Wait Minutes After Step",
+        default=0,
+        help="Additional minutes to wait after this step runs before running the next step (useful for testing when Wait Days is 0).",
+    )
 
     # Send Email configuration
     mailing_template_id = fields.Many2one(
@@ -192,11 +197,11 @@ class VHealthActionGroupStep(models.Model):
             else:
                 rec.name = _("Action Step")
 
-    @api.constrains("delay_days", "action_type", "mailing_template_id", "template_subject_pattern", "launch_step_number", "field_id", "field_name", "target_mailing_list_id", "target_list_name")
+    @api.constrains("delay_days", "delay_minutes", "action_type", "mailing_template_id", "template_subject_pattern", "launch_step_number", "field_id", "field_name", "target_mailing_list_id", "target_list_name")
     def _check_step_configuration(self):
         for rec in self:
-            if rec.delay_days < 0:
-                raise ValidationError(_("Wait Days After Step cannot be negative."))
+            if rec.delay_days < 0 or rec.delay_minutes < 0:
+                raise ValidationError(_("Wait Days and Wait Minutes After Step cannot be negative."))
             if rec.action_type == "send_email" and not (
                 rec.mailing_template_id or rec.template_subject_pattern or rec.launch_step_number > 0
             ):

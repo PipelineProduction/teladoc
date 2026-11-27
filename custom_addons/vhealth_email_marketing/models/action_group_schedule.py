@@ -62,6 +62,12 @@ class VHealthActionGroupSchedule(models.Model):
         ("scheduled", "Schedule for later"),
     ], string="Schedule Timing", default="now", required=True)
     scheduled_datetime = fields.Datetime(string="Scheduled Start Date/Time", default=fields.Datetime.now)
+    custom_interval_minutes = fields.Integer(
+        string="Custom Delay Between Steps (Minutes)",
+        default=0,
+        tracking=True,
+        help="Optional testing override: when greater than 0, waits this many minutes between non-immediate steps instead of the Action Group's configured Wait Days/Minutes.",
+    )
     next_execution_date = fields.Datetime(string="Next Scheduled Step", index=True, tracking=True)
 
     current_step = fields.Integer(string="Current Step", default=0, tracking=True)
@@ -234,15 +240,34 @@ class VHealthActionGroupSchedule(models.Model):
             rec._log(_("Campaign cancelled by user."))
         return True
 
+    def _step_wait_delta(self, step):
+        """Return the timedelta to wait after ``step``, or None for immediate chaining."""
+        has_delay = bool(step and (step.delay_days > 0 or step.delay_minutes > 0))
+        if not has_delay:
+            return None
+        if self.custom_interval_minutes > 0:
+            return timedelta(minutes=self.custom_interval_minutes)
+        return timedelta(days=step.delay_days, minutes=step.delay_minutes)
+
+    @api.constrains("custom_interval_minutes")
+    def _check_custom_interval_minutes(self):
+        for rec in self:
+            if rec.custom_interval_minutes < 0:
+                raise ValidationError(_("Custom Delay Between Steps (Minutes) cannot be negative."))
+
     def action_resume(self):
         for rec in self:
             if rec.state == "cancelled":
-                wait_days = 7
-                if rec.last_step_id and rec.last_step_id.delay_days > 0:
-                    wait_days = rec.last_step_id.delay_days
+                wait_delta = rec._step_wait_delta(rec.last_step_id)
+                if wait_delta is None:
+                    wait_delta = (
+                        timedelta(minutes=rec.custom_interval_minutes)
+                        if rec.custom_interval_minutes > 0
+                        else timedelta(days=7)
+                    )
                 rec.write({
                     "state": "running",
-                    "next_execution_date": fields.Datetime.now() + timedelta(days=wait_days),
+                    "next_execution_date": fields.Datetime.now() + wait_delta,
                 })
                 rec._log(_("Campaign resumed."))
         return True
@@ -523,15 +548,16 @@ class VHealthActionGroupSchedule(models.Model):
             if mailing and 1 <= cycle_number <= 4 and not vals.get(f"step{cycle_number}_mailing_id"):
                 vals[f"step{cycle_number}_mailing_id"] = mailing.id
 
+            wait_delta = self._step_wait_delta(step)
             if idx == len(steps) - 1:
                 completed = True
                 next_date = False
                 break
-            elif step.delay_days > 0:
-                next_date = now + timedelta(days=step.delay_days)
+            elif wait_delta is not None:
+                next_date = now + wait_delta
                 break
             else:
-                # delay_days == 0 chains immediately into the next step in this cycle
+                # 0-delay steps chain immediately into the next step in this cycle
                 idx += 1
 
         if last_executed:
