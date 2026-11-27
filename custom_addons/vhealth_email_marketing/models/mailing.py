@@ -147,14 +147,14 @@ def _merge_inline_style(existing_style, additions):
 
 
 def _get_attr(tag_text, attr_name):
-    m = re.search(rf"""\b{attr_name}\s*=\s*(?:"([^"]*)"|'([^']*)')""", tag_text, re.IGNORECASE)
+    m = re.search(rf"""(?<![a-zA-Z0-9_-]){attr_name}\s*=\s*(?:"([^"]*)"|'([^']*)')""", tag_text, re.IGNORECASE)
     if not m:
         return None
     return m.group(1) if m.group(1) is not None else m.group(2)
 
 
 def _set_attr(tag_text, attr_name, attr_value):
-    pattern = re.compile(rf"""\b{attr_name}\s*=\s*(?:"[^"]*"|'[^']*')""", re.IGNORECASE)
+    pattern = re.compile(rf"""(?<![a-zA-Z0-9_-]){attr_name}\s*=\s*(?:"[^"]*"|'[^']*')""", re.IGNORECASE)
     escaped = attr_value.replace('"', "&quot;")
     if pattern.search(tag_text):
         return pattern.sub(f'{attr_name}="{escaped}"', tag_text, count=1)
@@ -303,6 +303,63 @@ def _clean_sharpspring_tags(html):
     return html
 
 
+def _convert_o_layout_sections_to_gmail_table(html):
+    """Convert Odoo o_layout / o_mail_wrapper / <section> HTML into a centered 600px Gmail table."""
+    if not html or ("o_mail_wrapper" not in html and "<section" not in html.lower()):
+        return html
+
+    open_wrapper_re = re.compile(
+        r"""<div\b[^>]*class\s*=\s*["'][^"']*\bo_layout\b[^"']*["'][^>]*>\s*"""
+        r"""<div\b[^>]*class\s*=\s*["'][^"']*\bo_mail_wrapper\b[^"']*["'][^>]*>\s*"""
+        r"""<div\b[^>]*class\s*=\s*["'][^"']*\brow\b[^"']*["'][^>]*>\s*"""
+        r"""<div\b[^>]*class\s*=\s*["'][^"']*\bo_mail_wrapper_td\b[^"']*["'][^>]*>""",
+        re.IGNORECASE | re.DOTALL,
+    )
+    close_wrapper_re = re.compile(
+        r"""</div>\s*</div>\s*</div>\s*</div>\s*$""",
+        re.IGNORECASE | re.DOTALL,
+    )
+
+    if not open_wrapper_re.search(html):
+        return html
+
+    table_open = (
+        '<div style="background-color: #F7F7F7; margin: 0; padding: 0;">'
+        '<style type="text/css">'
+        '@media only screen and (max-width: 620px) {'
+        ' .vh-container { width: 100% !important; max-width: 100% !important; }'
+        ' .vh-stack-col { display: block !important; width: 100% !important; max-width: 100% !important; box-sizing: border-box !important; }'
+        ' }'
+        '</style>'
+        '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" '
+        'style="background-color: #F7F7F7; border-collapse: collapse; width: 100%; margin: 0; padding: 0;">'
+        '<tbody><tr><td align="center" style="padding: 16px 8px; vertical-align: top;">'
+        '<table role="presentation" class="vh-container" align="center" width="600" cellpadding="0" cellspacing="0" border="0" '
+        'style="width: 100%; max-width: 600px; margin: 0 auto; background-color: #FFFFFF; border-collapse: collapse; font-family: Arial, Helvetica, sans-serif;">'
+        '<tbody>'
+    )
+    table_close = '</tbody></table></td></tr></tbody></table></div>'
+
+    html = open_wrapper_re.sub(table_open, html, count=1)
+    html = close_wrapper_re.sub(table_close, html, count=1)
+
+    section_re = re.compile(r"<section\b([^>]*)>(.*?)</section>", re.IGNORECASE | re.DOTALL)
+
+    def _section_to_row(m):
+        attrs, inner = m.group(1), m.group(2)
+        tag = f"<section{attrs}>"
+        style = _get_attr(tag, "style") or ""
+        snippet = (_get_attr(tag, "data-snippet") or "").lower()
+        default_pad = "padding: 10px 0 16px 0;" if snippet == "s_image_card" else "padding-left: 20px; padding-right: 20px;"
+        if "padding-left" not in style.lower() and "padding:" not in style.lower():
+            style = _merge_inline_style(style, default_pad)
+        style = _merge_inline_style(style, "font-family: Arial, Helvetica, sans-serif; vertical-align: top;")
+        return f'<tr><td style="{style.replace(chr(34), "&quot;")}">{inner}</td></tr>'
+
+    html = section_re.sub(_section_to_row, html)
+    return html
+
+
 def fix_odoo_email_html_for_gmail(html):
     """Ensure Odoo mass_mailing HTML uses public image assets and Gmail-compatible inline styles."""
     if not html:
@@ -313,12 +370,13 @@ def fix_odoo_email_html_for_gmail(html):
 
     needs_layout_fix = any(
         marker in html
-        for marker in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "bg-o-color-5", "text-o-color-3", "background: red")
+        for marker in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "bg-o-color-5", "text-o-color-3", "background: red", "<section")
     )
     if needs_layout_fix:
         html = _DESIGN_ELEMENT_STYLE_RE.sub("", html)
         html = _apply_class_and_img_inline_styles(html)
         html = _propagate_colgroup_widths(html)
+        html = _convert_o_layout_sections_to_gmail_table(html)
 
     return html
 
@@ -332,6 +390,21 @@ def load_bundled_template(key):
         os.path.dirname(os.path.dirname(__file__)),
         "data",
         "templates",
+        filename,
+    )
+    with open(tmpl_path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def load_bundled_arch_template(key):
+    """Load one of the Odoo visual-editor-compatible body_arch templates from data/templates_arch/."""
+    filename = _BUNDLED_TEMPLATE_FILES.get(key)
+    if not filename:
+        raise ValueError(f"Unknown bundled template key: {key}")
+    tmpl_path = os.path.join(
+        os.path.dirname(os.path.dirname(__file__)),
+        "data",
+        "templates_arch",
         filename,
     )
     with open(tmpl_path, "r", encoding="utf-8") as f:
@@ -405,41 +478,46 @@ class MailingMailing(models.Model):
         return res
 
     def action_fix_gmail_layout(self):
-        """Update selected mailings/templates with Gmail-compatible layout and public static images."""
+        """Restore Odoo visual-editor editability in body_arch and Gmail-safe HTML in body_html."""
         updated = 0
         for rec in self:
-            body = rec.body_html or rec.body_arch or ""
-            tmpl_key = match_bundled_template_key(rec.subject, body)
-            is_broken_layout = (
-                "design-element" in body
-                or "o_mail_wrapper" in body
-                or "background: red" in body
-                or "{$" in body
-                or "%7B%24" in body
-                or not body.strip()
+            body_html = rec.body_html or ""
+            body_arch = rec.body_arch or ""
+            combined = body_arch or body_html
+            tmpl_key = match_bundled_template_key(rec.subject, combined)
+
+            arch_needs_restore = (
+                not body_arch.strip()
+                or "oe_structure" not in body_arch
+                or "o_mail_snippet_general" not in body_arch
+                or "background: red" in body_arch
+                or "{$" in body_arch
+                or "%7B%24" in body_arch
             )
-            if tmpl_key and is_broken_layout:
-                bundled_html = load_bundled_template(tmpl_key)
-                rec.write({"body_html": bundled_html, "body_arch": bundled_html})
-                updated += 1
+            vals = {}
+            if tmpl_key and arch_needs_restore:
+                vals["body_arch"] = load_bundled_arch_template(tmpl_key)
+                vals["body_html"] = load_bundled_template(tmpl_key)
             else:
-                fixed_html = fix_odoo_email_html_for_gmail(rec.body_html) if rec.body_html else rec.body_html
-                fixed_arch = fix_odoo_email_html_for_gmail(rec.body_arch) if rec.body_arch else rec.body_arch
-                vals = {}
-                if fixed_html != rec.body_html:
-                    vals["body_html"] = fixed_html
-                if fixed_arch != rec.body_arch:
-                    vals["body_arch"] = fixed_arch
-                if vals:
-                    rec.write(vals)
-                    updated += 1
+                if body_arch:
+                    fixed_arch = _clean_sharpspring_tags(rewrite_vhealth_image_urls(body_arch))
+                    if fixed_arch != body_arch:
+                        vals["body_arch"] = fixed_arch
+                source_for_html = vals.get("body_arch") or body_html or body_arch
+                if source_for_html:
+                    fixed_html = fix_odoo_email_html_for_gmail(source_for_html)
+                    if fixed_html != body_html:
+                        vals["body_html"] = fixed_html
+            if vals:
+                rec.write(vals)
+                updated += 1
 
         return {
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
                 "title": _("Gmail Layout & Images Updated"),
-                "message": _("%d mailing(s) updated with Gmail-compatible inline styles and static image URLs.") % updated,
+                "message": _("%d mailing(s) updated with editable Odoo blocks and Gmail-compatible HTML.") % updated,
                 "type": "success",
                 "sticky": False,
             },
@@ -447,7 +525,7 @@ class MailingMailing(models.Model):
 
     @api.model
     def _upgrade_fix_vhealth_templates(self):
-        """On module install/upgrade, upgrade broken un-inlined vHealth email templates in-place."""
+        """On module install/upgrade, ensure vHealth templates have editable body_arch and Gmail-safe body_html."""
         templates = self.sudo().search([
             ("is_template", "=", True),
             ("subject", "ilike", "vHealth"),
@@ -455,26 +533,36 @@ class MailingMailing(models.Model):
         if not templates:
             return
         for tmpl in templates:
-            body = tmpl.body_html or tmpl.body_arch or ""
-            tmpl_key = match_bundled_template_key(tmpl.subject, body)
-            is_broken_layout = any(
-                marker in body
-                for marker in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red", "{$", "%7B%24")
+            body_arch = tmpl.body_arch or ""
+            body_html = tmpl.body_html or ""
+            tmpl_key = match_bundled_template_key(tmpl.subject, body_arch or body_html)
+
+            arch_uneditable = (
+                not body_arch.strip()
+                or "oe_structure" not in body_arch
+                or "o_mail_snippet_general" not in body_arch
             )
-            if tmpl_key and is_broken_layout:
-                bundled_html = load_bundled_template(tmpl_key)
-                tmpl.write({"body_html": bundled_html, "body_arch": bundled_html})
-                _logger.info("Upgraded vHealth template '%s' (%s, ID %s) to Gmail-compatible HTML.", tmpl.subject, tmpl_key, tmpl.id)
-            elif is_broken_layout or "/web/image/" in body:
-                vals = {}
-                if tmpl.body_html:
-                    fixed = fix_odoo_email_html_for_gmail(tmpl.body_html)
-                    if fixed != tmpl.body_html:
-                        vals["body_html"] = fixed
-                if tmpl.body_arch:
-                    fixed_arch = fix_odoo_email_html_for_gmail(tmpl.body_arch)
-                    if fixed_arch != tmpl.body_arch:
-                        vals["body_arch"] = fixed_arch
-                if vals:
-                    tmpl.write(vals)
-                    _logger.info("Hardened vHealth template '%s' (ID %s) for Gmail.", tmpl.subject, tmpl.id)
+            has_legacy_markers = any(
+                marker in (body_arch + body_html)
+                for marker in ("background: red", "{$", "%7B%24")
+            )
+            if tmpl_key and (arch_uneditable or has_legacy_markers):
+                tmpl.write({
+                    "body_arch": load_bundled_arch_template(tmpl_key),
+                    "body_html": load_bundled_template(tmpl_key),
+                })
+                _logger.info("Restored editable body_arch + Gmail body_html on '%s' (%s, ID %s).", tmpl.subject, tmpl_key, tmpl.id)
+                continue
+
+            vals = {}
+            if body_arch:
+                cleaned_arch = _clean_sharpspring_tags(rewrite_vhealth_image_urls(body_arch))
+                if cleaned_arch != body_arch:
+                    vals["body_arch"] = cleaned_arch
+            if body_html:
+                fixed_html = fix_odoo_email_html_for_gmail(body_html)
+                if fixed_html != body_html:
+                    vals["body_html"] = fixed_html
+            if vals:
+                tmpl.write(vals)
+                _logger.info("Hardened vHealth template '%s' (ID %s) for Gmail.", tmpl.subject, tmpl.id)

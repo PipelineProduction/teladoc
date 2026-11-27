@@ -385,17 +385,23 @@ class TestVHealthSmoke(TransactionCase):
         self.assertNotIn("/web/image/", tmpl.body_html)
         self.assertNotIn("background: red", tmpl.body_html)
         self.assertIn("/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png", tmpl.body_html)
+        # body_arch must remain editable in Odoo Mass Mailing visual editor
+        self.assertIn("oe_structure", tmpl.body_arch)
+        self.assertIn("o_mail_snippet_general", tmpl.body_arch)
+        self.assertIn('id="design-element"', tmpl.body_arch)
 
         # Custom edits + newly uploaded Odoo image on already-fixed template must NOT be overwritten
-        custom_html = tmpl.body_html.replace("Talk to a doctor", "Custom Heading") + '<img src="/web/image/999-abc/new_custom_banner.png"/>'
-        tmpl.write({"body_html": custom_html, "body_arch": custom_html})
+        custom_arch = tmpl.body_arch.replace("Talk to a doctor", "Custom Heading") + '<section class="o_mail_snippet_general"><img src="/web/image/999-abc/new_custom_banner.png"/></section>'
+        tmpl.write({"body_arch": custom_arch, "body_html": custom_arch})
         Mailing._upgrade_fix_vhealth_templates()
+        self.assertIn("Custom Heading", tmpl.body_arch)
         self.assertIn("Custom Heading", tmpl.body_html)
-        self.assertIn("/web/image/999-abc/new_custom_banner.png", tmpl.body_html)
+        self.assertIn("/web/image/999-abc/new_custom_banner.png", tmpl.body_arch)
 
     def test_all_seven_bundled_templates_and_matching(self):
         from ..models.mailing import (
             _BUNDLED_TEMPLATE_FILES,
+            load_bundled_arch_template,
             load_bundled_template,
             match_bundled_template_key,
             fix_odoo_email_html_for_gmail,
@@ -417,6 +423,18 @@ class TestVHealthSmoke(TransactionCase):
             self.assertIn("background-color: #363C44", html, f"{key} missing footer dark background")
             self.assertIn("background-color: #7C3F96", html, f"{key} missing purple CTA/banner")
             self.assertIn('width="120"', html, f"{key} missing 120px app tile width")
+
+            arch = load_bundled_arch_template(key)
+            self.assertIn("oe_structure", arch, f"{key} body_arch missing oe_structure for Odoo editor")
+            self.assertIn("o_mail_snippet_general", arch, f"{key} body_arch missing snippet blocks")
+            self.assertIn('id="design-element"', arch, f"{key} body_arch missing design-element")
+            self.assertNotIn("/web/image/", arch, f"{key} body_arch must not have /web/image/")
+            self.assertNotIn("background: red", arch, f"{key} body_arch must not have background: red")
+
+            converted = fix_odoo_email_html_for_gmail(arch)
+            self.assertIn("vh-container", converted, f"{key} converted arch must produce 600px table")
+            self.assertNotIn("design-element", converted, f"{key} converted arch must strip design-element")
+            self.assertNotIn("<section", converted, f"{key} converted arch must convert <section> to <tr><td>")
 
         # Verify SharpSpring tag cleanup in fix_odoo_email_html_for_gmail
         ss_raw = (

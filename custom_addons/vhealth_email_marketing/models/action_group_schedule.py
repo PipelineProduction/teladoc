@@ -3,7 +3,7 @@ from datetime import timedelta
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from .imports import _get_or_create_list
-from .mailing import fix_odoo_email_html_for_gmail, load_bundled_template, match_bundled_template_key
+from .mailing import fix_odoo_email_html_for_gmail
 
 _logger = logging.getLogger(__name__)
 
@@ -358,19 +358,12 @@ class VHealthActionGroupSchedule(models.Model):
 
         new_mailing = template.copy(default=mailing_vals)
 
-        # Ensure outgoing mailing HTML is Gmail-compatible and uses public static image URLs
-        raw_body = new_mailing.body_html or new_mailing.body_arch or ""
-        tmpl_key = match_bundled_template_key(template.subject, raw_body)
-        is_broken_layout = any(
-            m in raw_body for m in ('id="design-element"', "id='design-element'", "o_mail_wrapper", "background: red", "{$", "%7B%24")
-        )
-        if tmpl_key and is_broken_layout:
-            fixed_body = load_bundled_template(tmpl_key)
-            new_mailing.write({"body_html": fixed_body, "body_arch": fixed_body})
-        elif raw_body:
-            fixed_body = fix_odoo_email_html_for_gmail(raw_body)
-            if fixed_body != raw_body:
-                new_mailing.write({"body_html": fixed_body})
+        # Ensure outgoing mailing body_html is Gmail-compatible while preserving user edits & editable body_arch
+        raw_html = new_mailing.body_html or new_mailing.body_arch or ""
+        if raw_html:
+            fixed_html = fix_odoo_email_html_for_gmail(raw_html)
+            if fixed_html != new_mailing.body_html:
+                new_mailing.write({"body_html": fixed_html})
 
         # Warn if web.base.url is localhost/127.0.0.1 because Gmail image proxy cannot fetch local URLs
         try:

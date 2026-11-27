@@ -1,0 +1,1938 @@
+<div data-name="Mailing" class="o_layout oe_unremovable oe_unmovable o_empty_theme"
+    style="background-color: #F7F7F7; margin: 0; padding: 16px 8px;">
+    <style id="design-element">
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.oi, img)) {
+            font-weight: var(--link-font-weight);
+            color: var(--link-color);
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.oi, img)):not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.oi, img)) :not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h4 {
+            font-size: var(--h4-font-size);
+            font-weight: var(--h4-font-weight);
+            color: var(--h4-color);
+            margin-bottom: var(--h4-margin-bottom);
+            font-family: var(--h4-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h4:not(.oi) {
+            font-family: var(--h4-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h4 :not(.oi) {
+            font-family: var(--h4-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td hr {
+            width: var(--separator-width);
+            border-top-width: var(--separator-border-top-width) !important;
+            border-style: var(--separator-border-style);
+            border-color: var(--separator-border-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary.btn-sm {
+            font-size: var(--btn-secondary-sm-font-size);
+            padding-left: var(--btn-secondary-sm-padding-x);
+            padding-right: var(--btn-secondary-sm-padding-x);
+            padding-top: var(--btn-secondary-sm-padding-y);
+            padding-bottom: var(--btn-secondary-sm-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary.btn-sm {
+            font-size: var(--btn-secondary-sm-font-size);
+            padding-left: var(--btn-secondary-sm-padding-x);
+            padding-right: var(--btn-secondary-sm-padding-x);
+            padding-top: var(--btn-secondary-sm-padding-y);
+            padding-bottom: var(--btn-secondary-sm-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary.btn-sm {
+            font-size: var(--btn-secondary-sm-font-size);
+            padding-left: var(--btn-secondary-sm-padding-x);
+            padding-right: var(--btn-secondary-sm-padding-x);
+            padding-top: var(--btn-secondary-sm-padding-y);
+            padding-bottom: var(--btn-secondary-sm-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary.btn-lg {
+            font-size: var(--btn-secondary-lg-font-size);
+            padding-left: var(--btn-secondary-lg-padding-x);
+            padding-right: var(--btn-secondary-lg-padding-x);
+            padding-top: var(--btn-secondary-lg-padding-y);
+            padding-bottom: var(--btn-secondary-lg-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary.btn-lg {
+            font-size: var(--btn-secondary-lg-font-size);
+            padding-left: var(--btn-secondary-lg-padding-x);
+            padding-right: var(--btn-secondary-lg-padding-x);
+            padding-top: var(--btn-secondary-lg-padding-y);
+            padding-bottom: var(--btn-secondary-lg-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary.btn-lg {
+            font-size: var(--btn-secondary-lg-font-size);
+            padding-left: var(--btn-secondary-lg-padding-x);
+            padding-right: var(--btn-secondary-lg-padding-x);
+            padding-top: var(--btn-secondary-lg-padding-y);
+            padding-bottom: var(--btn-secondary-lg-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary.btn-sm {
+            font-size: var(--btn-primary-sm-font-size);
+            padding-left: var(--btn-primary-sm-padding-x);
+            padding-right: var(--btn-primary-sm-padding-x);
+            padding-top: var(--btn-primary-sm-padding-y);
+            padding-bottom: var(--btn-primary-sm-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary.btn-sm {
+            font-size: var(--btn-primary-sm-font-size);
+            padding-left: var(--btn-primary-sm-padding-x);
+            padding-right: var(--btn-primary-sm-padding-x);
+            padding-top: var(--btn-primary-sm-padding-y);
+            padding-bottom: var(--btn-primary-sm-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary.btn-sm {
+            font-size: var(--btn-primary-sm-font-size);
+            padding-left: var(--btn-primary-sm-padding-x);
+            padding-right: var(--btn-primary-sm-padding-x);
+            padding-top: var(--btn-primary-sm-padding-y);
+            padding-bottom: var(--btn-primary-sm-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary.btn-lg {
+            font-size: var(--btn-primary-lg-font-size);
+            padding-left: var(--btn-primary-lg-padding-x);
+            padding-right: var(--btn-primary-lg-padding-x);
+            padding-top: var(--btn-primary-lg-padding-y);
+            padding-bottom: var(--btn-primary-lg-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary.btn-lg {
+            font-size: var(--btn-primary-lg-font-size);
+            padding-left: var(--btn-primary-lg-padding-x);
+            padding-right: var(--btn-primary-lg-padding-x);
+            padding-top: var(--btn-primary-lg-padding-y);
+            padding-bottom: var(--btn-primary-lg-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary.btn-lg {
+            font-size: var(--btn-primary-lg-font-size);
+            padding-left: var(--btn-primary-lg-padding-x);
+            padding-right: var(--btn-primary-lg-padding-x);
+            padding-top: var(--btn-primary-lg-padding-y);
+            padding-bottom: var(--btn-primary-lg-padding-y);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary:not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary {
+            font-size: var(--btn-secondary-font-size);
+            color: var(--btn-secondary-color);
+            background-color: var(--btn-secondary-background-color);
+            padding-left: var(--btn-secondary-padding-x);
+            padding-right: var(--btn-secondary-padding-x);
+            padding-top: var(--btn-secondary-padding-y);
+            padding-bottom: var(--btn-secondary-padding-y);
+            font-family: var(--btn-secondary-font-family);
+            border-style: var(--btn-secondary-border-style);
+            border-width: var(--btn-secondary-border-width);
+            border-color: var(--btn-secondary-border-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary:not(.fa) :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary:not(.fa):not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary :not(.fa) :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-secondary :not(.fa):not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary:not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary {
+            font-size: var(--btn-secondary-font-size);
+            color: var(--btn-secondary-outline-color);
+            background-color: var(--btn-secondary-outline-background-color);
+            padding-left: var(--btn-secondary-padding-x);
+            padding-right: var(--btn-secondary-padding-x);
+            padding-top: var(--btn-secondary-padding-y);
+            padding-bottom: var(--btn-secondary-padding-y);
+            font-family: var(--btn-secondary-font-family);
+            border-style: var(--btn-secondary-border-style);
+            border-width: var(--btn-secondary-border-width);
+            border-color: var(--btn-secondary-outline-border-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary:not(.fa) :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary:not(.fa):not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary :not(.fa) :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-secondary :not(.fa):not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary:not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary {
+            font-size: var(--btn-secondary-font-size);
+            color: var(--btn-secondary-color);
+            background-color: var(--btn-secondary-background-color);
+            padding-left: var(--btn-secondary-padding-x);
+            padding-right: var(--btn-secondary-padding-x);
+            padding-top: var(--btn-secondary-padding-y);
+            padding-bottom: var(--btn-secondary-padding-y);
+            font-family: var(--btn-secondary-font-family);
+            border-style: var(--btn-secondary-border-style);
+            border-width: var(--btn-secondary-border-width);
+            border-color: var(--btn-secondary-border-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary:not(.fa) :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary:not(.fa):not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary :not(.fa) :not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-secondary :not(.fa):not(.oi) {
+            font-family: var(--btn-secondary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary:not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary {
+            font-size: var(--btn-primary-font-size);
+            color: var(--btn-primary-color);
+            background-color: var(--btn-primary-background-color);
+            padding-left: var(--btn-primary-padding-x);
+            padding-right: var(--btn-primary-padding-x);
+            padding-top: var(--btn-primary-padding-y);
+            padding-bottom: var(--btn-primary-padding-y);
+            font-family: var(--btn-primary-font-family);
+            border-style: var(--btn-primary-border-style);
+            border-width: var(--btn-primary-border-width);
+            border-color: var(--btn-primary-border-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary:not(.fa) :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary:not(.fa):not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary :not(.fa) :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-primary :not(.fa):not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary:not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary {
+            font-size: var(--btn-primary-font-size);
+            color: var(--btn-primary-outline-color);
+            background-color: var(--btn-primary-outline-background-color);
+            padding-left: var(--btn-primary-padding-x);
+            padding-right: var(--btn-primary-padding-x);
+            padding-top: var(--btn-primary-padding-y);
+            padding-bottom: var(--btn-primary-padding-y);
+            font-family: var(--btn-primary-font-family);
+            border-style: var(--btn-primary-border-style);
+            border-width: var(--btn-primary-border-width);
+            border-color: var(--btn-primary-outline-border-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary:not(.fa) :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary:not(.fa):not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary :not(.fa) :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-outline-primary :not(.fa):not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary:not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary {
+            font-size: var(--btn-primary-font-size);
+            color: var(--btn-primary-color);
+            background-color: var(--btn-primary-background-color);
+            padding-left: var(--btn-primary-padding-x);
+            padding-right: var(--btn-primary-padding-x);
+            padding-top: var(--btn-primary-padding-y);
+            padding-bottom: var(--btn-primary-padding-y);
+            font-family: var(--btn-primary-font-family);
+            border-style: var(--btn-primary-border-style);
+            border-width: var(--btn-primary-border-width);
+            border-color: var(--btn-primary-border-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary:not(.fa) :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary:not(.fa):not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary :not(.fa) :not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-fill-primary :not(.fa):not(.oi) {
+            font-family: var(--btn-primary-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-link :not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-link:not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-link {
+            font-weight: var(--link-font-weight);
+            color: var(--link-color);
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-link:not(.fa) :not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-link:not(.fa):not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-link :not(.fa) :not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a.btn.btn-link :not(.fa):not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.fa, img)) :not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.fa, img)):not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.fa, img)) {
+            font-weight: var(--link-font-weight);
+            color: var(--link-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.fa, img)):not(.fa) :not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.fa, img)):not(.fa):not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.fa, img)) :not(.fa) :not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td a:not(.btn):not(:has(.fa, img)) :not(.fa):not(.oi) {
+            font-family: var(--link-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td ul {
+            margin-bottom: var(--text-container-margin-bottom);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td li :not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td li:not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td li {
+            font-size: var(--text-font-size);
+            font-weight: var(--text-font-weight);
+            color: var(--text-color);
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td li:not(.fa) :not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td li:not(.fa):not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td li :not(.fa) :not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td li :not(.fa):not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td p :not(.oi) {
+            font-family: var(--text-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td p:not(.oi) {
+            font-family: var(--text-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td p {
+            font-size: var(--text-font-size);
+            font-weight: var(--text-font-weight);
+            color: var(--text-color);
+            margin-bottom: var(--text-container-margin-bottom);
+            font-family: var(--text-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td p:not(.fa) :not(.oi) {
+            font-family: var(--text-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td p:not(.fa):not(.oi) {
+            font-family: var(--text-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td p :not(.fa) :not(.oi) {
+            font-family: var(--text-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td p :not(.fa):not(.oi) {
+            font-family: var(--text-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td .o-paragraph :not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td .o-paragraph:not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td .o-paragraph {
+            font-size: var(--text-font-size);
+            font-weight: var(--text-font-weight);
+            color: var(--text-color);
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td .o-paragraph:not(.fa) :not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td .o-paragraph:not(.fa):not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td .o-paragraph :not(.fa) :not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td .o-paragraph :not(.fa):not(.oi) {
+            font-family: var(--text-font-family);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h3 :not(.oi) {
+            font-family: var(--h3-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h3:not(.oi) {
+            font-family: var(--h3-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h3 {
+            font-size: var(--h3-font-size);
+            font-weight: var(--h3-font-weight);
+            color: var(--h3-color);
+            margin-bottom: var(--h3-margin-bottom);
+            font-family: var(--h3-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h3:not(.fa) :not(.oi) {
+            font-family: var(--h3-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h3:not(.fa):not(.oi) {
+            font-family: var(--h3-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h3 :not(.fa) :not(.oi) {
+            font-family: var(--h3-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h3 :not(.fa):not(.oi) {
+            font-family: var(--h3-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h2 :not(.oi) {
+            font-family: var(--h2-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h2:not(.oi) {
+            font-family: var(--h2-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h2 {
+            font-size: var(--h2-font-size);
+            font-weight: var(--h2-font-weight);
+            color: var(--h2-color);
+            margin-bottom: var(--h2-margin-bottom);
+            font-family: var(--h2-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h2:not(.fa) :not(.oi) {
+            font-family: var(--h2-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h2:not(.fa):not(.oi) {
+            font-family: var(--h2-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h2 :not(.fa) :not(.oi) {
+            font-family: var(--h2-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h2 :not(.fa):not(.oi) {
+            font-family: var(--h2-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h1 :not(.oi) {
+            font-family: var(--h1-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h1:not(.oi) {
+            font-family: var(--h1-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h1 {
+            font-size: var(--h1-font-size);
+            font-weight: var(--h1-font-weight);
+            color: var(--h1-color);
+            margin-bottom: var(--h1-margin-bottom);
+            font-family: var(--h1-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h1:not(.fa) :not(.oi) {
+            font-family: var(--h1-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h1:not(.fa):not(.oi) {
+            font-family: var(--h1-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h1 :not(.fa) :not(.oi) {
+            font-family: var(--h1-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td h1 :not(.fa):not(.oi) {
+            font-family: var(--h1-font-family) !important;
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td>[data-snippet] {
+            background-color: var(--wrapper-background-color);
+        }
+
+        .o_layout .o_mail_wrapper .o_mail_wrapper_td {
+            --wrapper-background-color: #FFFFFF;
+            --h1-font-size: 28px;
+            --h1-font-weight: 500;
+            --h1-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --h1-color: rgb(0, 0, 0);
+            --h1-margin-bottom: 7px;
+            --h2-font-size: 23px;
+            --h2-font-weight: 500;
+            --h2-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --h2-color: rgb(0, 0, 0);
+            --h2-margin-bottom: 7px;
+            --h3-font-size: 20px;
+            --h3-font-weight: 500;
+            --h3-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --h3-color: rgb(0, 0, 0);
+            --h3-margin-bottom: 7px;
+            --text-font-size: 16px;
+            --text-font-weight: 400;
+            --text-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --text-color: rgb(0, 0, 0);
+            --text-container-margin-bottom: 16px;
+            --link-font-weight: 400;
+            --link-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --link-color: rgb(113, 75, 103);
+            --btn-primary-font-size: 12px;
+            --btn-primary-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --btn-primary-color: rgb(255, 255, 255);
+            --btn-primary-background-color: #7C3F96;
+            --btn-primary-padding-x: 10px;
+            --btn-primary-padding-y: 5px;
+            --btn-primary-border-style: solid;
+            --btn-primary-border-width: 1px;
+            --btn-primary-border-color: #7C3F96;
+            --btn-secondary-font-size: 12px;
+            --btn-secondary-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --btn-secondary-color: rgb(255, 255, 255);
+            --btn-secondary-background-color: rgb(104, 85, 99);
+            --btn-secondary-padding-x: 10px;
+            --btn-secondary-padding-y: 5px;
+            --btn-secondary-border-style: solid;
+            --btn-secondary-border-width: 1px;
+            --btn-secondary-border-color: rgb(104, 85, 99);
+            --btn-primary-lg-font-size: calc(var(--btn-primary-font-size) * 1.5);
+            --btn-primary-lg-padding-x: calc(var(--btn-primary-padding-x) * 2.5);
+            --btn-primary-lg-padding-y: calc(var(--btn-primary-padding-y) * 1.5);
+            --btn-primary-sm-font-size: calc(var(--btn-primary-font-size) * 0.875);
+            --btn-primary-sm-padding-x: calc(var(--btn-primary-padding-x) * 0.3);
+            --btn-primary-sm-padding-y: calc(var(--btn-primary-padding-y) * 0.20);
+            --btn-secondary-lg-font-size: calc(var(--btn-secondary-font-size) * 1.5);
+            --btn-secondary-lg-padding-x: calc(var(--btn-secondary-padding-x) * 2.5);
+            --btn-secondary-lg-padding-y: calc(var(--btn-secondary-padding-y) * 1.5);
+            --btn-secondary-sm-font-size: calc(var(--btn-secondary-font-size) * 0.875);
+            --btn-secondary-sm-padding-x: calc(var(--btn-secondary-padding-x) * 0.3);
+            --btn-secondary-sm-padding-y: calc(var(--btn-secondary-padding-y) * 0.20);
+            --btn-primary-outline-background-color: transparent;
+            --btn-primary-outline-color: var(--btn-primary-background-color);
+            --btn-primary-outline-border-color: var(--btn-primary-background-color);
+            --btn-secondary-outline-background-color: transparent;
+            --btn-secondary-outline-color: var(--btn-secondary-background-color);
+            --btn-secondary-outline-border-color: var(--btn-secondary-background-color);
+            --separator-border-top-width: 1px;
+            --separator-border-style: solid;
+            --separator-border-color: rgb(33, 37, 41);
+            --separator-width: 100%;
+            background-color: var(--wrapper-background-color);
+            --h4-font-size: 19px;
+            --h4-font-weight: 500;
+            --h4-font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+            --h4-color: rgb(0, 0, 0);
+            --h4-margin-bottom: 7px;
+        }
+    </style>
+    <div class="container o_mail_wrapper oe_unremovable o_mail_regular"
+        style="max-width: 600px; width: 100%; margin: 0 auto; background-color: #FFFFFF; font-family: Arial, Helvetica, sans-serif;">
+        <div class="row mw-100 mx-0" style="">
+            <div class="col o_mail_no_options o_mail_wrapper_td oe_structure"
+                style="background-color: #FFFFFF; font-family: Arial, Helvetica, sans-serif;">
+                <section class="o_mail_snippet_general o_colored_level pb0 pt0" data-vxml="001"
+                    data-snippet="s_mail_block_header_logo_and_inline_menu" data-name="Logo + Inline Menu"
+                    style="padding-bottom: 0; padding-top: 0;">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-12 o_colored_level col-md-4">
+                                <div class="o_not_editable">
+                                    <a target="_blank" href="#">
+                                        <img src="/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png"
+                                            alt="" data-attachment-id="196"
+                                            class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                            data-format-mimetype="image/png" data-resize-width="600"
+                                            data-original-id="196"
+                                            data-original-src="/vhealth_email_marketing/static/src/img/email/Aetna_logo_24.png"
+                                            data-mimetype-before-conversion="image/png" data-mimetype="image/png"
+                                            style="padding-top: 16px; padding-bottom: 16px; width: 200px; max-width: 100%; height: auto; display: block; border: 0;">
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <section class="o_mail_snippet_general pt16 pb16 o_colored_level" data-vxml="001"
+                    data-snippet="s_image_card" data-name="Image Card" style="padding-top: 16px; padding-bottom: 16px;">
+                    <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                        <div class="container" style="padding: 10px 0;">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level" style="text-align: center;">
+                                    <div class="o_not_editable">
+                                        <img src="/vhealth_email_marketing/static/src/img/email/vHealth-worldwide_2026-09_Reg_es.jpg"
+                                            alt="" data-attachment-id="224"
+                                            class="img img-fluid o_editable_media mx-auto d-block mw-100 o_we_custom_image"
+                                            data-format-mimetype="image/png" data-resize-width="688"
+                                            data-original-id="224"
+                                            data-original-src="/vhealth_email_marketing/static/src/img/email/vHealth-worldwide_2026-09_Reg_es.jpg"
+                                            data-mimetype-before-conversion="image/jpeg" data-mimetype="image/png"
+                                            style="max-width: 600px; height: auto; border: 0; width: 100%; display: block; margin: 0 auto;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                    <t t-elif="object.x_studio_aetna_language == 'English'">
+                        <div class="container" style="padding: 10px 0;">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level" style="text-align: center;">
+                                    <div class="o_not_editable">
+                                        <img src="/vhealth_email_marketing/static/src/img/email/vHealth-worldwide_2026-09_reg_en.jpg"
+                                            alt="" data-attachment-id="226"
+                                            class="img img-fluid o_editable_media mx-auto d-block mw-100 o_we_custom_image"
+                                            data-format-mimetype="image/png" data-resize-width="688"
+                                            data-original-id="226"
+                                            data-original-src="/vhealth_email_marketing/static/src/img/email/vHealth-worldwide_2026-09_reg_en.jpg"
+                                            data-mimetype-before-conversion="image/jpeg" data-mimetype="image/png"
+                                            style="max-width: 600px; height: auto; border: 0; width: 100%; display: block; margin: 0 auto;">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </section>
+                <section class="o_mail_snippet_general pt16 pb16 o_colored_level" data-vxml="001"
+                    data-snippet="s_text_card" data-name="Text Card" style="padding-top: 16px; padding-bottom: 16px;">
+                    <div class="container" style="padding: 0 20px">
+                        <t t-if="object.x_studio_cohort_group == 'TH' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Understanding
+                                                blood sugar before it becomes a concern</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">Metabolic health shapes how your body turns food into
+                                        energy, and it can shift gradually over time. Raised blood sugar and insulin
+                                        resistance often develop without obvious symptoms, yet they remain among the
+                                        most preventable long term health risks. Knowing what influences them gives you
+                                        time to respond early.&nbsp;<br><br>If something feels different, unexplained
+                                        tiredness, increased thirst, or changes in weight or appetite, a Telehealth
+                                        consultation is a practical first step. You can speak with a doctor from
+                                        wherever you are, describe what you have noticed, and get clear guidance on
+                                        whether blood tests or further checks would be sensible. It is also a useful
+                                        conversation if metabolic conditions run in your family and you want to
+                                        understand your own risk. No waiting room, no travel, and no need to wait until
+                                        symptoms become disruptive before asking a question.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'TH + MH' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Understanding
+                                                blood sugar before it becomes a concern</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">Metabolic health shapes how your body turns food into
+                                        energy, and it can shift gradually over time. Raised blood sugar and insulin
+                                        resistance often develop without obvious symptoms, yet they remain among the
+                                        most preventable long term health risks. Knowing what influences them gives you
+                                        time to respond early.&nbsp;<br><br>Metabolic health sits at the meeting point
+                                        of body and routine. Through Telehealth, you can discuss symptoms, family
+                                        history and testing options with a doctor, and get clinical guidance tailored to
+                                        your situation. Mental Wellbeing supports the part that often proves harder:
+                                        changing habits that have been in place for years. Stress, disrupted sleep and
+                                        comfort eating all influence how the body handles glucose, and talking these
+                                        through with a professional can make new routines more realistic. Used together,
+                                        the two services cover both the medical picture and the everyday behaviours
+                                        behind it.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'TH' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Entender el
+                                                azúcar en sangre antes de que preocupe</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">La salud metabólica determina cómo tu cuerpo convierte
+                                        los alimentos en energía, y puede cambiar poco a poco con el tiempo. El azúcar
+                                        elevado y la resistencia a la insulina suelen aparecer sin síntomas claros,
+                                        aunque son de los riesgos más prevenibles a largo plazo. Conocerlos permite
+                                        actuar a tiempo.&nbsp;<br><br>Si notas algo distinto, como cansancio sin
+                                        explicación, más sed de lo habitual o cambios en el peso o el apetito, una
+                                        consulta de Telehealth es un buen primer paso. Puedes hablar con un médico desde
+                                        donde estés, explicar lo que has observado y recibir orientación clara sobre si
+                                        conviene hacer análisis u otras pruebas. También es una conversación útil si hay
+                                        antecedentes familiares de enfermedades metabólicas y quieres entender tu propio
+                                        riesgo. Sin salas de espera, sin desplazamientos y sin esperar a que los
+                                        síntomas se vuelvan molestos para preguntar.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'TH + MH' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Entender el
+                                                azúcar en sangre antes de que preocupe</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">La salud metabólica determina cómo tu cuerpo convierte
+                                        los alimentos en energía, y puede cambiar poco a poco con el tiempo. El azúcar
+                                        elevado y la resistencia a la insulina suelen aparecer sin síntomas claros,
+                                        aunque son de los riesgos más prevenibles a largo plazo. Conocerlos permite
+                                        actuar a tiempo.&nbsp;<br><br>La salud metabólica se sitúa entre el cuerpo y la
+                                        rutina diaria. Con Telehealth puedes comentar síntomas, antecedentes familiares
+                                        y opciones de análisis con un médico, y recibir orientación clínica adaptada a
+                                        tu situación. Mental Wellbeing acompaña la parte que suele costar más: cambiar
+                                        hábitos arraigados desde hace años. El estrés, el sueño interrumpido y comer por
+                                        ansiedad influyen en cómo el cuerpo gestiona la glucosa, y hablarlo con un
+                                        profesional hace que las nuevas rutinas resulten más realistas. Juntos, ambos
+                                        servicios cubren tanto el aspecto médico como los comportamientos cotidianos que
+                                        hay detrás.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'MH' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Entender el
+                                                azúcar en sangre antes de que preocupe</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">&nbsp;La salud metabólica determina cómo tu cuerpo
+                                        convierte los alimentos en energía, y puede cambiar poco a poco con el tiempo.
+                                        El azúcar elevado y la resistencia a la insulina suelen aparecer sin síntomas
+                                        claros, aunque son de los riesgos más prevenibles a largo plazo. Conocerlos
+                                        permite actuar a tiempo.&nbsp;<br><br>El azúcar en sangre responde a mucho más
+                                        que a la alimentación. El estrés continuado, el sueño de mala calidad y comer
+                                        por ansiedad influyen en cómo el cuerpo utiliza la insulina, por eso el
+                                        bienestar emocional tiene un papel real en la prevención. Con Mental Wellbeing
+                                        puedes hablar de forma confidencial con un profesional sobre las presiones que
+                                        marcan tu día a día, ya sea la carga de trabajo, la preocupación por tu salud o
+                                        la frustración de hábitos que cuesta cambiar. Juntos podéis trabajar en cambios
+                                        sostenibles, más allá de la fuerza de voluntad puntual.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'MH' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Understanding
+                                                blood sugar before it becomes a concern</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">Metabolic health shapes how your body turns food into
+                                        energy, and it can shift gradually over time. Raised blood sugar and insulin
+                                        resistance often develop without obvious symptoms, yet they remain among the
+                                        most preventable long term health risks. Knowing what influences them gives you
+                                        time to respond early.&nbsp;<br><br>Blood sugar responds to far more than diet
+                                        alone. Ongoing stress, broken sleep and emotional eating all affect how the body
+                                        uses insulin, which is why wellbeing support has a genuine place in prevention.
+                                        Through Mental Wellbeing, you can speak confidentially with a professional about
+                                        the pressures shaping your daily routine, whether that is workload, worry about
+                                        your health, or the frustration of habits that feel stuck. Together you can work
+                                        on sustainable changes rather than short bursts of willpower. Looking after your
+                                        mental health is part of looking after your metabolic health.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'PC' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Entender el
+                                                azúcar en sangre antes de que preocupe</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">La salud metabólica determina cómo tu cuerpo convierte
+                                        los alimentos en energía, y puede cambiar poco a poco con el tiempo. El azúcar
+                                        elevado y la resistencia a la insulina suelen aparecer sin síntomas claros,
+                                        aunque son de los riesgos más prevenibles a largo plazo. Conocerlos permite
+                                        actuar a tiempo.&nbsp;<br><br>Si notas algo distinto, como cansancio sin
+                                        explicación, más sed de lo habitual o cambios en el peso o el apetito, una
+                                        consulta de Telehealth es un buen primer paso. Puedes hablar con un médico desde
+                                        donde estés, explicar lo que has observado y recibir orientación clara sobre si
+                                        conviene hacer análisis u otras pruebas. También es una conversación útil si hay
+                                        antecedentes familiares de enfermedades metabólicas y quieres entender tu propio
+                                        riesgo. Sin salas de espera, sin desplazamientos y sin esperar a que los
+                                        síntomas se vuelvan molestos para preguntar.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'PC' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Understanding
+                                                blood sugar before it becomes a concern</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">Metabolic health shapes how your body turns food into
+                                        energy, and it can shift gradually over time. Raised blood sugar and insulin
+                                        resistance often develop without obvious symptoms, yet they remain among the
+                                        most preventable long term health risks. Knowing what influences them gives you
+                                        time to respond early.&nbsp;<br><br>If something feels different, unexplained
+                                        tiredness, increased thirst, or changes in weight or appetite, a Telehealth
+                                        consultation is a practical first step. You can speak with a doctor from
+                                        wherever you are, describe what you have noticed, and get clear guidance on
+                                        whether blood tests or further checks would be sensible. It is also a useful
+                                        conversation if metabolic conditions run in your family and you want to
+                                        understand your own risk. No waiting room, no travel, and no need to wait until
+                                        symptoms become disruptive before asking a question.</p>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-elif="object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2 style="text-align: center;"><span style="font-size: 30px;"><strong>Understanding
+                                                blood sugar before it becomes a concern</strong></span><br></h2>
+                                    <div class="s_hr o_mail_snippet_general o_not_editable pt16 pb16 o_colored_level"
+                                        data-vxml="001" data-snippet="s_hr" data-name="Separator"
+                                        style="padding-top: 16px; padding-bottom: 16px;">
+                                        <hr class="w-100 mx-auto"
+                                            style="border: 0; border-top: 1px solid #212529; width: 100%; margin: 16px 0;">
+                                    </div>
+                                    <p style="text-align: start;">Metabolic health shapes how your body turns food into
+                                        energy, and it can shift gradually over time. Raised blood sugar and insulin
+                                        resistance often develop without obvious symptoms, yet they remain among the
+                                        most preventable long term health risks. Knowing what influences them gives you
+                                        time to respond early.&nbsp;<br><br>If something feels different, unexplained
+                                        tiredness, increased thirst, or changes in weight or appetite, a Telehealth
+                                        consultation is a practical first step. You can speak with a doctor from
+                                        wherever you are, describe what you have noticed, and get clear guidance on
+                                        whether blood tests or further checks would be sensible. It is also a useful
+                                        conversation if metabolic conditions run in your family and you want to
+                                        understand your own risk. No waiting room, no travel, and no need to wait until
+                                        symptoms become disruptive before asking a question.</p>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+                <section class="o_mail_snippet_general o_colored_level pt40 pb24" data-vxml="001"
+                    data-snippet="s_text_product_description" data-name="Product Description"
+                    style="background-color: rgb(250, 250, 250); padding-top: 40px; padding-bottom: 24px;">
+                    <div class="container" style="padding: 0 20px;">
+                        <t t-if="object.x_studio_cohort_group == 'TH' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>Blood sugar changes quietly for years,
+                                                which is exactly why early awareness matters so much</strong></span><br>
+                                    </h2>
+                                    <ul>
+                                        <li>Insulin resistance can develop years before blood sugar rises noticeably<br>
+                                        </li>
+                                        <li>Sleep quality, daily movement and stress all influence glucose control<br>
+                                        </li>
+                                        <li>Prediabetes often causes no symptoms, so routine checks matter<br></li>
+                                        <li>Small, sustained changes can lower the risk of Type 2 diabetes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'TH + MH' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>Blood sugar changes quietly for years,
+                                                which is exactly why early awareness matters so much</strong></span><br>
+                                    </h2>
+                                    <ul>
+                                        <li>Insulin resistance can develop years before blood sugar rises noticeably<br>
+                                        </li>
+                                        <li>Sleep quality, daily movement and stress all influence glucose control<br>
+                                        </li>
+                                        <li>Prediabetes often causes no symptoms, so routine checks matter<br></li>
+                                        <li>Small, sustained changes can lower the risk of Type 2 diabetes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'TH' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>El azúcar en sangre cambia en silencio
+                                                durante años, por eso detectarlo pronto importa
+                                                tanto</strong></span><br></h2>
+                                    <ul>
+                                        <li>La resistencia a la insulina aparece años antes que los síntomas<br></li>
+                                        <li>El sueño, el movimiento diario y el estrés afectan a la glucosa<br></li>
+                                        <li>La prediabetes suele no dar síntomas, por eso conviene revisarse<br></li>
+                                        <li>Cambios pequeños y constantes reducen el riesgo de diabetes tipo 2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'TH + MH' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>El azúcar en sangre cambia en silencio
+                                                durante años, por eso detectarlo pronto importa
+                                                tanto</strong></span><br></h2>
+                                    <ul>
+                                        <li>La resistencia a la insulina aparece años antes que los síntomas<br></li>
+                                        <li>El sueño, el movimiento diario y el estrés afectan a la glucosa<br></li>
+                                        <li>La prediabetes suele no dar síntomas, por eso conviene revisarse<br></li>
+                                        <li>Cambios pequeños y constantes reducen el riesgo de diabetes tipo 2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'MH' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>El azúcar en sangre cambia en silencio
+                                                durante años, por eso detectarlo pronto importa
+                                                tanto</strong></span><br></h2>
+                                    <ul>
+                                        <li>La resistencia a la insulina aparece años antes que los síntomas<br></li>
+                                        <li>El sueño, el movimiento diario y el estrés afectan a la glucosa<br></li>
+                                        <li>La prediabetes suele no dar síntomas, por eso conviene revisarse<br></li>
+                                        <li>Cambios pequeños y constantes reducen el riesgo de diabetes tipo 2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'MH' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>Blood sugar changes quietly for years,
+                                                which is exactly why early awareness matters so much</strong></span><br>
+                                    </h2>
+                                    <ul>
+                                        <li>Insulin resistance can develop years before blood sugar rises noticeably<br>
+                                        </li>
+                                        <li>Sleep quality, daily movement and stress all influence glucose control<br>
+                                        </li>
+                                        <li>Prediabetes often causes no symptoms, so routine checks matter<br></li>
+                                        <li>Small, sustained changes can lower the risk of Type 2 diabetes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'PC' and object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>El azúcar en sangre cambia en silencio
+                                                durante años, por eso detectarlo pronto importa
+                                                tanto</strong></span><br></h2>
+                                    <ul>
+                                        <li>La resistencia a la insulina aparece años antes que los síntomas<br></li>
+                                        <li>El sueño, el movimiento diario y el estrés afectan a la glucosa<br></li>
+                                        <li>La prediabetes suele no dar síntomas, por eso conviene revisarse<br></li>
+                                        <li>Cambios pequeños y constantes reducen el riesgo de diabetes tipo 2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t
+                            t-elif="object.x_studio_cohort_group == 'PC' and object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>Blood sugar changes quietly for years,
+                                                which is exactly why early awareness matters so much</strong></span><br>
+                                    </h2>
+                                    <ul>
+                                        <li>Insulin resistance can develop years before blood sugar rises noticeably<br>
+                                        </li>
+                                        <li>Sleep quality, daily movement and stress all influence glucose control<br>
+                                        </li>
+                                        <li>Prediabetes often causes no symptoms, so routine checks matter<br></li>
+                                        <li>Small, sustained changes can lower the risk of Type 2 diabetes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 20px;"><strong>Blood sugar changes quietly for years,
+                                                which is exactly why early awareness matters so much</strong></span><br>
+                                    </h2>
+                                    <ul>
+                                        <li>Insulin resistance can develop years before blood sugar rises noticeably<br>
+                                        </li>
+                                        <li>Sleep quality, daily movement and stress all influence glucose control<br>
+                                        </li>
+                                        <li>Prediabetes often causes no symptoms, so routine checks matter<br></li>
+                                        <li>Small, sustained changes can lower the risk of Type 2 diabetes</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+                <section class="o_mail_snippet_general o_colored_level pt32 pb16" data-vxml="001"
+                    data-snippet="s_text_product_description" data-name="Product Description"
+                    style="padding-top: 32px; padding-bottom: 16px;">
+                    <div class="container" style="padding: 0 20px;">
+                        <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 22px;"><strong>*Habla con un médico a través de la app
+                                                de vHealth (¡es gratis!)</strong></span><br></h2>
+                                    <p><em>*Ten en cuenta que vHealth es gratuito para los familiares elegibles que
+                                            estén cubiertos por tu plan de salud de Aetna International.</em></p>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-elif="object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 o_colored_level">
+                                    <h2><span style="font-size: 22px;"><strong>Speak to a doctor using the vHealth app
+                                                (it’s free!)*</strong></span><br></h2>
+                                    <p>*Please note, vHealth is free for eligible family members who are covered by your
+                                        Aetna International health plan.</p>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+                <section class="s_title o_mail_snippet_general o_colored_level pt40 pb40" data-vxml="001"
+                    data-snippet="s_title" data-name="Title"
+                    style="background-color: rgb(124, 63, 150); padding-top: 40px; padding-bottom: 40px;">
+                    <div class="container s_allow_columns">
+                        <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                            <h2 style="text-align:center"><span style="font-size: 30px;">
+                                    <font class="text-o-color-3" style="color: #FFFFFF;"><strong>Habla con un
+                                            médico</strong></font>
+                                </span><br></h2>
+                        </t>
+                        <t t-elif="object.x_studio_aetna_language == 'English'">
+                            <h2 style="text-align:center"><span style="font-size: 30px;">
+                                    <font class="text-o-color-3" style="color: #FFFFFF;"><strong>Speak to a
+                                            doctor</strong></font>
+                                </span><br></h2>
+                        </t>
+                    </div>
+                </section>
+                <section class="o_mail_snippet_general pt16 pb16 o_colored_level" data-vxml="001"
+                    data-snippet="s_text_cta_card" data-name="Call To Action Card"
+                    style="padding-top: 16px; padding-bottom: 16px;">
+                    <div class="container" style="padding: 0 20px;">
+
+                        <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 border o_colored_level pt32 pb24"
+                                    style="border: 1px solid #DEE2E6; padding-top: 32px; padding-bottom: 24px;">
+                                    <h2 style="text-align: center"><span style="font-size: 24px;">Código de
+                                            acceso</span></h2>
+                                    <h3
+                                        style="font-size: 30px; color: rgb(133, 70, 160); margin: 15px 0px; text-align: center;">
+                                        <strong>
+                                            <t title="object.x_studio_aetna_access_code"
+                                                data-oe-expression-readable="Aetna - Access Code"
+                                                t-out="object.x_studio_aetna_access_code" data-oe-demo="AETNA2019"></t>
+                                        </strong>
+                                    </h3>
+                                    <p style="text-align: center"><a href="https://vhealth.app.link/gotostore"
+                                            target="_blank" class="btn btn-lg rounded-circle btn-primary"
+                                            style="display: inline-block; background-color: #7C3F96; color: #FFFFFF; border: 1px solid #7C3F96; border-radius: 50px; padding: 12px 28px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; text-decoration: none; line-height: 1.4;"><strong>Registrese
+                                                y reserve ahora</strong></a></p>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-elif="object.x_studio_aetna_language == 'English'">
+                            <div class="row">
+                                <div class="col-md-12 col-12 border o_colored_level pt32 pb24"
+                                    style="border: 1px solid #DEE2E6; padding-top: 32px; padding-bottom: 24px;">
+                                    <h2 style="text-align: center"><span style="font-size: 24px;">Your access
+                                            code</span></h2>
+                                    <h3
+                                        style="font-size: 30px; color: rgb(133, 70, 160); margin: 15px 0px; text-align: center;">
+                                        <strong>
+                                            <t title="object.x_studio_aetna_access_code"
+                                                data-oe-expression-readable="Aetna - Access Code"
+                                                t-out="object.x_studio_aetna_access_code" data-oe-demo="AETNA2019"></t>
+                                        </strong>
+                                    </h3>
+                                    <p style="text-align: center"><a href="https://vhealth.app.link/gotostore"
+                                            target="_blank" class="btn btn-lg rounded-circle btn-primary"
+                                            style="display: inline-block; background-color: #7C3F96; color: #FFFFFF; border: 1px solid #7C3F96; border-radius: 50px; padding: 12px 28px; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: bold; text-decoration: none; line-height: 1.4;"><strong>Register
+                                                and Book Now</strong></a></p>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </section>
+                <section class="s_three_columns o_mail_snippet_general o_cc pt32 pb32 o_colored_level" data-vxml="001"
+                    data-snippet="s_three_columns" data-name="Columns"
+                    style="background-color: rgb(242, 242, 242); padding-top: 32px; padding-bottom: 32px;">
+                    <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                        <div class="container" style="padding: 10px 20px;">
+
+                            <table style="border-collapse: collapse; width: 100%; margin:10px 0;">
+                                <colgroup>
+                                    <col style="width: 50%;">
+                                    <col style="width: 50%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0px; vertical-align: top; width: 50%;" width="50%">
+                                            <img src="/vhealth_email_marketing/static/src/img/email/instructions-1_es-v3.png"
+                                                alt="" data-attachment-id="178"
+                                                class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                data-format-mimetype="image/png" data-resize-width="660"
+                                                data-original-id="178"
+                                                data-original-src="/vhealth_email_marketing/static/src/img/email/instructions-1_es-v3.png"
+                                                data-mimetype-before-conversion="image/png" data-mimetype="image/png"
+                                                style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 274px; height: auto; display: block; border: 0;">
+                                        </td>
+                                        <td style="padding: 0px; vertical-align: top; width: 50%;" width="50%">
+                                            <img src="/vhealth_email_marketing/static/src/img/email/instructions-2_es.png"
+                                                alt="" data-attachment-id="165"
+                                                class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                data-format-mimetype="image/png" data-resize-width="660"
+                                                data-original-id="165"
+                                                data-original-src="/vhealth_email_marketing/static/src/img/email/instructions-2_es.png"
+                                                data-mimetype-before-conversion="image/png" data-mimetype="image/png"
+                                                style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 274px; height: auto; display: block; border: 0;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </t>
+                    <t t-elif="object.x_studio_aetna_language == 'English'">
+                        <div class="container" style="padding: 10px 20px;">
+                            <table style="border-collapse: collapse; width: 100%;">
+                                <colgroup>
+                                    <col style="width: 50%;">
+                                    <col style="width: 50%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <td style="padding: 0px; vertical-align: top; width: 50%;" width="50%">
+                                            <img src="/vhealth_email_marketing/static/src/img/email/instructions-1_en.png"
+                                                alt="" data-attachment-id="164"
+                                                class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                data-format-mimetype="image/png" data-resize-width="660"
+                                                data-original-id="164"
+                                                data-original-src="/vhealth_email_marketing/static/src/img/email/instructions-1_en.png"
+                                                data-mimetype-before-conversion="image/png" data-mimetype="image/png"
+                                                style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 274px; height: auto; display: block; border: 0;">
+                                        </td>
+                                        <td style="padding: 0px; vertical-align: top; width: 50%;" width="50%">
+                                            <img src="/vhealth_email_marketing/static/src/img/email/instructions-2_en.png"
+                                                alt="" data-attachment-id="180"
+                                                class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                data-format-mimetype="image/png" data-resize-width="660"
+                                                data-original-id="180"
+                                                data-original-src="/vhealth_email_marketing/static/src/img/email/instructions-2_en.png"
+                                                data-mimetype-before-conversion="image/png" data-mimetype="image/png"
+                                                style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 274px; height: auto; display: block; border: 0;">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </section>
+
+                <section class="s_three_columns o_mail_snippet_general o_cc pt32 pb32 o_colored_level" data-vxml="001"
+                    data-snippet="s_three_columns" data-name="Columns" style="padding-top: 32px; padding-bottom: 32px;">
+                    <div class="container">
+                        <table style="border-collapse: collapse; table-layout: fixed; width: 100%;">
+                            <colgroup>
+                                <col style="width: 50%;">
+                                <col style="width: 50%;">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+
+                                    <td style="padding: 0px; vertical-align: top; width: 50%;" width="50%">
+                                        <img src="/vhealth_email_marketing/static/src/img/email/vhealth-video_email_v2.gif"
+                                            alt="" data-attachment-id="166"
+                                            class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                            data-original-id="166"
+                                            data-original-src="/vhealth_email_marketing/static/src/img/email/vhealth-video_email_v2.gif"
+                                            data-mimetype-before-conversion="image/gif" width="260"
+                                            style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 260px; height: auto; display: block; border: 0;">
+                                    </td>
+
+
+                                    <td style="padding: 32px 20px 24px 0px; vertical-align: top; width: 50%;"
+                                        width="50%">
+
+
+                                        <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                                            <p style="font-size: 15px;">
+                                                As an Aetna International member, you have free and unlimited access to
+                                                Mental Wellbeing Appointments 24 hours a day, 365 days a year.
+                                            </p>
+                                            <p style="font-size: 15px;">
+                                                <strong>
+                                                    <a href="https://vhealth.app.link/gotostore">
+                                                        <font style="color: rgb(124, 63, 150);">&nbsp;Download
+                                                        </font>
+                                                    </a>&nbsp;</strong>&nbsp;and register so you know where to turn when
+                                                you need us.
+                                            </p>
+                                        </t>
+
+                                        <t t-else="">
+                                            <p style="font-size: 15px;">
+                                                As an Aetna International member, you have free and unlimited access to
+                                                Mental Wellbeing Appointments 24 hours a day, 365 days a year.
+                                            </p>
+                                            <p style="font-size: 15px;">
+                                                <strong>
+                                                    <a href="https://vhealth.app.link/gotostore">
+                                                        <font style="color: rgb(124, 63, 150);">&nbsp;Download
+                                                        </font>
+                                                    </a>&nbsp;</strong>&nbsp;and register so you know where to turn when
+                                                you need us.
+                                            </p>
+                                        </t>
+
+
+
+                                        <t t-if="object.x_studio_aetna_language == 'Spanish'">
+
+                                            <div style="padding: 5px 0;">
+
+                                                <h3>
+                                                    <strong style="color: #7c3f96;">
+                                                        Reservar una cita es fácil.
+                                                    </strong>
+                                                </h3>
+
+                                                <p>
+                                                    <a style="text-decoration: none;" title="Register and book now"
+                                                        href="https://vhealth.app.link/gotostore" target="_blank"
+                                                        rel="noopener">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/vhealth_register-book-now_es.png"
+                                                            alt="" data-attachment-id="176"
+                                                            class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                            data-format-mimetype="image/png" data-resize-width="503"
+                                                            data-original-id="176"
+                                                            data-original-src="/vhealth_email_marketing/static/src/img/email/vhealth_register-book-now_es.png"
+                                                            data-mimetype-before-conversion="image/png"
+                                                            data-mimetype="image/png"
+                                                            style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 250px; height: auto; display: block; border: 0;">
+                                                    </a>
+                                                </p>
+
+                                                <p>
+                                                    <a style="text-decoration: none;" title="Watch our video"
+                                                        href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=o0k9Jt59jGwmDH2KiJ0/aBQOwQ2CAc%20L"
+                                                        target="_blank" rel="noopener">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/vhealth_watch-video_es.png"
+                                                            alt="" data-attachment-id="174"
+                                                            class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                            data-format-mimetype="image/png" data-resize-width="373"
+                                                            data-original-id="174"
+                                                            data-original-src="/vhealth_email_marketing/static/src/img/email/vhealth_watch-video_es.png"
+                                                            data-mimetype-before-conversion="image/png"
+                                                            data-mimetype="image/png"
+                                                            style="width: 88%; padding-top: 16px; padding-bottom: 16px; max-width: 220px; height: auto; display: block; border: 0;">
+                                                    </a>
+                                                </p>
+
+                                            </div>
+
+                                        </t>
+
+                                        <t t-elif="object.x_studio_aetna_language == 'English'">
+
+                                            <div style="padding: 5px 0;">
+
+                                                <h3>
+                                                    <strong style="color: #7c3f96;">
+                                                        Booking an appointment is easy.
+                                                    </strong>
+                                                </h3>
+
+                                                <p>
+                                                    <a style="text-decoration: none;" title="Register and book now"
+                                                        href="https://vhealth.app.link/gotostore" target="_blank"
+                                                        rel="noopener">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/vhealth_register-book-now_en.png"
+                                                            alt="" data-attachment-id="170"
+                                                            class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                            data-format-mimetype="image/png" data-resize-width="503"
+                                                            data-original-id="170"
+                                                            data-original-src="/vhealth_email_marketing/static/src/img/email/vhealth_register-book-now_en.png"
+                                                            data-mimetype-before-conversion="image/png"
+                                                            data-mimetype="image/png"
+                                                            style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 250px; height: auto; display: block; border: 0;">
+                                                    </a>
+                                                </p>
+
+                                                <p>
+                                                    <a style="text-decoration: none;" title="Watch our video"
+                                                        href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=o0k9Jt59jGwmDH2KiJ0/aBQOwQ2CAc%20L"
+                                                        target="_blank" rel="noopener">
+                                                        <img src="/vhealth_email_marketing/static/src/img/email/vhealth_watch-video_en.png"
+                                                            alt="" data-attachment-id="172"
+                                                            class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                            data-format-mimetype="image/png" data-resize-width="373"
+                                                            data-original-id="172"
+                                                            data-original-src="/vhealth_email_marketing/static/src/img/email/vhealth_watch-video_en.png"
+                                                            data-mimetype-before-conversion="image/png"
+                                                            data-mimetype="image/png"
+                                                            style="width: 88%; padding-top: 16px; padding-bottom: 16px; max-width: 220px; height: auto; display: block; border: 0;">
+                                                    </a>
+                                                </p>
+
+                                            </div>
+
+                                        </t>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+                <section class="s_three_columns o_mail_snippet_general o_cc pt32 pb32 o_colored_level" data-vxml="001"
+                    data-snippet="s_three_columns" data-name="Columns"
+                    style="background-color: rgb(247, 247, 247); padding-top: 32px; padding-bottom: 32px;">
+                    <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                        <div class="container" style="padding: 10px 20px;">
+                            <table style="border-collapse: collapse; table-layout: fixed; width: 100%;">
+                                <colgroup>
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr style="padding: 10px 0;">
+                                        <td style="padding: 0px; text-align: center; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <a style="text-decoration: none;" title="vHealth (Worldwide) - App Store"
+                                                href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=GdW9IerORUbJ3nqYsa5kVYn1B49HO2Z2"
+                                                target="_blank" rel="noopener">
+                                                <img src="/vhealth_email_marketing/static/src/img/email/download-app-store-badge-es-2.png"
+                                                    alt="" data-attachment-id="188"
+                                                    class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                    data-format-mimetype="image/png" data-resize-width="180"
+                                                    data-original-id="188"
+                                                    data-original-src="/vhealth_email_marketing/static/src/img/email/download-app-store-badge-es-2.png"
+                                                    data-mimetype-before-conversion="image/png"
+                                                    data-mimetype="image/png"
+                                                    style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;">
+                                            </a>
+                                        </td>
+
+                                        <td style="padding: 0px; text-align: center; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <a style="text-decoration: none;" title="vHealth (Worldwide) - Google Play"
+                                                href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=YpmhHMQ4YXfgEWMed%20oidQjz0SdDBWYS"
+                                                target="_blank" rel="noopener">
+                                                <img src="/vhealth_email_marketing/static/src/img/email/google-play-badge-es.png"
+                                                    alt="" data-attachment-id="190"
+                                                    class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                    data-format-mimetype="image/png" data-resize-width="180"
+                                                    data-original-id="190"
+                                                    data-original-src="/vhealth_email_marketing/static/src/img/email/google-play-badge-es.png"
+                                                    data-mimetype-before-conversion="image/png"
+                                                    data-mimetype="image/png"
+                                                    style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;">
+                                            </a>
+                                        </td>
+
+                                        <td style="padding: 0px; text-align: center; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <a style="text-decoration: none;" title="Access via our website"
+                                                href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=IJkkzbp8yjyhhKtMnd4YKIqHIeKsE3sH"
+                                                target="_blank" rel="noopener">
+                                                <img src="/vhealth_email_marketing/static/src/img/email/vhealth-access-via-website-es.png"
+                                                    alt="" data-attachment-id="192"
+                                                    class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                    data-format-mimetype="image/png" data-resize-width="180"
+                                                    data-original-id="192"
+                                                    data-original-src="/vhealth_email_marketing/static/src/img/email/vhealth-access-via-website-es.png"
+                                                    data-mimetype-before-conversion="image/png"
+                                                    data-mimetype="image/png"
+                                                    style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+
+                    <t t-elif="object.x_studio_aetna_language == 'English'">
+                        <div class="container" style="padding: 10px 20px;">
+                            <table style="border-collapse: collapse; table-layout: fixed; width: 100%;">
+                                <colgroup>
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr style="padding: 10px 0;">
+                                        <td style="padding: 0px; text-align: center; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <a style="text-decoration: none;" title="vHealth (Worldwide) - App Store"
+                                                href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=GdW9IerORUbJ3nqYsa5kVYn1B49HO2Z2"
+                                                target="_blank" rel="noopener">
+                                                <img src="/vhealth_email_marketing/static/src/img/email/download-app-store-badge-en-2.png"
+                                                    alt="" data-attachment-id="182"
+                                                    class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                    data-format-mimetype="image/png" data-resize-width="180"
+                                                    data-original-id="182"
+                                                    data-original-src="/vhealth_email_marketing/static/src/img/email/download-app-store-badge-en-2.png"
+                                                    data-mimetype-before-conversion="image/png"
+                                                    data-mimetype="image/png"
+                                                    style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;">
+                                            </a>
+                                        </td>
+
+                                        <td style="padding: 0px; text-align: center; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <a style="text-decoration: none;" title="vHealth (Worldwide) - Google Play"
+                                                href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=YpmhHMQ4YXfgEWMed%20oidQjz0SdDBWYS"
+                                                target="_blank" rel="noopener">
+                                                <img src="/vhealth_email_marketing/static/src/img/email/google-play-badge-en.png"
+                                                    alt="" data-attachment-id="184"
+                                                    class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                    data-format-mimetype="image/png" data-resize-width="180"
+                                                    data-original-id="184"
+                                                    data-original-src="/vhealth_email_marketing/static/src/img/email/google-play-badge-en.png"
+                                                    data-mimetype-before-conversion="image/png"
+                                                    data-mimetype="image/png"
+                                                    style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;">
+                                            </a>
+                                        </td>
+
+                                        <td style="padding: 0px; text-align: center; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <a style="text-decoration: none;" title="Access via our website"
+                                                href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=IJkkzbp8yjyhhKtMnd4YKIqHIeKsE3sH"
+                                                target="_blank" rel="noopener">
+                                                <img src="/vhealth_email_marketing/static/src/img/email/vhealth-access-via-website-v2.png"
+                                                    alt="" data-attachment-id="186"
+                                                    class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                                    data-format-mimetype="image/png" data-resize-width="180"
+                                                    data-original-id="186"
+                                                    data-original-src="/vhealth_email_marketing/static/src/img/email/vhealth-access-via-website-v2.png"
+                                                    data-mimetype-before-conversion="image/png"
+                                                    data-mimetype="image/png"
+                                                    style="padding-top: 16px; padding-bottom: 16px; width: 100%; max-width: 165px; height: auto; display: inline-block; border: 0;">
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </t>
+                </section>
+                <section class="s_three_columns o_mail_snippet_general o_cc pt32 o_colored_level pb4" data-vxml="001"
+                    data-snippet="s_three_columns" data-name="Columns" style="padding-top: 32px; padding-bottom: 4px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12 o_colored_level"
+                                style="width: 120px; display: block; margin-left: auto; margin-right: auto; max-width: 100% !important;">
+                                <img src="/vhealth_email_marketing/static/src/img/email/20-vH_0395-New-App-Tile-1024x1024.png"
+                                    alt="" data-attachment-id="194"
+                                    class="img img-fluid o_editable_media py-4 o_we_custom_image"
+                                    data-format-mimetype="image/png" data-resize-width="688" data-original-id="194"
+                                    data-original-src="/vhealth_email_marketing/static/src/img/email/20-vH_0395-New-App-Tile-1024x1024.png"
+                                    data-mimetype-before-conversion="image/png" data-mimetype="image/png"
+                                    style="padding-top: 16px; padding-bottom: 16px; width: 120px; max-width: 120px; height: auto; display: block; margin: 0 auto; border: 0;">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_three_columns o_mail_snippet_general o_cc pt32 pb32 o_colored_level" data-vxml="001"
+                    data-snippet="s_three_columns" data-name="Columns" style="padding-top: 32px; padding-bottom: 32px;">
+                    <div class="container">
+                        <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                            <table style="border-collapse: collapse; table-layout: fixed; width: 100%;">
+                                <colgroup>
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+
+                                        <td style="padding: 0px 10px; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <h5 style="margin-top: 0;">
+                                                <strong>CONSULTAS SOBRE LA PÓLIZA DE AETNA</strong>
+                                            </h5>
+
+                                            <p>
+                                                Si tienes alguna pregunta sobre tu póliza o alguna reclamación,
+                                                comunícate con el equipo de atención al cliente de Aetna que
+                                                aparece en el reverso de tu tarjeta de miembro.
+                                            </p>
+                                        </td>
+
+
+                                        <td style="padding: 0px 10px; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <h5 style="margin-top: 0;">
+                                                <strong>CONTACTA CON NOSOTROS</strong>
+                                            </h5>
+
+                                            <p>
+                                                Si tienes problemas para acceder al servicio o quieres hacer
+                                                preguntas sobre vHealth, ponte en contacto con:
+                                            </p>
+
+                                            <p style="color: #454545; margin: 0;">
+                                                UK:&nbsp;
+                                                <a href="tel:00442034992851">
+                                                    <font style="color: rgb(54, 60, 68);">&nbsp;+44 (0) 20 3499
+                                                        2851&nbsp;</font>
+                                                </a>
+                                            </p>
+
+                                            <p style="color: #454545; margin: 0;">
+                                                USA:
+                                                <a href="tel:0018572563784">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;1-857-256-3784&nbsp;
+                                                    </font>
+                                                </a>
+                                            </p>
+
+                                            <p style="color: #454545; margin: 0;">
+                                                Email:
+                                                <a href="mailto:vhealth@teladochealth.com">
+                                                    <font style="color: rgb(51, 51, 51);">
+                                                        &nbsp;vhealth@teladochealth.com&nbsp;</font>
+                                                </a>
+                                            </p>
+                                        </td>
+
+
+                                        <td style="padding: 0px 10px; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <h5 style="margin-top: 0;">
+                                                <strong>Otros enlaces</strong>
+                                            </h5>
+
+                                            <p style="margin: 0;">
+                                                <a
+                                                    href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=PzE584iqMe0CIZI3RxdyDaZsjZuwLCly">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;Más información sobre
+                                                        vHealth&nbsp;</font>
+                                                </a>
+                                            </p>
+
+                                            <p style="margin: 0;">
+                                                <a href="https://info.vhealth-teladochealth.com/invite">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;Compártelo con tu
+                                                        familia**&nbsp;</font>
+                                                </a>
+                                            </p>
+
+                                            <p style="margin: 0;">
+                                                <a href="https://info.vhealth-teladochealth.com/stop-register/">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;¿Ya estás registrado?
+                                                        Haz clic aquí&nbsp;</font>
+                                                </a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+
+                        <t t-elif="object.x_studio_aetna_language == 'English'">
+                            <table style="border-collapse: collapse; table-layout: fixed; width: 100%;">
+                                <colgroup>
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                    <col style="width: 33.33%;">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+
+                                        <td style="padding: 0px 10px; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <h5 style="margin-top: 0;">
+                                                <strong>AETNA POLICY QUERIES</strong>
+                                            </h5>
+
+                                            <p>
+                                                If you have questions about your Aetna International policy,
+                                                please call the member services number on the back of your
+                                                member ID card.
+                                            </p>
+                                        </td>
+
+
+                                        <td style="padding: 0px 10px; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <h5 style="margin-top: 0;">
+                                                <strong>CONTACT VHEALTH</strong>
+                                            </h5>
+
+                                            <p>
+                                                If you have issues accessing the service, or have questions
+                                                about vHealth, please contact:
+                                            </p>
+
+                                            <p style="color: #454545; margin: 0;">
+                                                UK:&nbsp;
+                                                <a href="tel:00442034992851">
+                                                    <font style="color: rgb(54, 60, 68);">&nbsp;+44 (0) 20 3499
+                                                        2851&nbsp;</font>
+                                                </a>
+                                            </p>
+
+                                            <p style="color: #454545; margin: 0;">
+                                                USA:
+                                                <a href="tel:0018572563784">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;1-857-256-3784&nbsp;
+                                                    </font>
+                                                </a>
+                                            </p>
+
+                                            <p style="color: #454545; margin: 0;">
+                                                Email:
+                                                <a href="mailto:vhealth@teladochealth.com">
+                                                    <font style="color: rgb(51, 51, 51);">
+                                                        &nbsp;vhealth@teladochealth.com&nbsp;</font>
+                                                </a>
+                                            </p>
+                                        </td>
+
+
+                                        <td style="padding: 0px 10px; vertical-align: top; width: 33.33%;"
+                                            width="33.33%">
+                                            <h5 style="margin-top: 0;">
+                                                <strong>Other links</strong>
+                                            </h5>
+
+                                            <p style="margin: 0;">
+                                                <a
+                                                    href="https://koi-3QNDSD24G8.marketingautomation.services/net/m?md=o0k9Jt59jGwmDH2KiJ0/aBQOwQ2CAc%20L">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;More vHealth
+                                                        information&nbsp;</font>
+                                                </a>
+                                            </p>
+
+                                            <p style="margin: 0;">
+                                                <a href="https://info.vhealth-teladochealth.com/invite">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;Invite your family
+                                                        members**&nbsp;</font>
+                                                </a>
+                                            </p>
+
+                                            <p style="margin: 0;">
+                                                <a href="https://info.vhealth-teladochealth.com/stop-register/">
+                                                    <font style="color: rgb(51, 51, 51);">&nbsp;Already registered?
+                                                        Click here&nbsp;</font>
+                                                </a>
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </t>
+                    </div>
+                </section>
+                <section
+                    class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general pt16 pb16 o_colored_level"
+                    data-name="Social + Footer" data-vxml="001" data-snippet="s_mail_block_footer_social"
+                    style="padding-top: 16px; padding-bottom: 16px;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-12 col-12 o_colored_level">
+                                <div class="o_not_editable" style="margin-bottom: 20px;">
+                                    <a target="_blank" href="#">
+                                        <img style="max-width: 100%; margin: 0 auto; display: block; width: 200px; height: auto; border: 0;"
+                                            src="/vhealth_email_marketing/static/src/img/email/teladochealth_logo_plum_aqua_rgb.png"
+                                            alt="" data-attachment-id="1738"
+                                            class="img img-fluid o_editable_media mx-auto o_we_custom_image"
+                                            data-format-mimetype="image/png" data-resize-width="300"
+                                            data-original-id="1738"
+                                            data-original-src="/vhealth_email_marketing/static/src/img/email/teladochealth_logo_plum_aqua_rgb.png"
+                                            data-mimetype-before-conversion="image/png" data-mimetype="image/png">
+                                    </a>
+                                </div>
+                                <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                                    <p style="text-align: center">vHealth (Worldwide) en asociación con Teladoc Health
+                                    </p>
+                                </t>
+                                <t t-elif="object.x_studio_aetna_language == 'English'">
+                                    <p style="text-align: center">vHealth (Worldwide) in partnership with Teladoc Health
+                                    </p>
+                                </t>
+
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="s_text_block o_mail_snippet_general o_colored_level bg-o-color-5 pt32 pb32"
+                    style="padding-left: 15px; padding-right: 15px; background-color: #363C44; color: #FFFFFF; padding-top: 32px; padding-bottom: 32px;"
+                    data-vxml="001" data-snippet="s_text_block" data-name="Paragraph">
+                    <div class="container s_allow_columns">
+                        <t t-if="object.x_studio_aetna_language == 'Spanish'">
+                            <p style="text-align: left; color: #fff; font-size: 10px;">*Como la regulación de la
+                                prescripción médica varía país por país, no siempre podemos garantizar una prescripción
+                                médica. **Los miembros elegibles de tu familia son aquellos que están cubiertos por tu
+                                Aetna Health Plan. vHealth es un servicio de Advance Medical. Advance Medical
+                                conjuntamente con sus médicos y su personal son contratistas independientes y no son
+                                agentes ni empleados de Aetna. Aetna no ofrece atención ni garantiza el acceso a los
+                                servicios de salud. vHealth, el servicio de Advance Medical descrito en este documento
+                                solo está disponible de forma gratuita para los miembros de Aetna durante el período
+                                establecido por Aetna. El contenido de esta comunicación (incluidos los archivos
+                                adjuntos) es confidencial. Si no es el destinatario de esta comunicación, cualquier
+                                divulgación, copia, distribución o uso de su contenido está estrictamente prohibida, y
+                                debe notificar al remitente de inmediato y luego eliminarlo (incluidos los archivos
+                                adjuntos) de su sistema. Aetna no proporcionará ningún servicio que infrinja las
+                                regulaciones económicas o comerciales aplicables de los Estados Unidos (EE. UU.), Las
+                                Naciones Unidas (ONU) o la Unión Europea (UE). Esto incluye regulaciones relacionadas
+                                con una persona o entidad bloqueada, o un país sancionado por los EE. UU., A menos que
+                                esté permitido bajo una licencia válida de Office of Foreign Asset Control (OFAC). Para
+                                obtener más información sobre OFAC, visite
+                                https://www.treasury.gov/resource-center/sanctions/Pages/default.aspx. Apple, el
+                                logotipo de Apple y el iPhone son marcas comerciales de Apple Inc., registradas en los
+                                EE. UU. Y en otros países. App Store es una marca de servicio de Apple Inc. Google Play
+                                y los logotipos de Google Play son marcas comerciales de Google LLC. Aetna® es una marca
+                                comercial de Aetna Inc. y está protegida en todo el mundo mediante registros de marcas
+                                comerciales y tratados. Si ya se ha unido a vHealth por Aetna, haga clic en este enlace.
+                                Al darse de baja de la suscripción, no recibirá correos electrónicos futuros
+                                relacionados con vHealth. Aún puede seguir recibiendo material de marketing directamente
+                                de Aetna como parte de su plan.</p>
+                        </t>
+                        <t t-elif="object.x_studio_aetna_language == 'English'">
+                            <p style="text-align: left; color: #fff;  font-size: 10px;"><span style="font-size: 12px;">
+                                    <font class="text-o-color-4" style="color: #FFFFFF;">*As prescription regulation
+                                        varies country by country, we cannot guarantee a prescription. **Eligible family
+                                        members are those covered by your Aetna Health Plan. vHealth is an Advance
+                                        Medical service. Advance Medical together with their physicians and staff are
+                                        independent contractors and are neither agents nor employees of Aetna. Aetna
+                                        does not provide care or guarantee access to health services. vHealth, the
+                                        Advance Medical service described in this document are only available free of
+                                        charge to Aetna members for the period set out by Aetna. The contents of this
+                                        communication (including attachments) are confidential and may be privileged. If
+                                        you are not the intended recipient of this communication, any disclosure,
+                                        copying, distribution or use of its contents is strictly prohibited, and you
+                                        should notify the sender immediately and then delete it (including any
+                                        attachments) from your system. Aetna will not provide any services that violate
+                                        any United States (US), United Nations (UN), European Union (EU) or other
+                                        applicable economic or trade sanctions. This includes sanctions related to a
+                                        blocked person or entity, or a country under sanction by the US, unless
+                                        permitted under a valid written Office of Foreign Asset Control (OFAC) license.
+                                        For more information on OFAC, visit
+                                        https://www.treasury.gov/resource-center/sanctions/Pages/default.aspx. Apple,
+                                        the Apple logo and iPhone are trademarks of Apple Inc., registered in the U.S.
+                                        and other countries. App Store is a service mark of Apple Inc. Google Play and
+                                        the Google Play logos are trademarks of Google LLC. Aetna® is a trademark of
+                                        Aetna Inc. and is protected throughout the world by trademark registrations and
+                                        treaties. If you have already joined vHealth through Aetna, click on this link.
+                                        By unsubscribing, you are opting out of general vHealth communications only.
+                                        Registered users will still receive key emails such as appointment
+                                        confirmations. You may still receive communications from Aetna International as
+                                        part of your plan.</font>
+                                </span><br></p>
+                        </t>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
