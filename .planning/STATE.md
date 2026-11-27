@@ -26,5 +26,6 @@
 | 261126-mg3 | Fix Gmail layout and images for all remaining vHealth email templates | 2026-11-26 | 969c6cd | [261126-mg3-fix-gmail-layout-and-images-for-all-rema](./quick/261126-mg3-fix-gmail-layout-and-images-for-all-rema/) |
 | 261126-nz1 | Add Rebuild Mailing Lists action under Configuration menu with vHealth rules | 2026-11-26 | d76209d | [261126-nz1-add-rebuild-mailing-lists-action-under-c](./quick/261126-nz1-add-rebuild-mailing-lists-action-under-c/) |
 | 261127-jv2 | Fix Odoo Email Marketing editor editability for all vHealth templates | 2026-11-27 | 6b0c330 | [261127-jv2-fix-odoo-email-marketing-editor-editabil](./quick/261127-jv2-fix-odoo-email-marketing-editor-editabil/) |
+| 261127-mix | Add custom step delay minutes fields for launch email testing | 2026-11-27 | 69bb7b0 | [261127-mix-add-custom-step-delay-minutes-field-for-](./quick/261127-mix-add-custom-step-delay-minutes-field-for-/) |
 
-Last activity: 2026-11-27 - Completed quick task 261127-jv2: Fix Odoo Email Marketing editor editability for all vHealth templates
+Last activity: 2026-11-27 - Completed quick task 261127-mix: Add custom step delay minutes fields for launch email testing
